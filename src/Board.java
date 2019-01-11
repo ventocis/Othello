@@ -1,22 +1,26 @@
 
 public class Board {
-	int [][] boardPieces = new int [7][7];
-	int currentPlayer;
+	int [][] boardPieces = new int [8][8];
+	int currPlyr;
+	int otherPlyr;
 	
 	/**
 	 * This is the default constructor for Board
 	 * It sets up the board in its starting position
 	 */
 	public Board() {
-		for(int x = 0; x < 8; x++) 
-			for(int y = 0; y < 8; y++)
+		for(int x = 0; x < 8; x++) { 
+			for(int y = 0; y < 8; y++) {
 				if((x == 3 && y == 3) || (x == 4 && y == 4))
 					setPlayer(x,y,1);
 				else if((x == 4 && y == 3) || (x == 3 && y == 4))
 					setPlayer(x,y,2);
 				else
 					setPlayer(x,y,0);
-		currentPlayer = 1;
+			}
+		}
+		currPlyr = 1;
+		otherPlyr = 2;
 	}
 	
 	/**
@@ -43,10 +47,14 @@ public class Board {
 	}
 	
 	public void nextPlayer() {
-		if(currentPlayer == 1)
-			currentPlayer = 2;
-		else
-			currentPlayer = 1;
+		if(currPlyr == 1) {
+			otherPlyr = currPlyr;
+			currPlyr = 2;
+		}
+		else {
+			otherPlyr = currPlyr;
+			currPlyr = 1;
+		}
 	}
 	
 	public boolean isValidMove(int x, int y) {
