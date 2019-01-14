@@ -74,20 +74,50 @@ public class Gui extends Board implements ActionListener{
 		
 		for(JButton button:buttons) {
 			//check the source of the button
-			if(e.getSource() == button)
+			if(e.getSource() == button) {
 				//set the piece color based on the current player
-				if(gameBoard.getCurrPlyr() == 1)
-					if(gameBoard.isValidMove(x, y))
+				if(gameBoard.getCurrPlyr() == 1) {
+					if(gameBoard.isValidMove(x, y)) {
+						gameBoard.playPiece(x, y);
 						button.setIcon(blackPc);
-				else
-					if(gameBoard.isValidMove(x, y))
+						gameBoard.nextPlyr();
+					}
+				}
+				else if(gameBoard.isValidMove(x, y)) {
+						gameBoard.playPiece(x, y);
 						button.setIcon(whitePc);
-			x++;
-			y++;
+						gameBoard.nextPlyr();
+					}
+			}
+			if(x == 7) {
+				x = 0;
+				y++;
+			}
+			else
+				x++;
 		}
 		
-		//go to next player
-		gameBoard.nextPlyr();
+		
+		x = 0;
+		y = 0;
+		for(JButton button:buttons) {
+			//check the source of the button
+			if(gameBoard.getPlyr(x, y) == 1)
+				button.setIcon(blackPc);
+			else if(gameBoard.getPlyr(x, y) == 2)
+				button.setIcon(whitePc);
+			
+			if(x == 7) {
+				x = 0;
+				y++;
+			}
+			else
+				x++;
+		}
+		
+		
+		gameBoard.isWinner();
+		//FIXME add something to check if there's a valid move for that player
 	}
 
 }
