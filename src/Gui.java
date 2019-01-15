@@ -1,24 +1,22 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Gui extends Board implements ActionListener {
 
 	// make an arraylist of buttons
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
+	static final int NUMLABELS = 1;
 
 	// instantiate our icons
 	Icon blankPc = new ImageIcon("imgs/square.png");
@@ -29,6 +27,7 @@ public class Gui extends Board implements ActionListener {
 	Board gameBoard;
 	GridBagLayout gridBag = new GridBagLayout();
 	JPanel p = new JPanel(gridBag);
+	JLabel plyrTurn, blackScore, whiteScore;
 
 	public Gui(Board initialBoard) {
 		GridBagConstraints cnstrnts = new GridBagConstraints();
@@ -41,13 +40,46 @@ public class Gui extends Board implements ActionListener {
 
 		cnstrnts.fill = GridBagConstraints.BOTH;
 		// Add in the icons for the game
+		JButton newGameButton = new JButton("New Game");
+		cnstrnts.gridx = 0;
+		cnstrnts.gridy = 0;
+		buttons.add(newGameButton);
+		gridBag.setConstraints(newGameButton, cnstrnts);
+
+		// icon to indicate whose turn it is
+		plyrTurn = new JLabel("Black's Turn");
+		plyrTurn.setHorizontalTextPosition(JLabel.CENTER);
+		plyrTurn.setVerticalTextPosition(JLabel.BOTTOM);
+		cnstrnts.gridx = 1;
+		cnstrnts.gridy = 0;
+		gridBag.setConstraints(plyrTurn, cnstrnts);
+		
+		blackScore = new JLabel("Black: 2");
+		blackScore.setHorizontalTextPosition(JLabel.CENTER);
+		blackScore.setVerticalTextPosition(JLabel.BOTTOM);
+		cnstrnts.gridx = 6;
+		cnstrnts.gridy = 0;
+		gridBag.setConstraints(blackScore, cnstrnts);
+		
+		whiteScore = new JLabel("White: 2");
+		whiteScore.setHorizontalTextPosition(JLabel.CENTER);
+		whiteScore.setVerticalTextPosition(JLabel.BOTTOM);
+		cnstrnts.gridx = 7;
+		cnstrnts.gridy = 0;
+		gridBag.setConstraints(whiteScore, cnstrnts);
+		
+		
+		p.add(plyrTurn);
+		p.add(blackScore);
+		p.add(whiteScore);
+
 		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
+			for (int y = 1; y < 9; y++) {
 				JButton button = new JButton();
-				if (gameBoard.getPlyr(x, y) == 1) {
+				if (gameBoard.getPlyr(x, y - 1) == 1) {
 					button.setIcon(blackPc);
 					buttons.add(button);
-				} else if (gameBoard.getPlyr(x, y) == 2) {
+				} else if (gameBoard.getPlyr(x, y - 1) == 2) {
 					button.setIcon(whitePc);
 					buttons.add(button);
 				} else {
@@ -60,17 +92,6 @@ public class Gui extends Board implements ActionListener {
 				gridBag.setConstraints(button, cnstrnts);
 			}
 		}
-
-//			if (i == 27)
-//				buttons.add(new JButton(blackPc));
-//			else if (i == 28)
-//				buttons.add(new JButton(whitePc));
-//			else if (i == 35)
-//				buttons.add(new JButton(whitePc));
-//			else if (i == 36)
-//				buttons.add(new JButton(blackPc));
-//			else
-//				buttons.add(new JButton(blankIcon));
 
 		// Set up the jbuttons
 		for (JButton button : buttons) {
@@ -93,59 +114,72 @@ public class Gui extends Board implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		int x = 0, y = 0;
+		int x = 0, y = 0, z = 0;
 
 		for (JButton button : buttons) {
 			// check the source of the button
 			if (e.getSource() == button) {
 				// set the piece color based on the current player
-				if (gameBoard.getCurrPlyr() == 1) {
-					if (gameBoard.isValidMove(x, y)) {
+				if (z > NUMLABELS - 1) {
+					if (gameBoard.getCurrPlyr() == 1) {
+						if (gameBoard.isValidMove(x, y)) {
+							gameBoard.playPiece(x, y);
+							button.setIcon(blackPc);
+							gameBoard.nextPlyr();
+						}
+					} else if (gameBoard.isValidMove(x, y)) {
 						gameBoard.playPiece(x, y);
-						button.setIcon(blackPc);
+						button.setIcon(whitePc);
 						gameBoard.nextPlyr();
 					}
-				} else if (gameBoard.isValidMove(x, y)) {
-					gameBoard.playPiece(x, y);
-					button.setIcon(whitePc);
-					gameBoard.nextPlyr();
-				}
+				} else if (z == 0)
+					gameBoard.newGame();
 			}
-			if (x == 7) {
-				x = 0;
-				y++;
-			} else
-				x++;
+
+			if (z > NUMLABELS - 1) {
+				if (y == 7) {
+					y = 0;
+					x++;
+				} else
+					y++;
+			}
+			z++;
 		}
 
 		drawBoard();
 
-		/*
-		 * int winner = gameBoard.isWinner();
-		 * 
-		 * boolean availMoves = false; if(winner != 0) System.out.println("Player " +
-		 * winner + " won!"); //FIXME add something to check if there's a valid move for
-		 * that player else for(int i = 0; i < 8; i++) for(int j = 0; j < 8; j++)
-		 * if(gameBoard.isValidMove(i, j)) availMoves = true;
-		 * 
-		 * if(!availMoves) System.out.println("No available moves");
-		 */
 	}
 
 	private void drawBoard() {
-		int x = 0, y = 0;
+		int x = 0, y = 0, z = 0;
 		for (JButton button : buttons) {
 			// check the source of the button
-			if (gameBoard.getPlyr(x, y) == 1)
-				button.setIcon(blackPc);
-			else if (gameBoard.getPlyr(x, y) == 2)
-				button.setIcon(whitePc);
+			if (z > NUMLABELS-1) {
+				if (gameBoard.getPlyr(x, y) == 1)
+					button.setIcon(blackPc);
+				else if (gameBoard.getPlyr(x, y) == 2)
+					button.setIcon(whitePc);
+				else
+					button.setIcon(blankPc);
 
-			if (x == 7) {
-				x = 0;
-				y++;
-			} else
-				x++;
+				if (y == 7) {
+					y = 0;
+					x++;
+				} else
+					y++;
+			}
+			z++;
 		}
+		
+		String player;
+		if(gameBoard.getCurrPlyr() == 1)
+			player = "Black";
+		else
+			player = "White";
+		plyrTurn.setText(player + "'s Turn");
+		blackScore.setText("Black: " + gameBoard.blackScore());
+		whiteScore.setText("White: " + gameBoard.whiteScore());
 	}
+	
+	
 }

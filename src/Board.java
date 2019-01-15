@@ -11,18 +11,7 @@ public class Board {
 	 * starting position
 	 */
 	public Board() {
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				if ((x == 3 && y == 3) || (x == 4 && y == 4))
-					setPlyr(x, y, 1);
-				else if ((x == 4 && y == 3) || (x == 3 && y == 4))
-					setPlyr(x, y, 2);
-				else
-					setPlyr(x, y, 0);
-			}
-		}
-		currPlyr = 1;
-		otherPlyr = 2;
+		newGame();
 	}
 
 	/**
@@ -151,6 +140,41 @@ public class Board {
 			System.out.println("Player two won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
 		return 1;
 
+	}
+	
+	public void newGame() {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((x == 3 && y == 3) || (x == 4 && y == 4))
+					setPlyr(x, y, 1);
+				else if ((x == 4 && y == 3) || (x == 3 && y == 4))
+					setPlyr(x, y, 2);
+				else
+					setPlyr(x, y, 0);
+			}
+		}
+		currPlyr = 1;
+		otherPlyr = 2;
+	}
+	
+	public int whiteScore() {
+		int whiteScore = 0;
+		for(int x = 0; x < 8; x++)
+			for(int y = 0; y < 8; y++)
+				if(boardPieces[x][y] == 2)
+					whiteScore++;
+		
+		return whiteScore;
+	}
+	
+	public int blackScore() {
+		int blackScore = 0;
+		for(int x = 0; x < 8; x++)
+			for(int y = 0; y < 8; y++)
+				if(boardPieces[x][y] == 1)
+					blackScore++;
+		
+		return blackScore;
 	}
 
 }
