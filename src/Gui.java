@@ -41,6 +41,8 @@ public class Gui extends Board implements ActionListener {
 		cnstrnts.fill = GridBagConstraints.BOTH;
 		// Add in the icons for the game
 		JButton newGameButton = new JButton("New Game");
+		newGameButton.setPreferredSize(new Dimension(40,20));
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 0;
 		cnstrnts.gridy = 0;
 		buttons.add(newGameButton);
@@ -50,6 +52,7 @@ public class Gui extends Board implements ActionListener {
 		plyrTurn = new JLabel("Black's Turn");
 		plyrTurn.setHorizontalTextPosition(JLabel.CENTER);
 		plyrTurn.setVerticalTextPosition(JLabel.BOTTOM);
+		plyrTurn.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 1;
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(plyrTurn, cnstrnts);
@@ -57,6 +60,8 @@ public class Gui extends Board implements ActionListener {
 		blackScore = new JLabel("Black: 2");
 		blackScore.setHorizontalTextPosition(JLabel.CENTER);
 		blackScore.setVerticalTextPosition(JLabel.BOTTOM);
+		blackScore.setHorizontalAlignment(JLabel.CENTER);
+		blackScore.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 6;
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(blackScore, cnstrnts);
@@ -64,6 +69,8 @@ public class Gui extends Board implements ActionListener {
 		whiteScore = new JLabel("White: 2");
 		whiteScore.setHorizontalTextPosition(JLabel.CENTER);
 		whiteScore.setVerticalTextPosition(JLabel.BOTTOM);
+		whiteScore.setHorizontalAlignment(JLabel.CENTER);
+		whiteScore.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 7;
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(whiteScore, cnstrnts);
