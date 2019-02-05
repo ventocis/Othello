@@ -128,11 +128,7 @@ public class Gui extends Board implements ActionListener {
 		for (JButton button : buttons) {
 			// check the source of the button
 			if (e.getSource() == button) {
-				if(!canMove()) {
-					JOptionPane.showMessageDialog(f, "No moves available for the current player");
-					nextPlyr();
-					break;
-				}
+				
 				// set the piece color based on the current player
 				if (z > NUMLABELS - 1) {
 					if (gameBoard.getCurrPlyr() == 1) {
@@ -142,7 +138,8 @@ public class Gui extends Board implements ActionListener {
 							System.out.println("black played");
 							gameBoard.nextPlyr();
 						}
-					} else if (gameBoard.isValidMove(x, y)) {
+					}
+					else if (gameBoard.isValidMove(x, y)) {
 						gameBoard.playPiece(x, y);
 						button.setIcon(whitePc);
 						System.out.println("white played");
@@ -169,6 +166,10 @@ public class Gui extends Board implements ActionListener {
 
 		drawBoard();
 
+		if(!canMove()) {
+			JOptionPane.showMessageDialog(f, "No moves available for the " + currPlyr + " player");
+			drawBoard();
+		}
 	}
 
 	private void drawBoard() {

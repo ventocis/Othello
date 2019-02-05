@@ -46,6 +46,8 @@ public  class Board {
 			otherPlyr = currPlyr;
 			currPlyr = 1;
 		}
+		
+		System.out.println("Player toggled");
 	}
 
 	/**
