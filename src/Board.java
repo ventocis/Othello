@@ -1,6 +1,6 @@
 
-public class Board {
-	int[][] boardPieces = new int[8][8];
+public  class Board {
+	static int[][] boardPieces = new int[8][8];
 	int currPlyr;
 	int otherPlyr;
 	int finalX;
@@ -195,19 +195,26 @@ public class Board {
 		int x = 0, y = 0;
 		for(; x < 8; x++) {
 			for(; y < 8; y++) {
+				
 				if(boardPieces[x][y] != 0)
 					counter++;
 			}
 		}
 		
 		//check to see if it went through all of the pieces & the last piece wasn't empty
-		if(counter == 64)
+		if(counter == 64) {
+			System.out.println("Full board");
 			return true;
+		}
 		
 		if(!canMove()) {
 			nextPlyr();
-			if(!canMove())
+			if(!canMove()) {
+				System.out.println("no one can move");
 				return true;
+			}
+			else
+				nextPlyr();
 		}
 		
 		return false;
