@@ -132,14 +132,18 @@ public class Board {
 				}
 				else
 					return 0;
-		
+		if(staleMate() == true) {
+			if(plyrOnePts > plyrTwoPts)
+				System.out.println("Player one won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
+			else
+				System.out.println("Player two won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
+		}else {
 		if(plyrOnePts > plyrTwoPts)
 			System.out.println("Player one won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
-
 		else
 			System.out.println("Player two won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
+		}
 		return 1;
-
 	}
 	
 	public void newGame() {
@@ -176,5 +180,18 @@ public class Board {
 		
 		return blackScore;
 	}
-
+	public boolean staleMate() {
+		boolean isStale = false;
+		for(int x = 0; x < 8; x++){
+			for(int y = 0; y < 8; y++){
+				if(isValidMove(x, y) == false) {
+					isStale = true;
+				}
+				else {
+					isStale = false;
+				}
+			}	
+		}
+		return isStale;
+	}	
 }
