@@ -48,10 +48,20 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Returns current player
+	 * @return current player in game
+	 */
 	public int getCurrPlyr() {
 		return currPlyr;
 	}
 
+	/**
+	 * 
+	 * @param x - the x position of the move
+	 * @param y - the y position of the move
+	 * @return true if move is valid, else false
+	 */
 	public boolean isValidMove(int x, int y) {
 		if (!onBoard(x, y))
 			return false;
@@ -67,21 +77,37 @@ public class Board {
 		return false;
 	}
 
+	/**
+	 * This function is used to check to see if there are any pieces to capture
+	 * in the selected direction (direction is set by xChange & yChange)
+	 * @param x
+	 * @param y
+	 * @param xChange
+	 * @param yChange
+	 * @return true if the selection direction can capture pieces, else false
+	 */
 	public boolean checkDirections(int x, int y, int xChange, int yChange) {
 
+		//makes sure the move is on the Board
 		if (!onBoard(x, y))
 			return false;
+		//returns false if there is already a piece in the selected space
 		if (boardPieces[x][y] != 0)
 			return false;
 
 		x += xChange;
 		y += yChange;
 
+		//makes sure that move is on the board
 		if (!onBoard(x, y))
 			return false;
+
+		//makes sure that the piece immediately adjacent to it isn't the same player
 		if (boardPieces[x][y] == currPlyr)
 			return false;
 
+		//goes through the remaining pieces & returns true there are opponents pieces
+		//surrounded on both sides by the current player's pieces, else it returns false
 		for (; onBoard(x, y); x += xChange, y += yChange) {
 			if (boardPieces[x][y] == 0)
 				return false;
@@ -95,16 +121,27 @@ public class Board {
 		return false;
 	}
 
+	/**
+	 * This method plays the pieces & flips all of the opponent's captured pieces
+	 * @param initX - x value of the piece that was played
+	 * @param initY - y valie of the piece that was played
+	 */
 	public void playPiece(int initX, int initY) {
 		boolean flag = false;
 
+		//this loop goes through & checks all of the possible directions that the opponents
+		//pieces could possibly be captured
+		//xchange is used to set the change in the horizontal direction
 		for (int xChange = -1; xChange < 2; xChange++)
+			//yChange is used to set the change in the vertical direction
 			for (int yChange = -1; yChange < 2; yChange++)
+				//checks to see if opponent pieces in that direction can be captured
 				if (checkDirections(initX, initY, xChange, yChange)) {
 					int tempX = initX + xChange;
 					int tempY = initY + yChange;
 					flag = true;
 
+					//flips all captured pieces
 					for (; (tempX != finalX) || (tempY != finalY); tempX += xChange, tempY += yChange) {
 						boardPieces[tempX][tempY] = currPlyr;
 					}
@@ -113,13 +150,23 @@ public class Board {
 			boardPieces[initX][initY] = currPlyr;
 	}
 
+	/**
+	 * checks to see if the selected move is on the board
+	 * @param x - x value of the chosen move
+	 * @param y - y value of the chosen move
+	 * @return - true if the move is on the board, else false
+	 */
 	private boolean onBoard(int x, int y) {
 		if (x > 7 || x < 0 || y > 7 || y < 0)
 			return false;
 		return true;
 	}
-	
-	public int isWinner() {
+
+	/**
+	 * Returns the winner
+	 * @return 1 if player One wins, 2 if Player 2 wins, -1 if tie
+	 */
+	public int whoWon() {
 		int plyrOnePts = 0;
 		int plyrTwoPts = 0;
 		for(int x = 0; x < 8; x++)
@@ -130,22 +177,43 @@ public class Board {
 				else if(boardPieces[x][y] == 2) {
 					plyrTwoPts++;
 				}
-				else
-					return 0;
-		if(staleMate() == true) {
-			if(plyrOnePts > plyrTwoPts)
-				System.out.println("Player one won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
-			else
-				System.out.println("Player two won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
-		}else {
+
 		if(plyrOnePts > plyrTwoPts)
-			System.out.println("Player one won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
-		else
-			System.out.println("Player two won! Plyr 1 pts: " + plyrOnePts + "\nPlyr 2 pts" + plyrTwoPts);
-		}
-		return 1;
+			return 1;
+		if(plyrTwoPts > plyrOnePts)
+			return 2;
+
+		return -1;
 	}
 	
+	/**
+	 * Determines if there is a winner
+	 * @return true if game is over, else false
+	 */
+	public boolean gameOver() {
+		int counter = 0;
+		int x = 0, y = 0;
+		for(; x < 8; x++) {
+			for(; y < 8; y++) {
+				if(boardPieces[x][y] != 0)
+					counter++;
+			}
+		}
+		
+		//check to see if it went through all of the pieces & the last piece wasn't empty
+		if(counter == 64)
+			return true;
+		
+		if(!canMove()) {
+			nextPlyr();
+			if(!canMove())
+				return true;
+		}
+		
+		return false;
+		
+	}
+
 	public void newGame() {
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
@@ -160,38 +228,34 @@ public class Board {
 		currPlyr = 1;
 		otherPlyr = 2;
 	}
-	
+
 	public int whiteScore() {
 		int whiteScore = 0;
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(boardPieces[x][y] == 2)
 					whiteScore++;
-		
+
 		return whiteScore;
 	}
-	
+
 	public int blackScore() {
 		int blackScore = 0;
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(boardPieces[x][y] == 1)
 					blackScore++;
-		
+
 		return blackScore;
 	}
-	public boolean staleMate() {
-		boolean isStale = false;
-		for(int x = 0; x < 8; x++){
-			for(int y = 0; y < 8; y++){
-				if(isValidMove(x, y) == false) {
-					isStale = true;
-				}
-				else {
-					isStale = false;
-				}
-			}	
-		}
-		return isStale;
+	
+	
+	public boolean canMove() {
+		for(int x = 0; x < 8; x++)
+			for(int y = 0; y < 8; y++)
+				if(isValidMove(x, y)) 
+					return true;
+				
+		return false;
 	}	
 }

@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Gui extends Board implements ActionListener {
@@ -28,11 +29,12 @@ public class Gui extends Board implements ActionListener {
 	GridBagLayout gridBag = new GridBagLayout();
 	JPanel p = new JPanel(gridBag);
 	JLabel plyrTurn, blackScore, whiteScore;
+	JFrame f;
 
 	public Gui(Board initialBoard) {
 		GridBagConstraints cnstrnts = new GridBagConstraints();
 		// p.add()
-		JFrame f = new JFrame("Othello");
+		f = new JFrame("Othello");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// store the game board so we can access it later
@@ -151,6 +153,11 @@ public class Gui extends Board implements ActionListener {
 					y++;
 			}
 			z++;
+		}
+		
+		if(gameOver()) {
+			JOptionPane.showMessageDialog(f, "Game Over");;
+			gameBoard.newGame();
 		}
 
 		drawBoard();
