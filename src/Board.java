@@ -210,6 +210,7 @@ public  class Board {
 		if(!canMove()) {
 			nextPlyr();
 			if(!canMove()) {
+				nextPlyr();
 				System.out.println("no one can move");
 				return true;
 			}
