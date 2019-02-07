@@ -1,10 +1,10 @@
 
 public  class Board {
 	static int[][] boardPieces = new int[8][8];
-	int currPlyr;
-	int otherPlyr;
-	int finalX;
-	int finalY;
+	static int currPlyr;
+	static int otherPlyr;
+	static int finalX;
+	static int finalY;
 
 	/**
 	 * This is the default constructor for Board It sets up the board in its
@@ -168,7 +168,7 @@ public  class Board {
 	 * Returns the winner
 	 * @return 1 if player One wins, 2 if Player 2 wins, -1 if tie
 	 */
-	public int whoWon() {
+	public int getWinner() {
 		int plyrOnePts = 0;
 		int plyrTwoPts = 0;
 		for(int x = 0; x < 8; x++)
@@ -261,6 +261,7 @@ public  class Board {
 	
 	
 	public boolean canMove() {
+		System.out.println("Current player: " + currPlyr);
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(isValidMove(x, y)) 

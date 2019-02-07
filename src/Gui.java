@@ -158,18 +158,30 @@ public class Gui extends Board implements ActionListener {
 			}
 			z++;
 		}
-		
-		if(gameOver()) {
-			JOptionPane.showMessageDialog(f, "Game Over");;
-			gameBoard.newGame();
-		}
 
 		drawBoard();
 
 		if(!canMove()) {
-			JOptionPane.showMessageDialog(f, "No moves available for the " + currPlyr + " player");
-			drawBoard();
+			gameBoard.nextPlyr();
+			if(!canMove()) {
+				if(gameBoard.getWinner() == 1) {
+				JOptionPane.showMessageDialog(f, "C'mon White don't slack\nThis win goes to Black!");
+				}
+				else if(gameBoard.getWinner() == -1)
+					JOptionPane.showMessageDialog(f, "Oh my oh my\nLooks like we have a tie!");
+				else
+					JOptionPane.showMessageDialog(f, "Can hardly believe this is right\nThe win goes to White!");
+				
+				gameBoard.newGame();
+			}
+			else if(getCurrPlyr() == 1)
+				JOptionPane.showMessageDialog(f, "No available moves for white");
+			else
+				JOptionPane.showMessageDialog(f, "No available moves for black");
 		}
+		
+		drawBoard();
+		
 	}
 
 	private void drawBoard() {
