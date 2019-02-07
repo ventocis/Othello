@@ -3,6 +3,8 @@ public  class Board {
 	static int[][] boardPieces = new int[8][8];
 	static int currPlyr;
 	static int otherPlyr;
+	
+	//variables to help when flipping pieces
 	static int finalX;
 	static int finalY;
 
@@ -37,6 +39,10 @@ public  class Board {
 	public void setPlyr(int x, int y, int player) {
 		boardPieces[x][y] = player;
 	}
+	
+	/**
+	 * Toggles the current player
+	 */
 
 	public void nextPlyr() {
 		if (currPlyr == 1) {
@@ -47,7 +53,6 @@ public  class Board {
 			currPlyr = 1;
 		}
 		
-		System.out.println("Player toggled");
 	}
 
 	/**
@@ -185,46 +190,15 @@ public  class Board {
 		if(plyrTwoPts > plyrOnePts)
 			return 2;
 
+		//returns -1 if there's a tie
 		return -1;
 	}
-	
-	/**
-	 * Determines if there is a winner
-	 * @return true if game is over, else false
-	 */
-	public boolean gameOver() {
-		int counter = 0;
-		int x = 0, y = 0;
-		for(; x < 8; x++) {
-			for(; y < 8; y++) {
-				
-				if(boardPieces[x][y] != 0)
-					counter++;
-			}
-		}
-		
-		//check to see if it went through all of the pieces & the last piece wasn't empty
-		if(counter == 64) {
-			System.out.println("Full board");
-			return true;
-		}
-		
-		if(!canMove()) {
-			nextPlyr();
-			if(!canMove()) {
-				nextPlyr();
-				System.out.println("no one can move");
-				return true;
-			}
-			else
-				nextPlyr();
-		}
-		
-		return false;
-		
-	}
 
+	/*
+	 * Creates a new game with current player set to player 1
+	 */
 	public void newGame() {
+		//sets the board array back to the values for a new game
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				if ((x == 3 && y == 3) || (x == 4 && y == 4))
@@ -238,9 +212,15 @@ public  class Board {
 		currPlyr = 1;
 		otherPlyr = 2;
 	}
-
+	
+	/**
+	 *	Counts the number of pieces white has on the board 
+	 * @return returns white's score
+	 */
 	public int whiteScore() {
 		int whiteScore = 0;
+		
+		//counts the number of elements in the board array that are white
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(boardPieces[x][y] == 2)
@@ -249,8 +229,14 @@ public  class Board {
 		return whiteScore;
 	}
 
+	/**
+	 * Counts the number of pieces black has on the board
+	 * @return returns black's score
+	 */
 	public int blackScore() {
 		int blackScore = 0;
+		
+		//counts the number of elements in the board array that are black
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(boardPieces[x][y] == 1)
@@ -259,9 +245,12 @@ public  class Board {
 		return blackScore;
 	}
 	
-	
+	/**
+	 * Determines if the current player can move
+	 * @return true if the current player can move, false otherwise
+	 */
 	public boolean canMove() {
-		System.out.println("Current player: " + currPlyr);
+		//checks to see if there's a valid move at any of the places on the board
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(isValidMove(x, y)) 
