@@ -137,6 +137,9 @@ public class Gui extends Board implements ActionListener {
 		for (JButton button : buttons) {
 			// check the source of the button
 			if (e.getSource() == button) {
+				if(z==0) {
+					gameBoard.newGame();
+				}
 				//Make sure that the JButton isn't one of the top buttons 
 				if (z > NUMLABELS - 1) {
 					//Make sure it's a valid move for black & if so, play the piece
