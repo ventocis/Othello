@@ -131,7 +131,7 @@ public  class Board {
 	/**
 	 * This method plays the pieces & flips all of the opponent's captured pieces
 	 * @param initX - x value of the piece that was played
-	 * @param initY - y valie of the piece that was played
+	 * @param initY - y value of the piece that was played
 	 */
 	public void playPiece(int initX, int initY) {
 		boolean flag = false;
