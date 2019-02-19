@@ -1,9 +1,9 @@
 
 public  class Board {
-	static int[][] boardPieces = new int[8][8];
-	static int currPlyr;
-	static int otherPlyr;
-	
+	static int[][] boardPieces = new int[8][8];//array of integers for board
+	static int currPlyr;//current player
+	static int otherPlyr;//other player
+
 	//variables to help when flipping pieces
 	static int finalX;
 	static int finalY;
@@ -17,8 +17,8 @@ public  class Board {
 	}
 
 	/**
-	 * This method takes the coordinates of a spot on the board & returns the player
-	 * at that piece
+	 * This method takes the coordinates of a spot on the board and 
+	 * returns the player at that piece.
 	 * 
 	 * @param x - the x coordinate of the pieces
 	 * @param y - the y coordinate of the piece
@@ -29,8 +29,9 @@ public  class Board {
 	}
 
 	/**
-	 * This takes the coordinates of a spot on the board & sets the piece at that
-	 * place to the player that is passed into the method
+	 * This takes the coordinates of a spot on the board and sets 
+	 * the piece at that place to the player that is passed into
+	 * the method.
 	 * 
 	 * @param x      - the x coordinate of the spot
 	 * @param y      - the y coordinate of the spot
@@ -39,11 +40,11 @@ public  class Board {
 	public void setPlyr(int x, int y, int player) {
 		boardPieces[x][y] = player;
 	}
-	
-	/**
-	 * Toggles the current player
-	 */
 
+	/**
+	 * This method toggles the current player, between other player
+	 *  and current player.
+	 */
 	public void nextPlyr() {
 		if (currPlyr == 1) {
 			otherPlyr = currPlyr;
@@ -52,7 +53,7 @@ public  class Board {
 			otherPlyr = currPlyr;
 			currPlyr = 1;
 		}
-		
+
 	}
 
 	/**
@@ -85,8 +86,9 @@ public  class Board {
 	}
 
 	/**
-	 * This function is used to check to see if there are any pieces to capture
-	 * in the selected direction (direction is set by xChange & yChange)
+	 * This function is used to check to see if there are any pieces
+	 * to capture in one of the eight  selected directions. 
+	 * (direction is set by xChange & yChange)
 	 * @param x
 	 * @param y
 	 * @param xChange
@@ -109,12 +111,15 @@ public  class Board {
 		if (!onBoard(x, y))
 			return false;
 
-		//makes sure that the piece immediately adjacent to it isn't the same player
+		//makes sure that the piece immediately adjacent to it isn't the
+		//same player
 		if (boardPieces[x][y] == currPlyr)
 			return false;
 
-		//goes through the remaining pieces & returns true there are opponents pieces
-		//surrounded on both sides by the current player's pieces, else it returns false
+		/*goes through the remaining pieces & returns true there are
+		 *opponents pieces surrounded on both sides by the current 
+		 *player's pieces, else it returns false
+		 */
 		for (; onBoard(x, y); x += xChange, y += yChange) {
 			if (boardPieces[x][y] == 0)
 				return false;
@@ -129,7 +134,8 @@ public  class Board {
 	}
 
 	/**
-	 * This method plays the pieces & flips all of the opponent's captured pieces
+	 * This method plays the pieces and flips all of the opponent's 
+	 * captured pieces.
 	 * @param initX - x value of the piece that was played
 	 * @param initY - y value of the piece that was played
 	 */
@@ -158,7 +164,7 @@ public  class Board {
 	}
 
 	/**
-	 * checks to see if the selected move is on the board
+	 * This method checks to see if the selected move is on the board.
 	 * @param x - x value of the chosen move
 	 * @param y - y value of the chosen move
 	 * @return - true if the move is on the board, else false
@@ -170,10 +176,12 @@ public  class Board {
 	}
 
 	/**
-	 * Returns the winner
+	 * This method returns the winner based on the count of black
+	 * verses white pieces on the board as you navigate the board.
 	 * @return 1 if player One wins, 2 if Player 2 wins, -1 if tie
 	 */
 	public int getWinner() {
+		//These two variables count the number of points for each player
 		int plyrOnePts = 0;
 		int plyrTwoPts = 0;
 		for(int x = 0; x < 8; x++)
@@ -194,8 +202,9 @@ public  class Board {
 		return -1;
 	}
 
-	/*
-	 * Creates a new game with current player set to player 1
+	/**
+	 * This method creates a new game with current player set to
+	 * player 1(black).
 	 */
 	public void newGame() {
 		//sets the board array back to the values for a new game
@@ -212,14 +221,14 @@ public  class Board {
 		currPlyr = 1;
 		otherPlyr = 2;
 	}
-	
+
 	/**
-	 *	Counts the number of pieces white has on the board 
+	 * This method counts the number of pieces white has on the board 
 	 * @return returns white's score
 	 */
 	public int whiteScore() {
 		int whiteScore = 0;
-		
+
 		//counts the number of elements in the board array that are white
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
@@ -230,12 +239,12 @@ public  class Board {
 	}
 
 	/**
-	 * Counts the number of pieces black has on the board
+	 * This method counts the number of pieces black has on the board.
 	 * @return returns black's score
 	 */
 	public int blackScore() {
 		int blackScore = 0;
-		
+
 		//counts the number of elements in the board array that are black
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
@@ -244,18 +253,19 @@ public  class Board {
 
 		return blackScore;
 	}
-	
+
 	/**
-	 * Determines if the current player can move
+	 * This method determines if the current player can move.
 	 * @return true if the current player can move, false otherwise
 	 */
 	public boolean canMove() {
-		//checks to see if there's a valid move at any of the places on the board
+		//This for loop checks to see if there's a valid move at
+		//any of the places on the board.
 		for(int x = 0; x < 8; x++)
 			for(int y = 0; y < 8; y++)
 				if(isValidMove(x, y)) 
 					return true;
-				
+
 		return false;
 	}	
 }
