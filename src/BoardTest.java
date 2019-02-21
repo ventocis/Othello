@@ -1,9 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
-
+	
 	@Test
 	void testBoard() {
 		fail("Not yet implemented");
@@ -30,13 +31,14 @@ class BoardTest {
 	}
 
 	@Test
-	void testIsValidMove() {
-		fail("Not yet implemented");
+	void testBadCoordinates() {
+		Board board = new Board();
+		assertFalse(board.isValidMove(3,8));
 	}
-
 	@Test
-	void testCheckDirections() {
-		fail("Not yet implemented");
+	void testGoodCoordinates() {
+		Board board = new Board();
+		assertTrue(board.isValidMove(3,5));
 	}
 
 	@Test
