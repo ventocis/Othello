@@ -139,28 +139,32 @@ public  class Board {
 	 * @param initX - x value of the piece that was played
 	 * @param initY - y value of the piece that was played
 	 */
-	public void playPiece(int initX, int initY) {
+	public void playPiece(final int initX, final int initY) {
 		boolean flag = false;
 
-		//this loop goes through & checks all of the possible directions that the opponents
-		//pieces could possibly be captured
-		//xchange is used to set the change in the horizontal direction
+		/*this loop goes through & checks all of the possible directions
+		 *that the opponents pieces could possibly be captured
+		 *xchange is used to set the change in the horizontal direction
+		 */
 		for (int xChange = -1; xChange < 2; xChange++)
 			//yChange is used to set the change in the vertical direction
 			for (int yChange = -1; yChange < 2; yChange++)
-				//checks to see if opponent pieces in that direction can be captured
+				//checks to see if opponent pieces in that direction can be
+				//captured
 				if (checkDirections(initX, initY, xChange, yChange)) {
 					int tempX = initX + xChange;
 					int tempY = initY + yChange;
 					flag = true;
 
 					//flips all captured pieces
-					for (; (tempX != finalX) || (tempY != finalY); tempX += xChange, tempY += yChange) {
+					for (; (tempX != finalX) || (tempY != finalY);
+							tempX += xChange, tempY += yChange) {
 						boardPieces[tempX][tempY] = currPlyr;
 					}
 				}
-		if(flag)
+		if (flag) {
 			boardPieces[initX][initY] = currPlyr;
+		}
 	}
 
 	/**
