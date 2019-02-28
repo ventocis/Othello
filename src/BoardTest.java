@@ -42,7 +42,7 @@ public class BoardTest {
     }
 
     /**
-     * Test the setting the player's is assigned correctly
+     * Test the setting the player's is assigned correctly.
      */
     @Test
     public void testSetPlyr() {
@@ -64,7 +64,7 @@ public class BoardTest {
     }
 
     /**
-     * Test the the next player is correctly identified
+     * Test the the next player is correctly identified.
      */
     @Test
     public void testNextPlyr() {
@@ -79,7 +79,7 @@ public class BoardTest {
     }
 
     /**
-     * Test that the current player is assigned correctly
+     * Test that the current player is assigned correctly.
      */
     @Test
     public void testGetCurrPlyr() {
@@ -93,7 +93,7 @@ public class BoardTest {
     }
 
     /**
-     * Check if a given coordinate can be a valid move
+     * Check if a given coordinate can be a valid move.
      */
     @Test
     public void testIsValidMove() {
