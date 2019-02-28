@@ -187,19 +187,24 @@ public class Gui extends Board implements ActionListener {
 			//check if both players can't move
 			if(!canMove()) {
 				if(gameBoard.getWinner() == 1) {
-					JOptionPane.showMessageDialog(f, "\nThis win goes to Black!");
+					JOptionPane.showMessageDialog(f, 
+							"\nThis win goes to Black!");
 				}
 				else if(gameBoard.getWinner() == -1)
-					JOptionPane.showMessageDialog(f, "Oh my, oh my\nLooks like we have a tie!");
+					JOptionPane.showMessageDialog(f, 
+							"Oh my, oh my\nLooks like we have a tie!");
 				else
-					JOptionPane.showMessageDialog(f, "\nThe win goes to White!");
+					JOptionPane.showMessageDialog(f, 
+							"\nThe win goes to White!");
 
 				gameBoard.newGame();
 			}
 			else if(getCurrPlyr() == 1)
-				JOptionPane.showMessageDialog(f, "No available moves for white");
+				JOptionPane.showMessageDialog(f, 
+						"No available moves for white");
 			else
-				JOptionPane.showMessageDialog(f, "No available moves for black");
+				JOptionPane.showMessageDialog(f, 
+						"No available moves for black");
 		}
 
 		//draw the board to reflect any current player changes

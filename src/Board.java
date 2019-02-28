@@ -174,7 +174,7 @@ public  class Board {
 		 *xChange is used to set the change in the horizontal direction
 		 */
 		for (int xChange = -1; xChange < 2; xChange++) {
-			//yChange is used to set the change in the vertical direction
+			//yChange is used to set change in the vertical direction
 			for (int yChange = -1; yChange < 2; yChange++) {
 				//checks if opponent pieces in that direction can be
 				//captured
