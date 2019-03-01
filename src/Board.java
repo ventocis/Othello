@@ -36,15 +36,15 @@ public  class Board {
 	}
 	
 	/**
-    	 * Return a string representation of the board
+    	 * Return a string representation of the board.
     	 * @return A board
     	 */
    	 @Override
     	public String toString() {
        		 String str = "";
         
-        for(int row = 0; row < getBoardPieces().length; row++) {
-            for(int col = 0; col < getBoardPieces().length; col++) {
+        for (int row = 0; row < getBoardPieces().length; row++) {
+            for (int col = 0; col < getBoardPieces().length; col++) {
                 str += getBoardPieces()[row][col];
             }
             
@@ -131,10 +131,10 @@ public  class Board {
 	 * This function is used to check to see if there are any pieces
 	 * to capture in one of the eight  selected directions. 
 	 * (direction is set by xChange & yChange)
-	 * @param x
-	 * @param y
-	 * @param xChange
-	 * @param yChange
+	 * @param x variable for coordinate rows
+	 * @param y variable for coordinate columns
+	 * @param xChange change in direction variable
+	 * @param yChange change in direction variable
 	 * @return true if the selection direction
 	 *  can capture pieces, else false
 	 */
@@ -187,16 +187,20 @@ public  class Board {
 	public void playPiece(final int initX, final int initY) {
 		boolean flag = false;
 
-		/**this loop goes through & checks all of the possible directions
+		/*This loop checks all of the possible directions.
 		 *that the opponents pieces could possibly be captured
 		 *xChange is used to set the change in the horizontal direction
 		 */
 		for (int xChange = -1; xChange < 2; xChange++) {
-			//yChange is used to set change in the vertical direction
-			for (int yChange = -1; yChange < 2; yChange++) {
-				//checks if opponent pieces in that direction can be
+			//yChange is used to set change
+			//in the vertical direction
+			for (int yChange = -1;
+					yChange < 2; yChange++) {
+				//checks if opponent pieces 
+				//in that direction can be
 				//captured
-				if (checkDirections(initX, initY, xChange, yChange)) {
+				if (checkDirections(initX, initY,
+						xChange, yChange)) {
 					int tempX = initX + xChange;
 					int tempY = initY + yChange;
 					flag = true;
@@ -205,8 +209,9 @@ public  class Board {
 					for (; (tempX != finalX) 
 							|| (tempY != finalY);
 							tempX += xChange,
-									tempY += yChange) {
-						getBoardPieces()[tempX][tempY] = currPlyr;
+							tempY += yChange) {
+						getBoardPieces()
+						[tempX][tempY] = currPlyr;
 					}
 				}
 			}
@@ -341,17 +346,17 @@ public  class Board {
 	}
 
 	/**
-	 * @param boardPieces the boardPieces to set
+	 * @param boardPieces the boardPieces to set.
 	 */
-	public static void setBoardPieces(int[][] boardPieces) {
+	public static void setBoardPieces(final int[][] boardPieces) {
 		Board.boardPieces = boardPieces;
 	}
 
 	/**
 	 * 
-	 * @param i number we are setting the currPlyr to
+	 * @param i number we are setting the currPlyr to.
 	 */
-	public void setCurrPlyr(int i) {
+	public void setCurrPlyr(final int i) {
 		currPlyr = i;
 	}	
 }

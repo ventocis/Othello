@@ -48,7 +48,7 @@ public class Gui extends Board implements ActionListener {
 
 		// Add in the icons for the game
 		JButton newGameButton = new JButton("New Game");
-		newGameButton.setPreferredSize(new Dimension(40,20));
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
 		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 0;
 		cnstrnts.gridy = 0;
@@ -89,7 +89,8 @@ public class Gui extends Board implements ActionListener {
 		p.add(blackScore);
 		p.add(whiteScore);
 
-		//Set icons for each JButton & add them to the arrayList of JButtons
+		//Set icons for each JButton & add them to the arrayList
+		//of JButtons
 		for (int x = 0; x < 8; x++) {
 			for (int y = 1; y < 9; y++) {
 				JButton button = new JButton();
@@ -131,9 +132,11 @@ public class Gui extends Board implements ActionListener {
 	/*
 	 * Used to catch any actions that are performed on the GUI
 	 */
-	public void actionPerformed(ActionEvent e) {
-		/*x and y are used to hold the column and row position on the board
-		 *z is used so that x and y don't increment when the button loop is,
+	public void actionPerformed(final ActionEvent e) {
+		/*x and y are used to hold the column and row position 
+		 * on the board
+		 *z is used so that x and y don't increment when the
+		 * button loop is,
 		 *for one of the top buttons such as new game.
 		 */
 		int x = 0, y = 0, z = 0;
@@ -142,12 +145,14 @@ public class Gui extends Board implements ActionListener {
 		for (JButton button : buttons) {
 			// check the source of the button
 			if (e.getSource() == button) {
-				if(z==0) {
+				if (z == 0) {
 					gameBoard.newGame();
 				}
-				//Make sure that the JButton isn't one of the top buttons 
+				//Make sure that the JButton isn't one of the
+				//top buttons 
 				if (z > NUMLABELS - 1) {
-					//Make sure it's a valid move for black, if so, play the piece
+					//Make sure it's a valid move for black,
+					//if so, play the piece
 					if (gameBoard.getCurrPlyr() == 1) {
 						if (gameBoard.isValidMove(x, y)) {
 							gameBoard.playPiece(x, y);
@@ -156,7 +161,8 @@ public class Gui extends Board implements ActionListener {
 						}
 					}
 
-					//make sure it's a valid move for white & if so play the piece
+					//make sure it's a valid move for white
+					//& if so play the piece
 					else if (gameBoard.isValidMove(x, y)) {
 						gameBoard.playPiece(x, y);
 						button.setIcon(whitePc);
@@ -165,13 +171,15 @@ public class Gui extends Board implements ActionListener {
 				}
 			}
 
-			//increment x and y if the loop is passed the top buttons
+			//increment x and y if the loop is
+			//passed the top buttons
 			if (z > NUMLABELS - 1) {
 				if (y == 7) {
 					y = 0;
 					x++;
-				} else
+				} else {
 					y++;
+				}
 			}
 			//increment z, z tracks which button we are on
 			//(out of the total buttons, not just the board)
@@ -181,12 +189,12 @@ public class Gui extends Board implements ActionListener {
 		drawBoard();
 
 		//Make sure the next player can move
-		if(!canMove()) {
+		if (!canMove()) {
 			//If player can't move then toggle player again
 			gameBoard.nextPlyr();
 			//check if both players can't move
-			if(!canMove()) {
-				if(gameBoard.getWinner() == 1) {
+			if (!canMove()) {
+				if (gameBoard.getWinner() == 1) {
 					JOptionPane.showMessageDialog(f, 
 							"\nThis win goes to Black!");
 				}
@@ -214,7 +222,7 @@ public class Gui extends Board implements ActionListener {
 
 	/**
 	 * Draw the board by updating the icons based on which player is where
-	 * in the board array
+	 * in the board array.
 	 */
 	private void drawBoard() {
 		/*x and y are used to hold the x and y position on the board
@@ -226,30 +234,32 @@ public class Gui extends Board implements ActionListener {
 		//Go through each button
 		for (JButton button : buttons) {
 			//Make sure it's not on the top buttons
-			if (z > NUMLABELS-1) {
+			if (z > NUMLABELS - 1) {
 				//set the appropriate icon
-				if (gameBoard.getPlyr(x, y) == 1)
+				if (gameBoard.getPlyr(x, y) == 1) {
 					button.setIcon(blackPc);
-				else if (gameBoard.getPlyr(x, y) == 2)
+				} else if (gameBoard.getPlyr(x, y) == 2) {
 					button.setIcon(whitePc);
-				else
+				} else {
 					button.setIcon(blankPc);
-
+				}
 				if (y == 7) {
 					y = 0;
 					x++;
-				} else
+				} else {
 					y++;
+				}
 			}
 			z++;
 		}
 
 		//Set the current player on the board
 		String player;
-		if(gameBoard.getCurrPlyr() == 1)
+		if (gameBoard.getCurrPlyr() == 1) {
 			player = "Black";
-		else
+		} else {
 			player = "White";
+		}
 		plyrTurn.setText(player + "'s Turn");
 		blackScore.setText("Black: " + gameBoard.blackScore());
 		whiteScore.setText("White: " + gameBoard.whiteScore());

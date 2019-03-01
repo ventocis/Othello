@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class BoardTest {
 
     /**
-     * Check if getting the player's piece is returned correctly
+     * Check if getting the player's piece is returned correctly.
      */
     @Test
     public void testGetPlyr() {
@@ -31,8 +31,8 @@ public class BoardTest {
         // Rebuild the board it should be the same
         String actual = "";
 
-        for(int x = 0; x < Board.getBoardPieces().length; x++) {
-            for(int y = 0; y < Board.getBoardPieces().length; y++) {
+        for (int x = 0; x < Board.getBoardPieces().length; x++) {
+            for (int y = 0; y < Board.getBoardPieces().length; y++) {
                 actual += board.getPlyr(x, y);
             }
 
@@ -43,7 +43,7 @@ public class BoardTest {
     }
 
     /**
-     * Test the setting the player's is assigned correctly
+     * Test the setting the player's is assigned correctly.
      */
     @Test
     public void testSetPlyr() {
@@ -65,7 +65,7 @@ public class BoardTest {
     }
 
     /**
-     * Test the the next player is correctly identified
+     * Test the the next player is correctly identified.
      */
     @Test
     public void testNextPlyr() {
@@ -80,7 +80,7 @@ public class BoardTest {
     }
 
     /**
-     * Test that the current player is assigned correctly
+     * Test that the current player is assigned correctly.
      */
     @Test
     public void testGetCurrPlyr() {
@@ -94,7 +94,7 @@ public class BoardTest {
     }
 
     /**
-     * Check if a given coordinate can be a valid move
+     * Check if a given coordinate can be a valid move.
      */
     @Test
     public void testIsValidMove() {
@@ -106,10 +106,14 @@ public class BoardTest {
         assertTrue(board.isValidMove(2, 4));
         assertTrue(board.isValidMove(4, 2));
 
-        // Validate invalid moves, any moves that isn't 2,4 or 4,2 or 5,3 or 3,5 is invalid
+        // Validate invalid moves, any moves that isn't
+        //2,4 or 4,2 or 5,3 or 3,5 is invalid
         for (int i = 0; i < board.getBoardPieces().length; i++) {
             for (int j = 0; j < board.getBoardPieces()[i].length; j++) {
-                if ((i == 2 && j == 4) || (i == 4 && j == 2) || (i == 5 && j == 3) || (i == 3 && j == 5)) {
+                if ((i == 2 && j == 4) 
+                		|| (i == 4 && j == 2) 
+                		|| (i == 5 && j == 3) 
+                		|| (i == 3 && j == 5)) {
                     assertTrue(board.isValidMove(j, i));
                 } else {
                     assertFalse(board.isValidMove(j, i));
@@ -361,7 +365,8 @@ public class BoardTest {
         // Fill the board such that nobody can move
         Random random = new Random();
 
-        for (int i = 0; i < board.getBoardPieces().length; i++) {
+        for (int i = 0; i 
+        		< board.getBoardPieces().length; i++) {
             for (int j = 0; j < board.getBoardPieces()[i].length; j++) {
                 board.getBoardPieces()[i][j] = random.nextInt(2) + 1;
             }
