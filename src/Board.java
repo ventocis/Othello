@@ -7,15 +7,14 @@ public  class Board {
 	/**
 	 * This is an array of arrays of integers(2d array).
 	 */
-	public static int[][] boardPieces = new int[8][8];
+	private static int[][] boardPieces = new int[8][8];
 	/**
 	 * This is an integer variable for current player.
 	 */
-	public static int currPlyr; 
-	/**
-	 * This is an integer variable for other player.
-	 */
-	public static int otherPlyr;
+	private static int currPlyr; 
+	
+	private static int otherPlyr;
+
 
 	/**
 	 * This is an integer variable to help with moving pieces.
@@ -35,25 +34,25 @@ public  class Board {
 	public Board() {
 		newGame();
 	}
-
+	
 	/**
-	 * Return a string representation of the board.
-	 * @return A board
-	 */
-	@Override
-	public String toString() {
-		String str = "";
-
-		for (int row = 0; row < boardPieces.length; row++) {
-			for (int col = 0; col < boardPieces.length; col++) {
-				str += boardPieces[row][col];
-			}
-
-			str += "\n";
-		}
-
-		return str;
-	}
+    	 * Return a string representation of the board
+    	 * @return A board
+    	 */
+   	 @Override
+    	public String toString() {
+       		 String str = "";
+        
+        for(int row = 0; row < getBoardPieces().length; row++) {
+            for(int col = 0; col < getBoardPieces().length; col++) {
+                str += getBoardPieces()[row][col];
+            }
+            
+            str += "\n";
+        }
+        
+        return str;
+    	}
 
 	/**
 	 * This method takes the coordinates of a spot on the board and 
@@ -64,7 +63,7 @@ public  class Board {
 	 * @return 0, if an empty spot, 1 for player 1 or 2 for player 2
 	 */
 	public int getPlyr(final int x, final int y) {
-		return boardPieces[x][y];
+		return getBoardPieces()[x][y];
 	}
 
 	/**
@@ -78,7 +77,7 @@ public  class Board {
 	 * (1 or 2 if a player, 0 if empty)
 	 */
 	public void setPlyr(final int x, final int y, final int player) {
-		boardPieces[x][y] = player;
+		getBoardPieces()[x][y] = player;
 	}
 
 	/**
@@ -114,7 +113,7 @@ public  class Board {
 		if (!onBoard(x, y)) {
 			return false;
 		}
-		if (boardPieces[x][y] != 0) {
+		if (getBoardPieces()[x][y] != 0) {
 			return false;
 		}
 		// cycle through all different changes in directions
@@ -139,14 +138,14 @@ public  class Board {
 	 * @return true if the selection direction
 	 *  can capture pieces, else false
 	 */
-	public boolean checkDirections (int x, int y, final int xChange, final int yChange) {
+	public boolean checkDirections(int x, int y, final int xChange, final int yChange) {
 
 		//makes sure the move is on the Board
 		if (!onBoard(x, y)) {
 			return false;
 		}
 		//returns false if a piece in the selected space
-		if (boardPieces[x][y] != 0) {
+		if (getBoardPieces()[x][y] != 0) {
 			return false;
 		}
 		x += xChange;
@@ -158,7 +157,7 @@ public  class Board {
 		}
 		//makes sure that the piece immediately adjacent to it isn't the
 		//same player
-		if (boardPieces[x][y] == currPlyr) {
+		if (getBoardPieces()[x][y] == currPlyr) {
 			return false;
 		}
 
@@ -167,10 +166,10 @@ public  class Board {
 		 *player's pieces, else it returns false
 		 */
 		for (; onBoard(x, y); x += xChange, y += yChange) {
-			if (boardPieces[x][y] == 0) {
+			if (getBoardPieces()[x][y] == 0) {
 				return false;
 			}
-			if (boardPieces[x][y] == currPlyr) {
+			if (getBoardPieces()[x][y] == currPlyr) {
 				finalX = x;
 				finalY = y;
 				return true;
@@ -188,18 +187,16 @@ public  class Board {
 	public void playPiece(final int initX, final int initY) {
 		boolean flag = false;
 
-		/**This loop goes through & checks all of the possible
-		 * directions that the opponents pieces could possibly be
-		 * captured xChange is used to set the change in the
-		 * horizontal direction.
+		/**this loop goes through & checks all of the possible directions
+		 *that the opponents pieces could possibly be captured
+		 *xChange is used to set the change in the horizontal direction
 		 */
 		for (int xChange = -1; xChange < 2; xChange++) {
 			//yChange is used to set change in the vertical direction
 			for (int yChange = -1; yChange < 2; yChange++) {
 				//checks if opponent pieces in that direction can be
 				//captured
-				if (checkDirections(initX, initY,
-						xChange, yChange)) {
+				if (checkDirections(initX, initY, xChange, yChange)) {
 					int tempX = initX + xChange;
 					int tempY = initY + yChange;
 					flag = true;
@@ -208,15 +205,14 @@ public  class Board {
 					for (; (tempX != finalX) 
 							|| (tempY != finalY);
 							tempX += xChange,
-							tempY += yChange) {
-						boardPieces[tempX][tempY]
-								= currPlyr;
+									tempY += yChange) {
+						getBoardPieces()[tempX][tempY] = currPlyr;
 					}
 				}
 			}
 		}
 		if (flag) {
-			boardPieces[initX][initY] = currPlyr;
+			getBoardPieces()[initX][initY] = currPlyr;
 		}
 	}
 
@@ -244,9 +240,9 @@ public  class Board {
 		int plyrTwoPts = 0;
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if (boardPieces[x][y] == 1) {
+				if (getBoardPieces()[x][y] == 1) {
 					plyrOnePts++;
-				} else if (boardPieces[x][y] == 2) {
+				} else if (getBoardPieces()[x][y] == 2) {
 					plyrTwoPts++;
 				}
 			}
@@ -294,7 +290,7 @@ public  class Board {
 		//counts the number white pieces
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if (boardPieces[x][y] == 2) {
+				if (getBoardPieces()[x][y] == 2) {
 					whiteScore++;
 				}
 			}
@@ -312,7 +308,7 @@ public  class Board {
 		//counts the number of black pieces
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if (boardPieces[x][y] == 1) {
+				if (getBoardPieces()[x][y] == 1) {
 					blackScore++;
 				}
 			}
@@ -335,5 +331,27 @@ public  class Board {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @return the boardPieces
+	 */
+	public static int[][] getBoardPieces() {
+		return boardPieces;
+	}
+
+	/**
+	 * @param boardPieces the boardPieces to set
+	 */
+	public static void setBoardPieces(int[][] boardPieces) {
+		Board.boardPieces = boardPieces;
+	}
+
+	/**
+	 * 
+	 * @param i number we are setting the currPlyr to
+	 */
+	public void setCurrPlyr(int i) {
+		currPlyr = i;
 	}	
 }
