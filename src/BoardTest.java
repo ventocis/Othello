@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Alen Sam Chandler
- * @version 1.0
+ * @authors Alen Sam Chandler
+ * 
  */
 public class BoardTest {
 
@@ -17,7 +17,7 @@ public class BoardTest {
     public void testGetPlyr() {
         Board board = new Board();
         board.newGame();
-        
+
         // Initial board state is:
         // 00000000
         // 00000000
@@ -27,18 +27,18 @@ public class BoardTest {
         // 00000000
         // 00000000
         // 00000000
-        
+
         // Rebuild the board it should be the same
         String actual = "";
-        
+
         for(int x = 0; x < board.boardPieces.length; x++) {
             for(int y = 0; y < board.boardPieces.length; y++) {
                 actual += board.getPlyr(x, y);
             }
-            
+
             actual += "\n";
         }
-        
+
         assertEquals(board.toString(), actual);
     }
 
@@ -101,7 +101,7 @@ public class BoardTest {
         Board board = new Board();
         board.newGame();
 
-        // Current player is black (piece #1)        
+        // Current player is black (piece #1)
         // Make black move:
         assertTrue(board.isValidMove(2, 4));
         assertTrue(board.isValidMove(4, 2));
@@ -127,7 +127,7 @@ public class BoardTest {
         Board board = new Board();
         board.newGame();
 
-        // Current player is black (piece #1)        
+        // Current player is black (piece #1)
         // Make black move:
         board.playPiece(2, 4);
 
@@ -146,7 +146,7 @@ public class BoardTest {
         // Start a new game, this time make black move
         board.newGame();
 
-        // Current player is white (piece #2)        
+        // Current player is white (piece #2)
         // Make white move:
         board.currPlyr = 2;
         board.playPiece(2, 3);
@@ -182,14 +182,14 @@ public class BoardTest {
 
         // Nobody wins if there's a tie, initial state of the board are
         // 2 equal number of pieces.
-       // assertEquals(-1, board.whoWon());
+        // assertEquals(-1, board.whoWon());
 
         // Make more whites (piece #2) in the board
         board.boardPieces[2][3] = 2;
         board.boardPieces[3][3] = 2;
         board.boardPieces[4][3] = 2;
 
-      //  assertEquals(2, board.whoWon());
+        //  assertEquals(2, board.whoWon());
 
         // Reset the game, make more blacks (piece #1) in the board
         board.newGame();
@@ -198,7 +198,7 @@ public class BoardTest {
         board.boardPieces[3][4] = 1;
         board.boardPieces[4][4] = 1;
 
-      //  assertEquals(1, board.whoWon());
+        //  assertEquals(1, board.whoWon());
     }
 
     /**
@@ -209,7 +209,7 @@ public class BoardTest {
         Board board = new Board();
 
         // Initially game isn't over while someone can move
-      //  assertFalse(board.gameOver());
+        //  assertFalse(board.gameOver());
 
         // Fill the board such that nobody can move
         Random random = new Random();
@@ -220,7 +220,7 @@ public class BoardTest {
             }
         }
 
-       // assertTrue(board.gameOver());
+        // assertTrue(board.gameOver());
     }
 
     /**
@@ -350,7 +350,7 @@ public class BoardTest {
         // 00000000
         // 00000000
         // 00000000
-        // The board above should be able to make white move        
+        // The board above should be able to make white move
         assertTrue(board.canMove());
 
         // Switch the above scenario to make black current player (piece #1)
@@ -375,4 +375,14 @@ public class BoardTest {
         assertFalse(board.canMove());
     }
 
+    @Test
+    public void testGetWinner() {
+        //TestBoardPiecesSize should have arguments so the method can be able to enter in other loops
+        Board board = new Board();
+        //This is the only scenario that It can return, suggestion to add 2 parameters in getWinner()
+        //getWinner(int plyrOnePts, int plyrTwoPts) then It can have 3 results 1, 2 and -1
+        int expectedResult = -1;
+        int actualResult = board.getWinner();
+        assertEquals(actualResult, expectedResult);
+    }
 }
