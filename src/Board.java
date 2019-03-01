@@ -35,6 +35,25 @@ public  class Board {
 	public Board() {
 		newGame();
 	}
+	
+	/**
+    	 * Return a string representation of the board
+    	 * @return A board
+    	 */
+   	 @Override
+    	public String toString() {
+       		 String str = "";
+        
+        for(int row = 0; row < boardPieces.length; row++) {
+            for(int col = 0; col < boardPieces.length; col++) {
+                str += boardPieces[row][col];
+            }
+            
+            str += "\n";
+        }
+        
+        return str;
+    	}
 
 	/**
 	 * This method takes the coordinates of a spot on the board and 
