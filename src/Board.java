@@ -35,25 +35,25 @@ public  class Board {
 	public Board() {
 		newGame();
 	}
-	
+
 	/**
-    	 * Return a string representation of the board
-    	 * @return A board
-    	 */
-   	 @Override
-    	public String toString() {
-       		 String str = "";
-        
-        for(int row = 0; row < boardPieces.length; row++) {
-            for(int col = 0; col < boardPieces.length; col++) {
-                str += boardPieces[row][col];
-            }
-            
-            str += "\n";
-        }
-        
-        return str;
-    	}
+	 * Return a string representation of the board.
+	 * @return A board
+	 */
+	@Override
+	public String toString() {
+		String str = "";
+
+		for (int row = 0; row < boardPieces.length; row++) {
+			for (int col = 0; col < boardPieces.length; col++) {
+				str += boardPieces[row][col];
+			}
+
+			str += "\n";
+		}
+
+		return str;
+	}
 
 	/**
 	 * This method takes the coordinates of a spot on the board and 
@@ -139,7 +139,7 @@ public  class Board {
 	 * @return true if the selection direction
 	 *  can capture pieces, else false
 	 */
-	public boolean checkDirections(int x, int y, final int xChange, final int yChange) {
+	public boolean checkDirections (int x, int y, final int xChange, final int yChange) {
 
 		//makes sure the move is on the Board
 		if (!onBoard(x, y)) {
@@ -188,16 +188,18 @@ public  class Board {
 	public void playPiece(final int initX, final int initY) {
 		boolean flag = false;
 
-		/**this loop goes through & checks all of the possible directions
-		 *that the opponents pieces could possibly be captured
-		 *xChange is used to set the change in the horizontal direction
+		/**This loop goes through & checks all of the possible
+		 * directions that the opponents pieces could possibly be
+		 * captured xChange is used to set the change in the
+		 * horizontal direction.
 		 */
 		for (int xChange = -1; xChange < 2; xChange++) {
 			//yChange is used to set change in the vertical direction
 			for (int yChange = -1; yChange < 2; yChange++) {
 				//checks if opponent pieces in that direction can be
 				//captured
-				if (checkDirections(initX, initY, xChange, yChange)) {
+				if (checkDirections(initX, initY,
+						xChange, yChange)) {
 					int tempX = initX + xChange;
 					int tempY = initY + yChange;
 					flag = true;
@@ -206,8 +208,9 @@ public  class Board {
 					for (; (tempX != finalX) 
 							|| (tempY != finalY);
 							tempX += xChange,
-									tempY += yChange) {
-						boardPieces[tempX][tempY] = currPlyr;
+							tempY += yChange) {
+						boardPieces[tempX][tempY]
+								= currPlyr;
 					}
 				}
 			}
