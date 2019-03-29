@@ -39,7 +39,7 @@ public class Gui extends Board implements ActionListener {
 		//Gives a name to the frame
 		f = new JFrame("Othello");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		// store the game board so we can access it later
 		gameBoard = initialBoard;
 
