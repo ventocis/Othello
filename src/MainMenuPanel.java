@@ -6,33 +6,26 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 //Extends is inheritance, inherits all the qualities from JFrame
-public class MainMenuPanel extends JFrame{
+public class MainMenuPanel extends JPanel{
 	private JButton othello;
 	private JButton battleShip;	
 	private JButton checkers;
 	private JButton exit;
 	
-	JFrame frame;;
 		
 	public MainMenuPanel() {
-		frame = new JFrame();
-		frame.setSize(400, 500);
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setBackground(Color.BLACK);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+		setLayout(new FlowLayout());
+		setBackground(Color.BLACK);
+
 		othello = new JButton("Othello");
 		add(othello);
-		add(Box.createRigidArea(new Dimension (0, 10)));
 		
 		battleShip = new JButton("Battle Ship");
 		add(battleShip);
-		add(Box.createRigidArea(new Dimension (0, 10)));
 		
 		checkers = new JButton("Checkers");
 		add(checkers);
-		add(Box.createRigidArea(new Dimension (0, 10)));
 		
 		exit = new JButton("Exit");
 		add(exit);
@@ -43,7 +36,6 @@ public class MainMenuPanel extends JFrame{
 		checkers.addActionListener(handler);
 		exit.addActionListener(handler);
 		
-		frame.setVisible(true);
 		
 	}
 	
@@ -51,10 +43,10 @@ public class MainMenuPanel extends JFrame{
 		public void actionPerformed(ActionEvent event) {
 			if(event.getSource() == othello) {
 				Board gameBoard = new Board();
-				Gui ourGui = new Gui(gameBoard);
-//			} else if(event.getSource() == battleShip) {
-//				BattleBoard battleBoard = new BattleBoard();
-//				Gui ourGui = new Gui(battleBoard);
+				Gui firstGui = new Gui(gameBoard);
+			} else if(event.getSource() == battleShip) {
+				BattleBoard battleBoard = new BattleBoard();
+				BattleGUI secondGui = new BattleGUI(battleBoard);
 //			} else if(event.getSource() == checkers) {
 //				CheckerBoard checkerBoard = new CheckerBoard();
 			} else if(event.getSource() == exit) {

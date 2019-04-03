@@ -14,7 +14,7 @@ public  class Board {
 	private static int currPlyr; 
 	
 	private static int otherPlyr;
-
+	
 
 	/**
 	 * This is an integer variable to help with moving pieces.

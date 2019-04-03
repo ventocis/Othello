@@ -13,5 +13,9 @@ public class Main {
 		Gui ourGui = new Gui(gameBoard);
 
 	}
+	
+	public Main() {
+		
+	}
 
 }
