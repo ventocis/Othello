@@ -39,7 +39,7 @@ public class BattleBoard {
 	
 	
 	
-	private BattleBoard() {
+	public BattleBoard() {
 		initializeBoard();
 	}
 	
@@ -137,6 +137,21 @@ public class BattleBoard {
 	public String compScore() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String player1Score() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String player2Score() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getPlyr(int x, int y) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
