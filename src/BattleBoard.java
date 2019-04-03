@@ -37,7 +37,10 @@ public class BattleBoard {
 	private static final int EMPTY = 0; //represents a spot on board with no peg or ship
 	
 	
-	
+	class Ship{
+		int size[];
+		String shipName;
+	};
 	
 	public BattleBoard() {
 		initializeBoard();
@@ -67,22 +70,22 @@ public class BattleBoard {
 		return true;
 	}
 	
-	public boolean isValidMove(final int x, final int y) {
-		if(onBoard(x, y) && board[x][y] == EMPTY) {
+	private boolean isValidPegMove(final int x, final int y) {
+		if(onBoard(x, y) && (board[x][y] == EMPTY || board[x][y] == SHIP)) {
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean checkHit(final int x, final int y) {
+	private boolean checkHit(final int x, final int y) {
 		if(board[x][y] == SHIP) {
 			return true;
 		}
 		return false;
 	}
 	
-	public void placePieceAt(final int x, final int y) {
-		if(isValidMove(x,y)) {
+	private void placePegPieceAt(final int x, final int y) {
+		if(isValidPegMove(x,y)) {
 			if(checkHit(x,y)) {
 				board[x][y] = REDPEG;
 			}else {
@@ -93,11 +96,67 @@ public class BattleBoard {
 			return;
 		}
 	}
-
-	public void newGame() {
-		// TODO Auto-generated method stub
-		
+	//Creates a ship with the proper size and defines the ship names
+	private Ship createShip(Ship shipType) {
+			//initializes the small ship with array of size 2
+			//filled with the value that the SHIP value
+		   if(shipType.shipName == "small ship") {
+			   shipType.size = new int[2];
+		   		for(int i = 0; i < 2; i++) {
+		   			shipType.size[i] = SHIP;
+		   		}
+		   } 
+			//initializes the small ship with array of size 3
+			//filled with the value that the SHIP value
+		   else if(shipType.shipName == "medium ship") {
+			   shipType.size = new int[3];
+		   		for(int i = 0; i < 3; i++) {
+		   			shipType.size[i] = SHIP;
+		   		}
+		   } 
+			//initializes the small ship with array of size 4
+			//filled with the value that the SHIP value
+		   else if(shipType.shipName == "big ship") {
+			   shipType.size = new int[4];
+		   		for(int i = 0; i < 4; i++) {
+		   			shipType.size[i] = SHIP;
+		   		}
+		   }
+			//initializes the small ship with array of size 5
+			//filled with the value that the SHIP value
+		   else if(shipType.shipName == "biggest ship") {
+			   shipType.size = new int[5];
+		   		for(int i = 0; i < 5; i++) {
+		   			shipType.size[i] = SHIP;
+		   		}
+		   } else {
+			   //This is simply for testing the goal is to have a message dialog box 
+			   //pop up and tell you to enter a valid ship name.
+			   System.out.println("You need to enter a valid ship name...");
+		   }
+		   return shipType;
 	}
+	/**
+	 * Method to make sure when placing a ship that is adjacent to the 
+	 * y axis is valid.
+	 */
+	private boolean isValidHorizontalShipMove(Ship shipType, final int x, final int y) {
+		createShip(shipType);
+		return false;
+	}
+	/**
+	 * Method to make sure when placing a ship that is parallel to the
+	 * y axis is valid.
+	 * @return
+	 */
+	private boolean isValidVerticleShipMove(Ship shipType, final int x, final int y) {
+		createShip(shipType);
+		return false;
+	}
+	private void placeShipAt(final int x, final int y) {
+		//work on this after completing the functions for isValidShipMove
+	}
+
 
 	public void playPiece(int x, int y) {
 		// TODO Auto-generated method stub
