@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import java.util.Scanner;
+
 public class  BattleGUI extends BattleBoard implements ActionListener {
 
 	// make an arrayList of buttons
@@ -23,10 +25,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 	Icon blankSpace = new ImageIcon("imgs/water.png");
 	Icon hitPc = new ImageIcon("imgs/hit.png");
 	Icon noHitPc = new ImageIcon("imgs/noHit.png");
-	Icon smallShip = new ImageIcon("imgs/small_ship.png");
-	Icon medShip = new ImageIcon("imgs/medium_ship.png");
-	Icon bigShip = new ImageIcon("imgs/big_ship.png");
-	Icon biggestShip = new ImageIcon("imgs/biggest_ship.png");
+	Icon ship = new ImageIcon("imgs/ship.png");
 
 
 
@@ -71,7 +70,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 		gridBag.setConstraints(plyrTurn, cnstrnts);
 
 		//Icon to indicate the number of pieces black has
-		player1Hits = new JLabel("Player 1 Hits: 0");
+		player1Hits = new JLabel("Your Hits: 0");
 		player1Hits.setHorizontalTextPosition(JLabel.CENTER);
 		player1Hits.setVerticalTextPosition(JLabel.BOTTOM);
 		player1Hits.setHorizontalAlignment(JLabel.CENTER);
@@ -81,7 +80,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 		gridBag.setConstraints(player1Hits, cnstrnts);
 
 		//icon to indicate the number of pieces white has
-		player2Hits = new JLabel("Player 2 Hits: 0");
+		player2Hits = new JLabel("Computer Hits: 0");
 		player2Hits.setHorizontalTextPosition(JLabel.CENTER);
 		player2Hits.setVerticalTextPosition(JLabel.BOTTOM);
 		player2Hits.setHorizontalAlignment(JLabel.CENTER);
@@ -97,20 +96,22 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 
 		//Set icons for each JButton & add them to the arrayList
 		//of JButtons will write this after writing code for Board
-		for (int x = 0; x < 8; x++) {
-			for (int y = 1; y < 9; y++) {
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
 				JButton button = new JButton();
-//				if (gameBoard.getPlyr(x, y - 1) == 1) {
-//					button.setIcon();
-//					buttons.add(button);
-//				} else if (gameBoard.getPlyr(x, y - 1) == 2) {
-//					button.setIcon(whitePc);
-//					buttons.add(button);
-//				} else {
+				if (gameBoard.getPlyr(x, y) == getShip()) {
+					button.setIcon(ship);
+					buttons.add(button);
+				}else if (gameBoard.getPlyr(x, y) == getRedpeg()) {
+					button.setIcon(hitPc);
+					buttons.add(button);
+				}else if (gameBoard.getPlyr(x, y) == getGreypeg()) {
+					button.setIcon(noHitPc);
+					buttons.add(button);
+				} else {
 					button.setIcon(blankSpace);
 					buttons.add(button);
-
-//				}
+				}
 				cnstrnts.gridx = x;
 				cnstrnts.gridy = y;
 				gridBag.setConstraints(button, cnstrnts);
@@ -131,8 +132,9 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 		f.add(p);
 		f.pack();
 		f.setVisible(true);
-
 	}
+
+	
 
 	@Override
 	/*
@@ -150,32 +152,74 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 		//for loops to check & see which button was pushed
 		for (JButton button : buttons) {
 			// check the source of the button
-//			if (e.getSource() == button) {
-//				if (z == 0) {
-//					gameBoard.newGame();
-//				}
+			if (e.getSource() == button) {
+				if (z == 0) {
+					gameBoard.initializeBoard();
+				}
 //				//Make sure that the JButton isn't one of the
 //				//top buttons 
-//				if (z > NUMLABELS - 1) {
-//					//Make sure it's a valid move for black,
-//					//if so, play the piece
-//					if (gameBoard.getCurrPlyr() == 1) {
-//						if (gameBoard.isValidMove(x, y)) {
-//							gameBoard.playPiece(x, y);
-//							button.setIcon(blackPc);
+				if (z > NUMLABELS - 1) {
+//					//Make sure it's a valid move for horizontal ship and vertical,
+//					//if so, play the correct piece
+					if (gameBoard.getCurrPlyr() == 0) {
+						if (gameBoard.isValidHorizontalShipMove("small ship", x, y)) {
+							gameBoard.placeShipAt("small ship h", x, y);
+							button.setIcon(ship);
 //							gameBoard.nextPlyr();
-//						}
-//					}
-//
-//					//make sure it's a valid move for white
-//					//& if so play the piece
-//					else if (gameBoard.isValidMove(x, y)) {
-//						gameBoard.playPiece(x, y);
-//						button.setIcon(whitePc);
-//						gameBoard.nextPlyr();
-//					}
-//				}
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 0) {
+						if (gameBoard.isValidHorizontalShipMove("medium ship", x, y)) {
+							gameBoard.placeShipAt("medium ship h", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 0) {
+						if (gameBoard.isValidHorizontalShipMove("big ship", x, y)) {
+							gameBoard.placeShipAt("big ship h", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 0) {
+						if (gameBoard.isValidHorizontalShipMove("biggest ship", x, y)) {
+							gameBoard.placeShipAt("biggest ship h", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 1) {
+						if (gameBoard.isValidHorizontalShipMove("small ship", x, y)) {
+							gameBoard.placeShipAt("small ship v", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 1) {
+						if (gameBoard.isValidHorizontalShipMove("medium ship", x, y)) {
+							gameBoard.placeShipAt("small ship v", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 1) {
+						if (gameBoard.isValidHorizontalShipMove("big ship", x, y)) {
+							gameBoard.placeShipAt("small ship v", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
+					if (gameBoard.getCurrPlyr() == 1) {
+						if (gameBoard.isValidHorizontalShipMove("biggest ship", x, y)) {
+							gameBoard.placeShipAt("small ship v", x, y);
+							button.setIcon(ship);
+//							gameBoard.nextPlyr();
+						}
+					}
 			}
+			}
+		}
 
 			//increment x and y if the loop is
 			//passed the top buttons
@@ -192,7 +236,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 			z++;
 		}
 
-//		drawBoard();
+		drawBoard();
 
 //		//Make sure the next player can move
 //		if (!canMove()) {
@@ -242,7 +286,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 			//Make sure it's not on the top buttons
 			if (z > NUMLABELS - 1) {
 				//set the appropriate icon
-				if (gameBoard.getPlyr(x, y) == 0) {
+				if (gameBoard.getPlyr(x, y) == getEmpty()) {
 					button.setIcon(blankSpace);
 				}
 				if (y == 7) {
@@ -257,13 +301,13 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 
 		//Set the current player on the board
 		String player;
-		if (gameBoard.getCurrPlyr() == 1) {
-			player = "Black";
+		if (gameBoard.getCurrPlyr() == getHumanPlayer()) {
+			player = "Human";
 		} else {
-			player = "White";
+			player = "Computer";
 		}
 		plyrTurn.setText(player + "'s Turn");
-		player1Hits.setText("Black: " + gameBoard.player1Score());
-		player2Hits.setText("White: " + gameBoard.player2Score());
+		player1Hits.setText("Human: " + gameBoard.playerScore());
+		player2Hits.setText("Computer: " + gameBoard.compScore());
 	}
 }
