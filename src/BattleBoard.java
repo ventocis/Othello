@@ -69,7 +69,7 @@ public class BattleBoard {
 	private void switchPlayer() {
 		int player = this.getCurrPlyr();
 		if (player == getHumanPlayer()) {
-			player = compPlayer;
+			player = getCompPlayer();
 		} else {
 			player = getHumanPlayer();
 		}
@@ -434,6 +434,18 @@ public class BattleBoard {
 	 */
 	public static void setSIZE(int sIZE) {
 		SIZE = sIZE;
+	}
+	/**
+	 * @return the compPlayer
+	 */
+	public static int getCompPlayer() {
+		return compPlayer;
+	}
+	/**
+	 * @param compPlayer the compPlayer to set
+	 */
+	public static void setCompPlayer(int compPlayer) {
+		BattleBoard.compPlayer = compPlayer;
 	}
 
 

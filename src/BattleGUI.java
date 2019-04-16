@@ -236,7 +236,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 			z++;
 		}
 
-		drawBoard();
+//		drawBoard();
 
 //		//Make sure the next player can move
 //		if (!canMove()) {
@@ -307,7 +307,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 			player = "Computer";
 		}
 		plyrTurn.setText(player + "'s Turn");
-		player1Hits.setText("Human: " + gameBoard.playerScore());
-		player2Hits.setText("Computer: " + gameBoard.compScore());
+		player1Hits.setText("Human: " + gameBoard.getPlayerScore(getHumanPlayer()));
+		player2Hits.setText("Computer: " + gameBoard.getPlayerScore(getCompPlayer()));
 	}
 }
