@@ -56,17 +56,21 @@ public class BattleBoard {
 	/**
 	 * Starts up the board with all empty squares.
 	 */
-	protected void initializeBoard() {
+	public void initializeBoard() {
+		int count = 0;
 		for(int i = 0; i < getSIZE(); i++){
 			for(int j = 0; j < getSIZE(); j++) {
 				board[i][j] = getEmpty();
 			}
 		}
+//		if (count < SHIPMAX && isValidVerticalShipMove(smallShip, 2, 2)) {
+//			placeShipAt("v small ship", 2, 2);
+//		}
 	}
 	/**
 	 * Switches between two different players.
 	 */
-	private void switchPlayer() {
+	public void switchPlayer() {
 		int player = this.getCurrPlyr();
 		if (player == getHumanPlayer()) {
 			player = getCompPlayer();
@@ -80,7 +84,7 @@ public class BattleBoard {
 	 * @param y represents columns.
 	 * @return true if on the board false if not on the board
 	 */
-	private boolean onBoard(final int x, final int y) {
+	public boolean onBoard(final int x, final int y) {
 		if (x > getSIZE() || x < 0 || y > getSIZE() || y < 0) {
 			return false;
 		}
@@ -93,7 +97,7 @@ public class BattleBoard {
 	 * @param y position on the board representing a column.
 	 * @return true only if the spot is empty, or a ship value, and on the board.
 	 */
-	private boolean isValidPegMove(final int x, final int y) {
+	public boolean isValidPegMove(final int x, final int y) {
 		if(onBoard(x, y) && (board[x][y] == getEmpty() || board[x][y] == getShip())) {
 			return true;
 		}
@@ -105,7 +109,7 @@ public class BattleBoard {
 	 * @param y represents columns.
 	 * @return true if hit false is not
 	 */
-	private boolean checkHit(final int x, final int y) {
+	public boolean checkHit(final int x, final int y) {
 		if(board[x][y] == getShip()) {
 			return true;
 		}
@@ -117,7 +121,7 @@ public class BattleBoard {
 	 * @param x represents the rows.
 	 * @param y represents the columns.
 	 */
-	private void placePegPieceAt(final int x, final int y) {
+	public void placePegPieceAt(final int x, final int y) {
 		if(isValidPegMove(x,y)) {
 			if(checkHit(x,y)) {
 				board[x][y] = getRedpeg();
@@ -136,7 +140,7 @@ public class BattleBoard {
 	 * @param y represents the columns. 
 	 * @return true or false
 	 */
-	protected boolean isValidHorizontalShipMove(String sname, final int x, final int y) {
+	public boolean isValidHorizontalShipMove(String sname, final int x, final int y) {
 		int row = x;
 		int col = y;
 		
@@ -199,7 +203,7 @@ public class BattleBoard {
 	 * @param y represents the columns
 	 * @return true or false 
 	 */
-	private boolean isValidVerticalShipMove(String sname, final int x, final int y) {
+	public boolean isValidVerticalShipMove(String sname, final int x, final int y) {
 		int row = x;
 		int col = y;
 		
@@ -261,7 +265,7 @@ public class BattleBoard {
 	 * @param x represents rows.
 	 * @param y represents columns.
 	 */
-	protected void placeShipAt(String sname, final int x, final int y) {
+	public void placeShipAt(String sname, final int x, final int y) {
 		//work on this after completing the functions for isValidShipMove
 		int row = x;
 		int col = y;
@@ -347,7 +351,7 @@ public class BattleBoard {
 		return currPlayer;
 	}
 
-	private boolean gameOver() {
+	public boolean gameOver() {
 		int hitCount = 0;
 		for(int i = 0; i < getSIZE(); i++) {
 			for(int j = 0; j < getSIZE(); j++) {
@@ -364,8 +368,8 @@ public class BattleBoard {
 
 	public int getPlayerScore(int player) {
 		int playerScore = 0;
-		for(int i = 0; i < SIZE; i++) {
-			for(int j = 0; i < SIZE; j++) {
+		for(int i = 0; i < SIZE-1; i++) {
+			for(int j = 0; i < SIZE-1; j++) {
 				if(board[i][j] == REDPEG) {
 					playerScore++;
 				}
