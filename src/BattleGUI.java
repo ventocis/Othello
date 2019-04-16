@@ -26,10 +26,10 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 	static final int NUMLABELS = 5;
 
 	// instantiate our icons
-	Icon blankSpace = new ImageIcon("imgs/water.jpeg");
-	Icon hitPc = new ImageIcon("imgs/hit.jpeg");
-	Icon noHitPc = new ImageIcon("imgs/noHit.jpeg");
-	Icon ship = new ImageIcon("imgs/ship.jpeg");
+	Icon blankSpace = new ImageIcon("imgs/water.jpg");
+	Icon hitPc = new ImageIcon("imgs/hit.jpg");
+	Icon noHitPc = new ImageIcon("imgs/noHit.jpg");
+	Icon ship = new ImageIcon("imgs/ship.jpg");
 
 
 
@@ -187,17 +187,15 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 				}else if(z == 1) {
 				smallShip = true;
 				}
-//				//Make sure that the JButton isn't one of the
-//				//top buttons 
+				//Make sure that the JButton isn't one of the
+				//top buttons 
 				if (z > NUMLABELS - 1) {
-//					//Make sure it's a valid move for horizontal ship and vertical,
-//					//if so, play the correct piece
+					//Make sure it's a valid move for horizontal ship and vertical,
+					//if so, play the correct piece
 					if (smallShip) {
-						if (gameBoard.isValidHorizontalShipMove("small ship", x, y)) {
 							gameBoard.placeShipAt("small ship h", x, y);
 							button.setIcon(ship);
 							gameBoard.switchPlayer();
-						}
 					}
 					if (gameBoard.getCurrPlyr() == 0) {
 						if (gameBoard.isValidHorizontalShipMove("medium ship", x, y)) {
@@ -249,7 +247,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 						}
 					}
 			}
-			}
+			
 		}
 
 			//increment x and y if the loop is
@@ -265,7 +263,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 			//increment z, z tracks which button we are on
 			//(out of the total buttons, not just the board)
 			z++;
-
+	}
 		drawBoard();
 	}
 	

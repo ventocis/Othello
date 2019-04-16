@@ -155,7 +155,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(smallShip)) {
 			//checks to see if the ship is in bounds on the east border
 			if(onBoard(row, col+1)) {
-				for(int i = col+1; i == col; i--) {
+				for(int i = col; i <= col+2; i++) {
 					if(board[row][i] == getEmpty()) {
 						return true;
 					}
@@ -308,7 +308,7 @@ public class BattleBoard {
 		} 
 		if(sname.equals("small ship h")) {
 			if(isValidHorizontalShipMove("small ship", x, y)) {
-				for(int i = col+1; i == col; i--) {
+				for(int i = col; i < col+2; i++) {
 					board[row][i] = getShip();
 						count++;
 				}
@@ -317,7 +317,7 @@ public class BattleBoard {
 		 
 		if(sname.equals("medium ship h")) {
 			if(isValidHorizontalShipMove("medium ship", x, y)) {
-				for(int i = col+2; i == col; i--) {
+				for(int i = col; i <col+4; i++) {
 					board[row][i] = getShip();
 						count++;
 				}
