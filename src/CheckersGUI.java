@@ -194,20 +194,16 @@ public class CheckersGui implements MouseListener,
 	public void resetGame() {
 		frame.setVisible(false);
 		selSquare = null;
-		
 		frame.remove(boardPanel);
 		boardPanel = new JPanel(new GridLayout(8, 8));
 		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
 		CheckersBoard = new CheckersBoard();
 		CheckersBoard.initializePieces();
 		
 		setBoard(CheckersBoard, boardPanel);
 		frame.add(boardPanel, 0);
-		
 		redCheckersRemaining = 12;
 		blackCheckersRemaining = 12;
-		
 		turn = Color.BLACK;
 		
 		updateGameStatus();
