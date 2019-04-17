@@ -9,148 +9,147 @@ import java.awt.Rectangle;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
-public class CheckersGui implements MouseListener, ActionListener {
-	
+public class CheckersGui implements MouseListener,
+									ActionListener {
+	private JPanel boardPanel;
 	private JFrame frame;
-	private JPanel boardpanel;
-	private JLabel piecesLabel;
-	private JMenuBar menubar;
-	private JMenu fileMenu;
-	private JMenuItem newGame;
-	private JMenuItem exit;
-	
-	private Color currentTurn;
+	private JMenuItem startGame;
+	private JMenuBar menuBar;
+	private JMenuItem quit;
+	private JMenu menu;
+
+	private Color turn;
 	
 	private final int borderWidth = 1;
 	
-	private Board board;
+	private CheckersBoard CheckersBoard;
 	
-	private int blackCheckersLeft;
-	private int redCheckersLeft;
-	private Square selectedSquare;
-		
-	
-	public CheckersGui() {
-		InitializeGUI();
-		
-		currentTurn = Color.GREEN;
-		
-		redCheckersLeft = 12;
-		blackCheckersLeft = 12;
-		
-		updateGameStatus();
-	}
+	private int blackCheckersRemaining;
+	private int redCheckersRemaining;
+	private CheckersSquare selSquare;
 	
 	public void InitializeGUI() {
-		frame = new JFrame("Gui Frame");
+		frame = new JFrame("CheckersGui Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new FlowLayout());
 		
 		frame.getContentPane().setLayout(
 				new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
-		boardpanel = new JPanel(new GridLayout(8, 8));
-		boardpanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		boardPanel = new JPanel(new GridLayout(8, 8));
+		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		board = new Board();
-		board.initializePieces();
+		CheckersBoard = new CheckersBoard();
+		CheckersBoard.initializePieces();
 		
-		piecesLabel = new JLabel(" ");
-		piecesLabel.setHorizontalTextPosition(JLabel.LEFT);
-		piecesLabel.setVerticalTextPosition(JLabel.BOTTOM);
+		piecesText = new JLabel(" ");
+		piecesText.setHorizontalTextPosition(JLabel.LEFT);
+		piecesText.setVerticalTextPosition(JLabel.BOTTOM);
 		
-		menubar = new JMenuBar();
-		fileMenu = new JMenu("File");
+		menuBar = new JMenuBar();
+		menu = new JMenu("File");
 		
-		newGame = new JMenuItem("New Game");
-		newGame.addActionListener(this);
+		startGame = new JMenuItem("New Game");
+		startGame.addActionListener(this);
 		
-		exit = new JMenuItem("Exit");
-		exit.addActionListener(this);
+		quit = new JMenuItem("Quit");
+		quit.addActionListener(this);
 		
-		fileMenu.add(newGame);
-		fileMenu.add(exit);
-		menubar.add(fileMenu);
+		menu.add(startGame);
+		menu.add(quit);
+		menuBar.add(menu);
 
-		setBoard(board, boardpanel);
-		frame.add(boardpanel);
-		frame.add(piecesLabel);
-		frame.setJMenuBar(menubar);
+		setBoard(CheckersBoard, boardPanel);
+		frame.add(boardPanel);
+		frame.add(piecesText);
+		frame.setJMenuBar(menuBar);
 		frame.pack();
 		
 		Rectangle boundingRect = frame.getBounds();
 		frame.setBounds(boundingRect.x, boundingRect.y, boundingRect.width + 5, boundingRect.height);
 		frame.setVisible(true);
-	}
+	}	
 	
+	public CheckersGui() {
+		InitializeGUI();
+		
+		turn = Color.GREEN;
+		
+		redCheckersRemaining = 12;
+		blackCheckersRemaining = 12;
+		
+		updateGameStatus();
+	}
+
+		
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Square sel = (Square)e.getComponent();
+		CheckersSquare sel = (CheckersSquare)e.getComponent();
 
 		if(sel.hasPiece()) 
-			if(sel.getPiece().getColor() != currentTurn &&
-				currentTurn != Color.GREEN) {
-			piecesLabel.setText("Ash! This isn't the time to use that!");
+			if(sel.getPiece().getColor() != turn &&
+				turn != Color.GREEN) {
+			piecesText.setText("Ash! This isn't the time to use that!");
 			return;
 		}
 		
-		if (sel.hasPiece() && selectedSquare == null) {
-			selectedSquare = sel;
-			selectedSquare.setHighlight(true);
-			board.highlightMoves(selectedSquare.getPiece(), true);
+		if (sel.hasPiece() && selSquare == null) {
+			selSquare = sel;
+			selSquare.setHighlight(true);
+			CheckersBoard.highlightMoves(selSquare.getPiece(), true);
 			return;
-		} else if (sel.hasPiece() && !sel.equals(selectedSquare)) {
-			selectedSquare.setHighlight(false);
-			board.highlightMoves(selectedSquare.getPiece(), false);
+		} else if (sel.hasPiece() && !sel.equals(selSquare)) {
+			selSquare.setHighlight(false);
+			CheckersBoard.highlightMoves(selSquare.getPiece(), false);
 			
-			selectedSquare = sel;
-			selectedSquare.setHighlight(true);
-			board.highlightMoves(selectedSquare.getPiece(), true);
+			selSquare = sel;
+			selSquare.setHighlight(true);
+			CheckersBoard.highlightMoves(selSquare.getPiece(), true);
 			return;
 			
-		} else if (sel.equals(selectedSquare)) {
-			selectedSquare.setHighlight(false);
-			board.highlightMoves(selectedSquare.getPiece(), false);
-			selectedSquare = null;
-		} else if (!sel.hasPiece() && selectedSquare != null) {
+		} else if (sel.equals(selSquare)) {
+			selSquare.setHighlight(false);
+			CheckersBoard.highlightMoves(selSquare.getPiece(), false);
+			selSquare = null;
+		} else if (!sel.hasPiece() && selSquare != null) {
 			boolean found = false;
 			boolean jumped = false;
 			
-			Vector<Square> oldPossibleMoves = board.possibleMoves(selectedSquare.getPiece());
+			Vector<CheckersSquare> oldPossibleMoves = CheckersBoard.possibleMoves(selSquare.getPiece());
 			
-			for (Square choice : oldPossibleMoves) {
+			for (CheckersSquare choice : oldPossibleMoves) {
 				if (choice.equals(sel)) {
-					if (currentTurn == Color.GREEN)
-						currentTurn = selectedSquare.getPiece().getColor();
-					jumped = board.move(selectedSquare, sel);
+					if (turn == Color.GREEN)
+						turn = selSquare.getPiece().getColor();
+					jumped = CheckersBoard.move(selSquare, sel);
 					found = true;
 				}
 			}
 			
 			if (found) {
 				if (jumped) {
-					if (currentTurn == Color.BLACK) {
-						redCheckersLeft--;
+					if (turn == Color.BLACK) {
+						redCheckersRemaining--;
 					}
 					else {
-						blackCheckersLeft--;
+						blackCheckersRemaining--;
 					}
 				}
 				
-				selectedSquare.setHighlight(false);
-				for (Square unhighlight : oldPossibleMoves) {
+				selSquare.setHighlight(false);
+				for (CheckersSquare unhighlight : oldPossibleMoves) {
 					unhighlight.setHighlight(false);
 				}
-				selectedSquare = null;
+				selSquare = null;
 				
 				nextTurn();
 				updateGameStatus();
@@ -160,7 +159,7 @@ public class CheckersGui implements MouseListener, ActionListener {
 					int restart = JOptionPane.showConfirmDialog(null, winningStr + " Do you want to begin a new game?", "New Game?", JOptionPane.YES_NO_OPTION);
 					
 					if (restart == JOptionPane.YES_OPTION) {
-						restartGame();
+						resetGame();
 					}
 					else {
 						frame.setVisible(false);
@@ -169,62 +168,62 @@ public class CheckersGui implements MouseListener, ActionListener {
 				}
 			}
 			else if (!found) {
-				piecesLabel.setText("You are able to move");
+				piecesText.setText("You are able to move");
 			}
 		}
 	}
-
+	
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
 	public void mousePressed(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == newGame) {
-			restartGame();
+		if(e.getSource() == startGame) {
+			resetGame();
 		}
-		else if(e.getSource() == exit) {
+		else if(e.getSource() == quit) {
 			frame.setVisible(false);
 			frame.dispose();
 		}
 		
 	}
 		
-	public void restartGame() {
+	public void resetGame() {
 		frame.setVisible(false);
-		selectedSquare = null;
+		selSquare = null;
 		
-		frame.remove(boardpanel);
-		boardpanel = new JPanel(new GridLayout(8, 8));
-		boardpanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		frame.remove(boardPanel);
+		boardPanel = new JPanel(new GridLayout(8, 8));
+		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		board = new Board();
-		board.initializePieces();
+		CheckersBoard = new CheckersBoard();
+		CheckersBoard.initializePieces();
 		
-		setBoard(board, boardpanel);
-		frame.add(boardpanel, 0);
+		setBoard(CheckersBoard, boardPanel);
+		frame.add(boardPanel, 0);
 		
-		redCheckersLeft = 12;
-		blackCheckersLeft = 12;
+		redCheckersRemaining = 12;
+		blackCheckersRemaining = 12;
 		
-		currentTurn = Color.BLACK;
+		turn = Color.BLACK;
 		
 		updateGameStatus();
 		frame.pack();
 		frame.setVisible(true);
 	}
 
-	public void setBoard(Board b, JPanel p) {
+	public void setBoard(CheckersBoard b, JPanel p) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				Square sq = b.getSquare(i, j);
+				CheckersSquare sq = b.getSquare(i, j);
 				sq.addMouseListener(this);
 				
 				JPanel ContainerPanel = new JPanel(new FlowLayout());
 				ContainerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,
 																					borderWidth));
 				ContainerPanel.add(sq);
-				if (sq.getBackgroundColor() == Square.BackgroundColor.DARK) {
+				if (sq.getBackgroundColor() == CheckersSquare.BackgroundColor.DARK) {
 					ContainerPanel.setBackground(Color.DARK_GRAY);
 				}
 				else {
@@ -236,17 +235,17 @@ public class CheckersGui implements MouseListener, ActionListener {
 	}
 	
 	public void updateGameStatus() {
-		piecesLabel.setText("Red Pieces Left: " + redCheckersLeft + "             Black Pieces Left: " + blackCheckersLeft);
+		piecesText.setText("Red Pieces Left: " + redCheckersRemaining + "             Black Pieces Left: " + blackCheckersRemaining);
 	}
 	
 	public String getWinner() {
 		
-		if (blackCheckersLeft == 0) {
-			return "Red has won";
+		if (blackCheckersRemaining == 0) {
+			return "Red has won by taking Black's pieces!";
 		}
 			
-		if (redCheckersLeft == 0) {
-			return "Black has won";		
+		if (redCheckersRemaining == 0) {
+			return "Black has won by taking Red's pieces!";		
 		}
 
 		boolean redCanMove = false;
@@ -254,10 +253,10 @@ public class CheckersGui implements MouseListener, ActionListener {
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (board.getSquare(i, j).hasPiece()) {
-					Vector<Square> potentialMoves = board.possibleMoves(board.getSquare(i, j).getPiece());
+				if (CheckersBoard.getSquare(i, j).hasPiece()) {
+					Vector<CheckersSquare> potentialMoves = CheckersBoard.possibleMoves(CheckersBoard.getSquare(i, j).getPiece());
 					if (!potentialMoves.isEmpty()) {
-						if (board.getSquare(i, j).getPiece().getColor() == Color.black) {
+						if (CheckersBoard.getSquare(i, j).getPiece().getColor() == Color.black) {
 							blackCanMove = true;
 						}
 						else {
@@ -269,10 +268,10 @@ public class CheckersGui implements MouseListener, ActionListener {
 		}
 		
 		if (redCanMove && !blackCanMove) {
-			return "Red team wins!";
+			return "Red team wins";
 		}
 		else if (blackCanMove && !redCanMove) {
-			return "Black team wins!";
+			return "Black team wins";
 		}
 		else if (!redCanMove && !blackCanMove) {
 			return "Neither side wins!";
@@ -282,11 +281,11 @@ public class CheckersGui implements MouseListener, ActionListener {
 	}
 	
 	public void nextTurn() {
-		if(currentTurn == Color.BLACK) {
-			currentTurn = Color.RED;
+		if(turn == Color.BLACK) {
+			turn = Color.RED;
 		}
 		else {
-			currentTurn = Color.BLACK;
+			turn = Color.BLACK;
 		}
 	}
 
