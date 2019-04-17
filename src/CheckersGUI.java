@@ -1,21 +1,22 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
-import java.util.Vector;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Vector;
+
 
 
 public class CheckersGui implements MouseListener,
@@ -36,6 +37,7 @@ public class CheckersGui implements MouseListener,
 	private int blackCheckersRemaining;
 	private int redCheckersRemaining;
 	private CheckersSquare selSquare;
+	private JLabel piecesText;
 	
 	public void InitializeGUI() {
 		frame = new JFrame("CheckersGui Frame");
@@ -268,10 +270,10 @@ public class CheckersGui implements MouseListener,
 		}
 		
 		if (redCanMove && !blackCanMove) {
-			return "Red team wins";
+			return "Red team wins since Black team can make no more moves!";
 		}
 		else if (blackCanMove && !redCanMove) {
-			return "Black team wins";
+			return "Black team wins since Red team can make no more moves!";
 		}
 		else if (!redCanMove && !blackCanMove) {
 			return "Neither side wins!";
