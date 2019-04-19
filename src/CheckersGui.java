@@ -234,6 +234,7 @@ public class CheckersGui implements MouseListener, ActionListener {
 	 * @param e mouse exited.
 	 */
 	public void mouseExited(final MouseEvent e) {
+	}
 
 	/**
 	 * The mouse is pressed.
@@ -372,10 +373,10 @@ public class CheckersGui implements MouseListener, ActionListener {
 				}
 			}
 		}
-
+		if (redCanMove && !blackCanMove) {
 			return "Red team wins since"
 					+ " Black team can make no more moves!";
-		} else if (blackCanMove && !redCanMove) {
+	} else if (blackCanMove && !redCanMove) {
 			return "Black team wins since"
 					+ " Red team can make no more moves!";
 		} else if (!redCanMove && !blackCanMove) {
@@ -384,6 +385,8 @@ public class CheckersGui implements MouseListener, ActionListener {
 
 		return null;
 	}
+
+
 
 	/**
 	 * Method to go to the next players turn.

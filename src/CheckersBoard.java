@@ -1,4 +1,4 @@
-B
+
 import java.awt.Color;
 import java.util.Vector;
 
@@ -55,14 +55,6 @@ public class CheckersBoard {
 	 * @param col variable for the columns of the board.
 	 * @return true or false based on bounds.
 	 */
-	/** Created by Alen, Sam, Chandler */
-	public static boolean inBounds(int row, int col) {
-		if (row >= 0 && row < rows && col >= 0 && col < cols) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	/**
 	 * Method to make sure that the move is within the bounds of the board.

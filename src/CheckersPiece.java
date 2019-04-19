@@ -1,6 +1,5 @@
 
 import java.awt.Color;
-import java.awt.*;
 
 /**
  * @author Chandler Scott, Sam Ventocilla, Allen Huric This is the class that
@@ -91,7 +90,7 @@ public class CheckersPiece {
 		}
 
 		s.append("CheckersPiece is at row " 
-		+ Integer.toString(this.getRow()) + ", col "
+		+ Integer.toString(this.getRow()) + ", col ");
 
 		return s.toString();
 	}
