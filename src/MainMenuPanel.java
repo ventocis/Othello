@@ -7,6 +7,8 @@ import javax.swing.*;
 
 //Extends is inheritance, inherits all the qualities from JFrame
 public class MainMenuPanel extends JPanel{
+
+	private static final long serialVersionUID = 1L;
 	private JButton othello;
 	private JButton battleShip;	
 	private JButton checkers;
@@ -43,11 +45,11 @@ public class MainMenuPanel extends JPanel{
 		public void actionPerformed(ActionEvent event) {
 			if(event.getSource() == othello) {
 				Board gameBoard = new Board();
-				Gui firstGui = new Gui(gameBoard);
-			} else if(event.getSource() == battleShip) {
-				BattleBoard battleBoard = new BattleBoard();
-				BattleGUI secondGui = new BattleGUI(battleBoard);
-			} else if(event.getSource() == checkers) {
+				new Gui(gameBoard);
+			} //else if(event.getSource() == battleShip) {
+				//BattleBoard battleBoard = new BattleBoard();
+				//BattleGUI secondGui = new BattleGUI(battleBoard);
+			else if(event.getSource() == checkers) {
 				new CheckersGui();
 			} else if(event.getSource() == exit) {
 				JOptionPane.showMessageDialog(null, "Thanks for playing the suite!");

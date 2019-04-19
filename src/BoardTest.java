@@ -30,16 +30,18 @@ public class BoardTest {
 
         // Rebuild the board it should be the same
         String actual = "";
+        
+        StringBuilder strngBld = new StringBuilder();
 
         for (int x = 0; x < Board.getBoardPieces().length; x++) {
             for (int y = 0; y < Board.getBoardPieces().length; y++) {
-                actual += board.getPlyr(x, y);
+                strngBld.append(board.getPlyr(x, y));
             }
 
-            actual += "\n";
+            strngBld.append("\n");
         }
 
-        assertEquals(board.toString(), actual);
+        assertEquals(strngBld.toString(), actual);
     }
 
     /**
@@ -71,11 +73,11 @@ public class BoardTest {
     public void testNextPlyr() {
         Board board = new Board();
 
-        board.setCurrPlyr(1);
-        board.nextPlyr();
+        Board.setCurrPlyr(1);
+        Board.nextPlyr();
         assertEquals(2, board.getCurrPlyr());
 
-        board.nextPlyr();
+        Board.nextPlyr();
         assertEquals(1, board.getCurrPlyr());
     }
 
@@ -86,10 +88,10 @@ public class BoardTest {
     public void testGetCurrPlyr() {
         Board board = new Board();
 
-        board.setCurrPlyr(1);
+        Board.setCurrPlyr(1);
         assertEquals(1, board.getCurrPlyr());
 
-        board.setCurrPlyr(2);
+        Board.setCurrPlyr(2);
         assertEquals(2, board.getCurrPlyr());
     }
 
@@ -108,8 +110,8 @@ public class BoardTest {
 
         // Validate invalid moves, any moves that isn't
         //2,4 or 4,2 or 5,3 or 3,5 is invalid
-        for (int i = 0; i < board.getBoardPieces().length; i++) {
-            for (int j = 0; j < board.getBoardPieces()[i].length; j++) {
+        for (int i = 0; i < Board.getBoardPieces().length; i++) {
+            for (int j = 0; j < Board.getBoardPieces()[i].length; j++) {
                 if ((i == 2 && j == 4) 
                 		|| (i == 4 && j == 2) 
                 		|| (i == 5 && j == 3) 
@@ -152,7 +154,7 @@ public class BoardTest {
 
         // Current player is white (piece #2)
         // Make white move:
-        board.setCurrPlyr(2);
+        Board.setCurrPlyr(2);
         board.playPiece(2, 3);
 
         expected = "";
@@ -189,18 +191,18 @@ public class BoardTest {
         // assertEquals(-1, board.whoWon());
 
         // Make more whites (piece #2) in the board
-        board.getBoardPieces()[2][3] = 2;
-        board.getBoardPieces()[3][3] = 2;
-        board.getBoardPieces()[4][3] = 2;
+        Board.getBoardPieces()[2][3] = 2;
+        Board.getBoardPieces()[3][3] = 2;
+        Board.getBoardPieces()[4][3] = 2;
 
         //  assertEquals(2, board.whoWon());
 
         // Reset the game, make more blacks (piece #1) in the board
         board.newGame();
 
-        board.getBoardPieces()[2][4] = 1;
-        board.getBoardPieces()[3][4] = 1;
-        board.getBoardPieces()[4][4] = 1;
+        Board.getBoardPieces()[2][4] = 1;
+        Board.getBoardPieces()[3][4] = 1;
+        Board.getBoardPieces()[4][4] = 1;
 
         //  assertEquals(1, board.whoWon());
     }
@@ -210,7 +212,7 @@ public class BoardTest {
      */
     @Test
     public void testGameOver() {
-        Board board = new Board();
+        new Board();
 
         // Initially game isn't over while someone can move
         //  assertFalse(board.gameOver());
@@ -218,9 +220,9 @@ public class BoardTest {
         // Fill the board such that nobody can move
         Random random = new Random();
 
-        for (int i = 0; i < board.getBoardPieces().length; i++) {
-            for (int j = 0; j < board.getBoardPieces()[i].length; j++) {
-                board.getBoardPieces()[i][j] = random.nextInt(2) + 1;
+        for (int i = 0; i < Board.getBoardPieces().length; i++) {
+            for (int j = 0; j < Board.getBoardPieces()[i].length; j++) {
+                Board.getBoardPieces()[i][j] = random.nextInt(2) + 1;
             }
         }
 
@@ -287,9 +289,9 @@ public class BoardTest {
         // 00000000
         // 00000000
         // 00000000
-        board.getBoardPieces()[2][3] = 2;
-        board.getBoardPieces()[3][3] = 2;
-        board.getBoardPieces()[4][3] = 2;
+        Board.getBoardPieces()[2][3] = 2;
+        Board.getBoardPieces()[3][3] = 2;
+        Board.getBoardPieces()[4][3] = 2;
 
         // White now has a score of 4
         assertEquals(4, board.whiteScore());
@@ -326,9 +328,9 @@ public class BoardTest {
         // 00000000
         // 00000000
         // 00000000
-        board.getBoardPieces()[2][4] = 1;
-        board.getBoardPieces()[3][4] = 1;
-        board.getBoardPieces()[4][4] = 1;
+        Board.getBoardPieces()[2][4] = 1;
+        Board.getBoardPieces()[3][4] = 1;
+        Board.getBoardPieces()[4][4] = 1;
 
         // Black now has a score of 4
         assertEquals(4, board.blackScore());
@@ -359,24 +361,24 @@ public class BoardTest {
 
         // Switch the above scenario to make black current player (piece #1)
         // Black should still be able to move
-        board.setCurrPlyr(1);
+        Board.setCurrPlyr(1);
         assertTrue(board.canMove());
 
         // Fill the board such that nobody can move
         Random random = new Random();
 
         for (int i = 0; i 
-        		< board.getBoardPieces().length; i++) {
-            for (int j = 0; j < board.getBoardPieces()[i].length; j++) {
-                board.getBoardPieces()[i][j] = random.nextInt(2) + 1;
+        		< Board.getBoardPieces().length; i++) {
+            for (int j = 0; j < Board.getBoardPieces()[i].length; j++) {
+                Board.getBoardPieces()[i][j] = random.nextInt(2) + 1;
             }
         }
 
         // Now that board is full, body should be able to make a move
-        board.setCurrPlyr(2);
+        Board.setCurrPlyr(2);
         assertFalse(board.canMove());
 
-        board.setCurrPlyr(1);
+        Board.setCurrPlyr(1);
         assertFalse(board.canMove());
     }
 

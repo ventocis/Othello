@@ -1,5 +1,4 @@
 import java.awt.Dimension;
-import javax.swing.Timer;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -22,7 +21,6 @@ public class Gui extends Board implements ActionListener {
 
 	boolean ai = true;
 
-	private Timer timer;
 	// instantiate our icons
 	Icon blankPc = new ImageIcon("imgs/square.png");
 	Icon whitePc = new ImageIcon("imgs/white pc.png");
@@ -187,7 +185,7 @@ public class Gui extends Board implements ActionListener {
 						if (gameBoard.isValidMove(x, y)) {
 							gameBoard.playPiece(x, y);
 							button.setIcon(blackPc);
-							gameBoard.nextPlyr();
+							Board.nextPlyr();
 						}
 					}
 
@@ -197,12 +195,12 @@ public class Gui extends Board implements ActionListener {
 						gameBoard.playPiece(x, y);
 						drawBoard();
 						button.setIcon(whitePc);
-						gameBoard.nextPlyr();
+						Board.nextPlyr();
 						if (ai) {
 							drawBoard();
 							move = myAi.computeMove(gameBoard);
 							gameBoard.playPiece(move[1], move[0]);
-							gameBoard.nextPlyr();
+							Board.nextPlyr();
 						}
 					}
 				}
@@ -228,7 +226,7 @@ public class Gui extends Board implements ActionListener {
 		// Make sure the next player can move
 		if (!canMove()) {
 			// If player can't move then toggle player again
-			gameBoard.nextPlyr();
+			Board.nextPlyr();
 			// check if both players can't move
 			if (!canMove()) {
 				if (gameBoard.getWinner() == 1) {

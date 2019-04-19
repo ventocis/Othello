@@ -5,16 +5,27 @@
  */
 public  class Board {
 	/**
+	 * @param finalY the finalY to set
+	 */
+	private static void setFinalY(int finalY) {
+		Board.finalY = finalY;
+	}
+
+	/**
+	 * @param finalX the finalX to set
+	 */
+	private static void setFinalX(int finalX) {
+		Board.finalX = finalX;
+	}
+
+	/**
 	 * This is an array of arrays of integers(2d array).
 	 */
 	private static int[][] boardPieces = new int[8][8];
 	/**
 	 * This is an integer variable for current player.
 	 */
-	private static int currPlyr; 
-	
-	private static int otherPlyr;
-	
+	private static int currPlyr; 	
 
 	/**
 	 * This is an integer variable to help with moving pieces.
@@ -41,17 +52,17 @@ public  class Board {
     	 */
    	 @Override
     	public String toString() {
-       		 String str = "";
+       		 StringBuilder check = new StringBuilder();
         
         for (int row = 0; row < getBoardPieces().length; row++) {
             for (int col = 0; col < getBoardPieces().length; col++) {
-                str += getBoardPieces()[row][col];
+                check.append(getBoardPieces()[row][col]);
             }
             
-            str += "\n";
+            check.append("\n");
         }
         
-        return str;
+        return check.toString();
     	}
 
 	/**
@@ -84,13 +95,11 @@ public  class Board {
 	 * This method toggles the current player, between other player
 	 *  and current player.
 	 */
-	public void nextPlyr() {
-		if (currPlyr == 1) {
-			otherPlyr = currPlyr;
-			currPlyr = 2;
+	public static void nextPlyr() {
+		if (Board.currPlyr == 1) {
+			Board.currPlyr = 2;
 		} else {
-			otherPlyr = currPlyr;
-			currPlyr = 1;
+			Board.currPlyr = 1;
 		}
 
 	}
@@ -170,8 +179,8 @@ public  class Board {
 				return false;
 			}
 			if (getBoardPieces()[x][y] == currPlyr) {
-				finalX = x;
-				finalY = y;
+				setFinalX(x);
+				setFinalY(y);
 				return true;
 			}
 		}
@@ -281,8 +290,7 @@ public  class Board {
 				}
 			}
 		}
-		currPlyr = 2;
-		otherPlyr = 1;
+		setCurrPlyr(2);
 	}
 
 	/**
@@ -342,21 +350,14 @@ public  class Board {
 	 * @return the boardPieces
 	 */
 	public static int[][] getBoardPieces() {
-		return boardPieces;
-	}
-
-	/**
-	 * @param boardPieces the boardPieces to set.
-	 */
-	public static void setBoardPieces(final int[][] boardPieces) {
-		Board.boardPieces = boardPieces;
+		return (int[][])boardPieces.clone();
 	}
 
 	/**
 	 * 
 	 * @param i number we are setting the currPlyr to.
 	 */
-	public void setCurrPlyr(final int i) {
+	public static void setCurrPlyr(final int i) {
 		currPlyr = i;
 	}	
 }
