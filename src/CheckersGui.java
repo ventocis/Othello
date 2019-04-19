@@ -17,46 +17,82 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
 
-
 /**
- * @author Chandler Scott, Sam Ventocilla, Allen Huric
- * This is the class that contains GUI logic checkers
- * board. 
- * 
+ * @author Chandler Scott, Sam Ventocilla, Allen Huric This is the class that
+ *         contains GUI logic checkers board.
  * 
  * @version 1.0
  */
 public class CheckersGui implements MouseListener, ActionListener {
+	/**
+	 * Jpanel variable.
+	 */
 	private JPanel boardPanel;
+	/**
+	 * JFrame variable.
+	 */
 	private JFrame frame;
+	/**
+	 * Variable for menu item.
+	 */
 	private JMenuItem startGame;
+	/**
+	 * Variable for menu bar.
+	 */
 	private JMenuBar menuBar;
+	/**
+	 * Variable for quit menu item.
+	 */
 	private JMenuItem quit;
+	/**
+	 * Variable for the JMenu.
+	 */
 	private JMenu menu;
-
-	
+	/**
+	 * Variable for current color.
+	 */
 	private Color turn;
-	private static final int borderWidth = 1;
-	private CheckersBoard CheckersBoard;
+	/**
+	 * Variable for border width.
+	 */
+	private static final int BORDERWIDTH = 1;
+	/**
+	 * Variable for the board.
+	 */
+	private CheckersBoard checkersBoard;
+	/**
+	 * Variable for remaining black pieces.
+	 */
 	private int blackCheckersRemaining;
+	/**
+	 * Variable for remaining red pieces.
+	 */
 	private int redCheckersRemaining;
+	/**
+	 * Variable for the selected square.
+	 */
 	private CheckersSquare selSquare;
+	/**
+	 * Variable for JLabel piece text.
+	 */
 	private JLabel piecesText;
-	
+
 	/**
 	 * Method to initialize the GUI of the board.
 	 */
-	void InitializeGUI() {
+	void initializeGui() {
 		frame = new JFrame("CheckersGui Frame");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new FlowLayout());
-		frame.getContentPane().setLayout(
-				new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-		
+		frame.getContentPane().setLayout(new 
+				BoxLayout(frame.getContentPane(),
+						BoxLayout.Y_AXIS));
+
 		boardPanel = new JPanel(new GridLayout(8, 8));
-		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
-		CheckersBoard = new CheckersBoard();
-		CheckersBoard.initializePieces();	
+		boardPanel.setBorder(
+				BorderFactory.createLineBorder(Color.BLACK));
+		checkersBoard = new CheckersBoard();
+		checkersBoard.initializePieces();
 		piecesText = new JLabel(" ");
 		piecesText.setHorizontalTextPosition(JLabel.LEFT);
 		piecesText.setVerticalTextPosition(JLabel.BOTTOM);
@@ -69,134 +105,165 @@ public class CheckersGui implements MouseListener, ActionListener {
 		menu.add(startGame);
 		menu.add(quit);
 		menuBar.add(menu);
-		setBoard(CheckersBoard, boardPanel);
+		setBoard(checkersBoard, boardPanel);
 		frame.add(boardPanel);
 		frame.add(piecesText);
 		frame.setJMenuBar(menuBar);
-		frame.pack();	
+		frame.pack();
 		Rectangle boundingRect = frame.getBounds();
-		frame.setBounds(boundingRect.x, boundingRect.y, boundingRect.width + 5, boundingRect.height);
+		frame.setBounds(boundingRect.x,
+				boundingRect.y, boundingRect.width + 5,
+				boundingRect.height);
 		frame.setVisible(true);
-	}	
-	
+	}
+
 	/**
 	 * Constructor for the GUI of checkers.
 	 */
 	public CheckersGui() {
-		InitializeGUI();
+		initializeGui();
 		turn = Color.GREEN;
 		redCheckersRemaining = 12;
 		blackCheckersRemaining = 12;
 		updateGameStatus();
 	}
 
-		
 	@Override
 	/**
 	 * Method to register mouse clicker events.
 	 */
-	public void mouseClicked(MouseEvent e) {
-		CheckersSquare sel = (CheckersSquare)e.getComponent();
-		if(sel.hasPiece()) 
-			if(sel.getPiece().getColor() != turn && turn != Color.GREEN) {
-				piecesText.setText("Ash! This isn't the time to use that!");
-			return;
+	public void mouseClicked(final MouseEvent e) {
+		CheckersSquare sel = (CheckersSquare) e.getComponent();
+		if (sel.hasPiece()) {
+			if (sel.getPiece().getColor() 
+					!= turn && turn != Color.GREEN) {
+				piecesText.setText("Can't do that...");
+				return;
+			}
 		}
 		if (sel.hasPiece() && selSquare == null) {
 			selSquare = sel;
 			selSquare.setHighlight(true);
-			CheckersBoard.highlightMoves(selSquare.getPiece(), true);
+			checkersBoard.highlightMoves(selSquare.getPiece(),
+					true);
 			return;
 		} else if (sel.hasPiece() && !sel.equals(selSquare)) {
 			selSquare.setHighlight(false);
-			CheckersBoard.highlightMoves(selSquare.getPiece(), false);
+			checkersBoard.highlightMoves(selSquare.getPiece(),
+					false);
 			selSquare = sel;
 			selSquare.setHighlight(true);
-			CheckersBoard.highlightMoves(selSquare.getPiece(), true);
+			checkersBoard.highlightMoves(selSquare.getPiece(),
+					true);
 			return;
-			
+
 		} else if (sel.equals(selSquare)) {
 			selSquare.setHighlight(false);
-			CheckersBoard.highlightMoves(selSquare.getPiece(), false);
+			checkersBoard.highlightMoves(selSquare.getPiece(),
+					false);
 			selSquare = null;
 		} else if (!sel.hasPiece() && selSquare != null) {
 			boolean found = false;
-			boolean jumped = false;		
-			Vector<CheckersSquare> oldPossibleMoves = CheckersBoard.possibleMoves(selSquare.getPiece());		
+			boolean jumped = false;
+			Vector<CheckersSquare> oldPossibleMoves 
+			= checkersBoard.possibleMoves(selSquare.getPiece());
 			for (CheckersSquare choice : oldPossibleMoves) {
 				if (choice.equals(sel)) {
-					if (turn == Color.GREEN)
-						turn = selSquare.getPiece().getColor();
-					jumped = CheckersBoard.move(selSquare, sel);
+					if (turn == Color.GREEN) {
+						turn = selSquare.
+								getPiece().
+								getColor();
+					jumped = checkersBoard.
+							move(selSquare, sel);
 					found = true;
+					}
 				}
 			}
 			if (found) {
 				if (jumped) {
 					if (turn == Color.BLACK) {
 						redCheckersRemaining--;
-					}
-					else {
+					} else {
 						blackCheckersRemaining--;
 					}
 				}
 				selSquare.setHighlight(false);
-				for (CheckersSquare unhighlight : oldPossibleMoves) {
+				for (CheckersSquare unhighlight 
+						: oldPossibleMoves) {
 					unhighlight.setHighlight(false);
 				}
 				selSquare = null;
 				nextTurn();
-				updateGameStatus();	
+				updateGameStatus();
 				String winningStr = getWinner();
 				if (winningStr != null) {
-					int restart = JOptionPane.showConfirmDialog(null, winningStr + " Do you want to begin a new game?", "New Game?", JOptionPane.YES_NO_OPTION);
-					
+					int restart 
+					= JOptionPane.
+					showConfirmDialog(null,
+							winningStr 
+							+ " Do you want"
+							+ " to begin"
+							+ " a new"
+							+ " game?",
+							"New Game?",
+							JOptionPane.
+							YES_NO_OPTION);
+
 					if (restart == JOptionPane.YES_OPTION) {
 						resetGame();
-					}
-					else {
+					} else {
 						frame.setVisible(false);
 						frame.dispose();
 					}
 				}
-			}
-			else if (!found) {
+			} else if (!found) {
 				piecesText.setText("You are able to move");
 			}
 		}
 	}
+
 	/**
 	 * The mouse event gets entered.
+	 * @param e mouse entered.
 	 */
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(final MouseEvent e) {
+	}
+
 	/**
 	 * The mouse event gets exited.
+	 * @param e mouse exited.
 	 */
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(final MouseEvent e) {
+	}
+
 	/**
 	 * The mouse is pressed.
+	 * @param e mouse pressed.
 	 */
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(final MouseEvent e) {
+	}
+
 	/**
 	 * The mouse event is released.
+	 * @param e mouse event.
 	 */
-	public void mouseReleased(MouseEvent e) {}
-	
+	public void mouseReleased(final MouseEvent e) {
+	}
+
 	/**
-	 * Method to register an action performed from
-	 * and action event.
+	 * Method to register an action performed from and action event.
+	 * @param e event.
 	 */
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == startGame) {
+	public void actionPerformed(final ActionEvent e) {
+		if (e.getSource() == startGame) {
 			resetGame();
-		}
-		else if(e.getSource() == quit) {
+		} else if (e.getSource() == quit) {
 			frame.setVisible(false);
 			frame.dispose();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Method to reset the game if chosen to do so.
 	 */
@@ -205,16 +272,17 @@ public class CheckersGui implements MouseListener, ActionListener {
 		selSquare = null;
 		frame.remove(boardPanel);
 		boardPanel = new JPanel(new GridLayout(8, 8));
-		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		CheckersBoard = new CheckersBoard();
-		CheckersBoard.initializePieces();
-		
-		setBoard(CheckersBoard, boardPanel);
+		boardPanel.setBorder(BorderFactory.createLineBorder(
+				Color.BLACK));
+		checkersBoard = new CheckersBoard();
+		checkersBoard.initializePieces();
+
+		setBoard(checkersBoard, boardPanel);
 		frame.add(boardPanel, 0);
 		redCheckersRemaining = 12;
 		blackCheckersRemaining = 12;
 		turn = Color.BLACK;
-		
+
 		updateGameStatus();
 		frame.pack();
 		frame.setVisible(true);
@@ -222,91 +290,111 @@ public class CheckersGui implements MouseListener, ActionListener {
 
 	/**
 	 * Method that sets the Board to its proper logic.
+	 * 
 	 * @param b variable that represents the board.
 	 * @param p variable that represents the panel.
 	 */
-	public void setBoard(CheckersBoard b, JPanel p) {
+	public void setBoard(final CheckersBoard b,  final JPanel p) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				CheckersSquare sq = b.getSquare(i, j);
 				sq.addMouseListener(this);
-				
-				JPanel ContainerPanel = new JPanel(new FlowLayout());
-				ContainerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,
-																					borderWidth));
-				ContainerPanel.add(sq);
-				if (sq.getBackgroundColor() == CheckersSquare.BackgroundColor.DARK) {
-					ContainerPanel.setBackground(Color.DARK_GRAY);
+
+				JPanel containerPanel 
+				= new JPanel(new
+						FlowLayout());
+				containerPanel.
+				setBorder(BorderFactory.
+						createLineBorder(Color.BLACK,
+						BORDERWIDTH));
+				containerPanel.add(sq);
+				if (sq.getBackgroundColor() 
+						== CheckersSquare.
+						BackgroundColor.DARK) {
+					containerPanel.
+					setBackground(Color.DARK_GRAY);
+				} else {
+					containerPanel.
+					setBackground(Color.LIGHT_GRAY);
 				}
-				else {
-					ContainerPanel.setBackground(Color.LIGHT_GRAY);
-				}
-				p.add(ContainerPanel);
+				p.add(containerPanel);
 			}
 		}
 	}
-	
+
 	/**
 	 * Method to update the user on current status of pieces.
 	 */
 	public void updateGameStatus() {
-		piecesText.setText("Red Pieces Left: " + redCheckersRemaining + "             Black Pieces Left: " + blackCheckersRemaining);
+		piecesText.setText("Red Pieces"
+				+ " Left: " 
+				+ redCheckersRemaining 
+				+ "             Black Pieces Left: "
+				+ blackCheckersRemaining);
 	}
-	
+
 	/**
 	 * Method to reveal the winner of the game.
+	 * 
 	 * @return returns the winner or the game.
 	 */
 	public String getWinner() {
-		
+
 		if (blackCheckersRemaining == 0) {
 			return "Red has won by taking Black's pieces!";
 		}
-			
+
 		if (redCheckersRemaining == 0) {
-			return "Black has won by taking Red's pieces!";		
+			return "Black has won by taking Red's pieces!";
 		}
 
 		boolean redCanMove = false;
 		boolean blackCanMove = false;
-		
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (CheckersBoard.getSquare(i, j).hasPiece()) {
-					Vector<CheckersSquare> potentialMoves = CheckersBoard.possibleMoves(CheckersBoard.getSquare(i, j).getPiece());
+				if (checkersBoard.getSquare(i, j).hasPiece()) {
+					Vector<CheckersSquare> potentialMoves =
+							checkersBoard
+							.possibleMoves(
+							checkersBoard
+						.getSquare(i, j).getPiece());
 					if (!potentialMoves.isEmpty()) {
-						if (CheckersBoard.getSquare(i, j).getPiece().getColor() == Color.black) {
+						if (checkersBoard
+								.getSquare(i, j)
+								.getPiece()
+								.getColor() 
+								== 
+								Color.black) {
 							blackCanMove = true;
-						}
-						else {
+						} else {
 							redCanMove = true;
 						}
 					}
 				}
 			}
 		}
-		
+
 		if (redCanMove && !blackCanMove) {
-			return "Red team wins since Black team can make no more moves!";
-		}
-		else if (blackCanMove && !redCanMove) {
-			return "Black team wins since Red team can make no more moves!";
-		}
-		else if (!redCanMove && !blackCanMove) {
+			return "Red team wins since"
+					+ " Black team can make no more moves!";
+		} else if (blackCanMove && !redCanMove) {
+			return "Black team wins since"
+					+ " Red team can make no more moves!";
+		} else if (!redCanMove && !blackCanMove) {
 			return "Neither side wins!";
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Method to go to the next players turn.
 	 */
 	public void nextTurn() {
-		if(turn == Color.BLACK) {
+		if (turn == Color.BLACK) {
 			turn = Color.RED;
-		}
-		else {
+		} else {
 			turn = Color.BLACK;
 		}
 	}
