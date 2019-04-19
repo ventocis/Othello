@@ -9,7 +9,8 @@ public class CheckersSquare extends Canvas {
 
     private int row;
     private int col;
-
+	
+	 /** Created by Alen, Sam, Chandler */
     public CheckersSquare(BackgroundColor c, int row, int col) {
     	
     	this.setSize(64, 64);
@@ -44,6 +45,7 @@ public class CheckersSquare extends Canvas {
     	return this.bgColor;
     }
     
+	 /** Created by Alen, Sam, Chandler */
     public CheckersPiece getPiece() {
     	if(this.hasPiece())
     		return this.CheckersPiece;
@@ -51,6 +53,7 @@ public class CheckersSquare extends Canvas {
     	return null;
     }
 
+	 /** Created by Alen, Sam, Chandler */
 	public void paint(Graphics g) {
         if (this.getBackgroundColor() == CheckersSquare.BackgroundColor.DARK) {
 			this.setBackground(Color.DARK_GRAY);
@@ -66,6 +69,7 @@ public class CheckersSquare extends Canvas {
         }			
 	}    
 	 
+	 /** Created by Alen, Sam, Chandler */
 	public void setPiece(CheckersPiece visitor) {
     	if(visitor != null) {
     		this.CheckersPiece = visitor;
@@ -78,6 +82,7 @@ public class CheckersSquare extends Canvas {
     	}
     }
 
+	 /** Created by Alen, Sam, Chandler */
     public void setHighlight(boolean doHighlight) {
     	
     	
