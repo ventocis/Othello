@@ -2,18 +2,15 @@ import java.util.ArrayList;
 
 public class AI {
 
-	int player, opponent;
+	int player;
+	int opponent;
 
-	public AI() {
-		
+	public AI() {	
 	}
 
 	public int[] computeMove(Board board) {
-		
 		player = board.getCurrPlyr();
 		opponent = getOpponent();
-		
-		
 		int[] move = new int[2];
 		//Random rand = new Random();
 
