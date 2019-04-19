@@ -55,6 +55,114 @@ public class Gui extends Board implements ActionListener {
 	 * 
 	 */
 	private Board gameBoard;
+	public ArrayList<JButton> getButtons() {
+		return buttons;
+	}
+
+	public void setButtons(ArrayList<JButton> buttons) {
+		this.buttons = buttons;
+	}
+
+	public boolean isAi() {
+		return ai;
+	}
+
+	public void setAi(boolean ai) {
+		this.ai = ai;
+	}
+
+	public Icon getBlankPc() {
+		return blankPc;
+	}
+
+	public void setBlankPc(Icon blankPc) {
+		this.blankPc = blankPc;
+	}
+
+	public Icon getWhitePc() {
+		return whitePc;
+	}
+
+	public void setWhitePc(Icon whitePc) {
+		this.whitePc = whitePc;
+	}
+
+	public Icon getBlackPc() {
+		return blackPc;
+	}
+
+	public void setBlackPc(Icon blackPc) {
+		this.blackPc = blackPc;
+	}
+
+	public AI getMyAi() {
+		return myAi;
+	}
+
+	public void setMyAi(AI myAi) {
+		this.myAi = myAi;
+	}
+
+	public Board getGameBoard() {
+		return gameBoard;
+	}
+
+	public void setGameBoard(Board gameBoard) {
+		this.gameBoard = gameBoard;
+	}
+
+	public GridBagLayout getGridBag() {
+		return gridBag;
+	}
+
+	public void setGridBag(GridBagLayout gridBag) {
+		this.gridBag = gridBag;
+	}
+
+	public JPanel getP() {
+		return p;
+	}
+
+	public void setP(JPanel p) {
+		this.p = p;
+	}
+
+	public JLabel getPlyrTurn() {
+		return plyrTurn;
+	}
+
+	public void setPlyrTurn(JLabel plyrTurn) {
+		this.plyrTurn = plyrTurn;
+	}
+
+	public JLabel getBlackScore() {
+		return blackScore;
+	}
+
+	public void setBlackScore(JLabel blackScore) {
+		this.blackScore = blackScore;
+	}
+
+	public JLabel getWhiteScore() {
+		return whiteScore;
+	}
+
+	public void setWhiteScore(JLabel whiteScore) {
+		this.whiteScore = whiteScore;
+	}
+
+	public JFrame getF() {
+		return f;
+	}
+
+	public void setF(JFrame f) {
+		this.f = f;
+	}
+
+	public static int getNumbuttons() {
+		return NUMBUTTONS;
+	}
+
 	/** 
 	 * variables to hold the elements in the GUI.
 	 * 
