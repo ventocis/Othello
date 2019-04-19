@@ -7,12 +7,9 @@ public class CheckersBoard {
     private CheckersSquare[][] squares;
 
 	  /** Created by Alen, Sam, Chandler */
-    public CheckersBoard() {
-    			
-    	squares = new CheckersSquare[rows][cols];
-    	
-		boolean lastColor = false;
-		
+    public CheckersBoard() {			
+    	squares = new CheckersSquare[rows][cols]; 	
+	boolean lastColor = false;		
     	for (int i = 0; i < rows; i++) {
     		for (int j = 0; j < cols; j++) {
     			if (lastColor) {
@@ -22,10 +19,10 @@ public class CheckersBoard {
 				}
     			lastColor = !lastColor;
     		}
-    		
     		lastColor = !lastColor;
     	}
     }
+	
 	  /** Created by Alen, Sam, Chandler */
     public static boolean inBounds(int row, int col) {
     	if (row >= 0 && row < rows &&
@@ -35,6 +32,7 @@ public class CheckersBoard {
 			return false;
 		}
     }
+	
 	  /** Created by Alen, Sam, Chandler */
     public CheckersSquare getSquare(int row, int col) {
         if (inBounds(row, col)) {
@@ -52,7 +50,6 @@ public class CheckersBoard {
 				}
 			}
 		}
-		
 		for (int row = 5; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
 				if (getSquare(row, col).getBackgroundColor() == CheckersSquare.BackgroundColor.DARK) {
@@ -65,37 +62,29 @@ public class CheckersBoard {
 		  /** Created by Alen, Sam, Chandler */
 	public boolean move(CheckersSquare from, CheckersSquare to) {
 		boolean jumpPerformed = false;
-		
 		CheckersPiece beingMoved = from.getPiece();
-		
 		int oldRow = from.getRow(), newRow = to.getRow();
 		int oldCol = from.getCol(), newCol = to.getCol();
-		
 		from.setPiece(null);
 		beingMoved.setRowCol(to.getRow(), to.getCol());
 		to.setPiece(beingMoved);
-		
 		if (Math.abs(oldRow - newRow) > 1 || Math.abs(oldCol - newCol) > 1) {
 			int takeRow = (oldRow + newRow) / 2;
 			int takeCol = (oldCol + newCol) / 2;
-			
 			CheckersSquare takeSquare = getSquare(takeRow, takeCol);
 			takeSquare.setPiece(null);
 			takeSquare.update(takeSquare.getGraphics());
-		
 			jumpPerformed = true;
 		}
-		
 		from.update(from.getGraphics());
 		to.update(to.getGraphics());
-		
 		return jumpPerformed;
 	}
 	  /** Created by Alen, Sam, Chandler */
+	
 	public Vector<CheckersSquare> possibleMoves(CheckersPiece p) {
 		Vector<CheckersSquare> possibleMoves = new Vector<CheckersSquare>();
 		Color pColor = p.getColor();
-		
 		int row = p.getRow();
 		int col = p.getCol();
 
