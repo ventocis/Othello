@@ -18,7 +18,14 @@ import java.awt.event.MouseListener;
 import java.util.Vector;
 
 
-
+/**
+ * @author Chandler Scott, Sam Ventocilla, Allen Huric
+ * This is the class that contains GUI logic checkers
+ * board. 
+ * 
+ * 
+ * @version 1.0
+ */
 public class CheckersGui implements MouseListener, ActionListener {
 	private JPanel boardPanel;
 	private JFrame frame;
@@ -36,7 +43,9 @@ public class CheckersGui implements MouseListener, ActionListener {
 	private CheckersSquare selSquare;
 	private JLabel piecesText;
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method to initialize the GUI of the board.
+	 */
 	void InitializeGUI() {
 		frame = new JFrame("CheckersGui Frame");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,7 +79,9 @@ public class CheckersGui implements MouseListener, ActionListener {
 		frame.setVisible(true);
 	}	
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Constructor for the GUI of checkers.
+	 */
 	public CheckersGui() {
 		InitializeGUI();
 		turn = Color.GREEN;
@@ -81,6 +92,9 @@ public class CheckersGui implements MouseListener, ActionListener {
 
 		
 	@Override
+	/**
+	 * Method to register mouse clicker events.
+	 */
 	public void mouseClicked(MouseEvent e) {
 		CheckersSquare sel = (CheckersSquare)e.getComponent();
 		if(sel.hasPiece()) 
@@ -151,13 +165,27 @@ public class CheckersGui implements MouseListener, ActionListener {
 			}
 		}
 	}
-	
+	/**
+	 * The mouse event gets entered.
+	 */
 	public void mouseEntered(MouseEvent e) {}
+	/**
+	 * The mouse event gets exited.
+	 */
 	public void mouseExited(MouseEvent e) {}
+	/**
+	 * The mouse is pressed.
+	 */
 	public void mousePressed(MouseEvent e) {}
+	/**
+	 * The mouse event is released.
+	 */
 	public void mouseReleased(MouseEvent e) {}
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method to register an action performed from
+	 * and action event.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == startGame) {
 			resetGame();
@@ -169,7 +197,9 @@ public class CheckersGui implements MouseListener, ActionListener {
 		
 	}
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method to reset the game if chosen to do so.
+	 */
 	public void resetGame() {
 		frame.setVisible(false);
 		selSquare = null;
@@ -190,7 +220,11 @@ public class CheckersGui implements MouseListener, ActionListener {
 		frame.setVisible(true);
 	}
 
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method that sets the Board to its proper logic.
+	 * @param b variable that represents the board.
+	 * @param p variable that represents the panel.
+	 */
 	public void setBoard(CheckersBoard b, JPanel p) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -212,12 +246,17 @@ public class CheckersGui implements MouseListener, ActionListener {
 		}
 	}
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method to update the user on current status of pieces.
+	 */
 	public void updateGameStatus() {
 		piecesText.setText("Red Pieces Left: " + redCheckersRemaining + "             Black Pieces Left: " + blackCheckersRemaining);
 	}
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method to reveal the winner of the game.
+	 * @return returns the winner or the game.
+	 */
 	public String getWinner() {
 		
 		if (blackCheckersRemaining == 0) {
@@ -260,7 +299,9 @@ public class CheckersGui implements MouseListener, ActionListener {
 		return null;
 	}
 	
-	  /** Created by Alen, Sam, Chandler */
+	/**
+	 * Method to go to the next players turn.
+	 */
 	public void nextTurn() {
 		if(turn == Color.BLACK) {
 			turn = Color.RED;
