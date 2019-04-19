@@ -402,4 +402,13 @@ public class BoardTest {
         int actualResult = board.getWinner();
         assertEquals(actualResult, expectedResult);
     }
+    
+    /**
+     * Tests the GUI
+     */
+    @Test
+    public void testGUI() {
+    	String[] myString = new String[] {"hello"};
+    	Main.main(myString);
+    }
 }
