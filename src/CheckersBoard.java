@@ -6,6 +6,7 @@ public class CheckersBoard {
     public static final int cols = 8;
     private CheckersSquare[][] squares;
 
+	  /** Created by Alen, Sam, Chandler */
     public CheckersBoard() {
     			
     	squares = new CheckersSquare[rows][cols];
@@ -25,7 +26,7 @@ public class CheckersBoard {
     		lastColor = !lastColor;
     	}
     }
-
+	  /** Created by Alen, Sam, Chandler */
     public static boolean inBounds(int row, int col) {
     	if (row >= 0 && row < rows &&
     		col >= 0 && col < cols) {	
@@ -34,7 +35,7 @@ public class CheckersBoard {
 			return false;
 		}
     }
-
+	  /** Created by Alen, Sam, Chandler */
     public CheckersSquare getSquare(int row, int col) {
         if (inBounds(row, col)) {
         	return squares[row][col];
@@ -42,7 +43,7 @@ public class CheckersBoard {
 			return null;	
 		}
     }
-    
+    	  /** Created by Alen, Sam, Chandler */
     public void initializePieces() {
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 8; col++) {
@@ -61,7 +62,7 @@ public class CheckersBoard {
 		}
 	}
 	
-	
+		  /** Created by Alen, Sam, Chandler */
 	public boolean move(CheckersSquare from, CheckersSquare to) {
 		boolean jumpPerformed = false;
 		
@@ -90,7 +91,7 @@ public class CheckersBoard {
 		
 		return jumpPerformed;
 	}
-
+	  /** Created by Alen, Sam, Chandler */
 	public Vector<CheckersSquare> possibleMoves(CheckersPiece p) {
 		Vector<CheckersSquare> possibleMoves = new Vector<CheckersSquare>();
 		Color pColor = p.getColor();
@@ -155,7 +156,7 @@ public class CheckersBoard {
 
 		return possibleMoves;
 	}
-
+	  /** Created by Alen, Sam, Chandler */
 	public void highlightMoves(CheckersPiece p, boolean doHighlight) {
 		
 		Vector<CheckersSquare> possibleMoves = possibleMoves(p);
