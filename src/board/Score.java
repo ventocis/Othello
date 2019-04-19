@@ -1,3 +1,4 @@
+package board;
 public class Score {
 	int row,col,points;
 	

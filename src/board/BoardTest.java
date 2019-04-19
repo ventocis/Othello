@@ -1,3 +1,4 @@
+package board;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,6 +13,7 @@ import org.junit.Test;
  * @version 1.0
  */
 public class BoardTest {
+	
 
     /**
      * Check if getting the player's piece is returned correctly.

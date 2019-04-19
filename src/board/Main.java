@@ -1,3 +1,4 @@
+package board;
 import java.awt.Color;
 
 import javax.swing.JFrame;//need this

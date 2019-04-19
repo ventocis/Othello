@@ -1,3 +1,4 @@
+package board;
 import java.util.ArrayList;
 /**
  * Our class for the AI portion of Othello.

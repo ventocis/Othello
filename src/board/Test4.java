@@ -1,3 +1,6 @@
+package board;
+
+
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
@@ -11,7 +14,7 @@ import org.junit.Test;
 public class Test4 {
 
   @Test
-    public void testConcatenate() {
+    public void testCheckers() {
     CheckersBoard board = new CheckersBoard();
     assertEquals(false, CheckersBoard.inBounds(10, 10));
     assertEquals(true, board.getSquare(1, 2) != null);
