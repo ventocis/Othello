@@ -1,3 +1,4 @@
+package board;
 
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +14,7 @@ public class AlTest {
 	 * This is the test for AI.
 	 */
 	@Test
-	public void testAl() {
+	public void testAi() {
 		Board gameBoard = new Board();
 		Gui g = new Gui(gameBoard);
 		AI a = g.getMyAi();

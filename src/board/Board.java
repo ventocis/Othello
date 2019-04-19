@@ -1,3 +1,4 @@
+package board;
 /**
  * 
  * @author Chandler Scott, Sam Ventocilla, Allen Huric

@@ -1,13 +1,20 @@
+package board;
+
+
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 
+import javax.swing.JPanel;
+
 import org.junit.Test;
 
-public class Test3 {
+
+
+public class Test4 {
 
   @Test
-    public void testConcatenate() {
+    public void testCheckers() {
     CheckersBoard board = new CheckersBoard();
     assertEquals(false, CheckersBoard.inBounds(10, 10));
     assertEquals(true, board.getSquare(1, 2) != null);
@@ -17,6 +24,10 @@ public class Test3 {
     CheckersPiece piece = new CheckersPiece(c,1,1);
     assertEquals(true, board.possibleMoves(piece) != null);
     board.highlightMoves(piece, true);
-        
+    CheckersGui app = new CheckersGui();
+    app.resetGame();
+    app.setBoard(board, new JPanel());
+    app.updateGameStatus();
+    assertEquals(null, app.getWinner());
   }
 }

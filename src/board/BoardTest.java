@@ -1,3 +1,4 @@
+package board;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,6 +13,7 @@ import org.junit.Test;
  * @version 1.0
  */
 public class BoardTest {
+	
 
     /**
      * Check if getting the player's piece is returned correctly.
@@ -399,5 +401,14 @@ public class BoardTest {
         int expectedResult = -1;
         int actualResult = board.getWinner();
         assertEquals(actualResult, expectedResult);
+    }
+    
+    /**
+     * Tests the GUI
+     */
+    @Test
+    public void testGUI() {
+    	String[] myString = new String[] {"hello"};
+    	Main.main(myString);
     }
 }

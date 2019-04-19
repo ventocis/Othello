@@ -1,3 +1,4 @@
+package board;
 /**
  * This is a class to get the score of a position.
  * @author Owner
