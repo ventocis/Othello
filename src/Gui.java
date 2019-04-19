@@ -12,34 +12,75 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+/**
+ * Class for the Board GUI of Othello.
+ * @author Owner
+ *
+ */
 public class Gui extends Board implements ActionListener {
 
-	// make an arrayList of buttons
-	ArrayList<JButton> buttons = new ArrayList<JButton>();
-	static final int NUMBUTTONS = 2;
-
-	boolean ai = true;
-
-	// instantiate our icons
-	Icon blankPc = new ImageIcon("imgs/square.png");
-	Icon whitePc = new ImageIcon("imgs/white pc.png");
-	Icon blackPc = new ImageIcon("imgs/black pc.png");
-
-	// variables to hold the elements in the GUI
-	AI myAi;
-	Board gameBoard;
-	GridBagLayout gridBag = new GridBagLayout();
-	JPanel p = new JPanel(gridBag);
-
-	/*
-	 * These are three labels one for: player turn, black piece score, white piece
-	 * score
+	/**
+	 *  make an arrayList of buttons.
 	 */
-	JLabel plyrTurn, blackScore, whiteScore;
-	JFrame f;
+	private ArrayList<JButton> buttons = new ArrayList<JButton>();
+	/**
+	 * Variable for number of buttons.
+	 */
+	private static final int NUMBUTTONS = 2;
+	/**
+	 * Boolean toggle value for AI.
+	 */
+	private boolean ai = true;
 
-	public Gui(Board initialBoard) {
+	/** 
+	 * instantiate our icons.
+	 */
+	private Icon blankPc = new ImageIcon("imgs/square.png");
+	/** 
+	 * instantiate our icons.
+	 */
+	private Icon whitePc = new ImageIcon("imgs/white pc.png");
+	/** 
+	 * instantiate our icons.
+	 */
+	private Icon blackPc = new ImageIcon("imgs/black pc.png");
+
+	/** 
+	 * variables to hold the elements in the GUI.
+	 * 
+	 */
+	private AI myAi;
+	/** 
+	 * variables to hold the elements in the GUI.
+	 * 
+	 */
+	private Board gameBoard;
+	/** 
+	 * variables to hold the elements in the GUI.
+	 * 
+	 */
+	private GridBagLayout gridBag = new GridBagLayout();
+	/** 
+	 * variables to hold the elements in the GUI.
+	 * 
+	 */
+	private JPanel p = new JPanel(gridBag);
+
+	/**
+	 * These are three labels one for: player turn,
+	 *  black piece score, white piece
+	 * score.
+	 */
+	private JLabel plyrTurn, blackScore, whiteScore;
+	/**
+	 * Variable for frame.
+	 */
+	private JFrame f;
+	/**
+	 * Acts as constructor for GUI.
+	 * @param initialBoard is the starting board.
+	 */
+	public Gui(final Board initialBoard) {
 		GridBagConstraints cnstrnts = new GridBagConstraints();
 		// Gives a name to the frame
 		f = new JFrame("Othello");
@@ -155,13 +196,15 @@ public class Gui extends Board implements ActionListener {
 	 */
 	public void actionPerformed(final ActionEvent e) {
 		/*
-		 * x and y are used to hold the column and row position on the board z is used
-		 * so that x and y don't increment when the button loop is, for one of the top
+		 * x and y are used to hold the column
+		 *  and row position on the board z is used
+		 * so that x and y don't increment when
+		 *  the button loop is, for one of the top
 		 * buttons such as new game.
 		 */
 		int x = 0, y = 0, z = 0;
 
-		int move[];
+		int[] move;
 
 		// for loops to check & see which button was pushed
 		for (JButton button : buttons) {
@@ -169,37 +212,38 @@ public class Gui extends Board implements ActionListener {
 			if (e.getSource() == button) {
 				if (z == 0) {
 					gameBoard.newGame();
-				}
-				// Make sure that the JButton isn't one of the
-				// top buttons
-				else if (z == 1) {
-					if (ai)
+				} else if (z == 1) {
+					if (ai) {
 						ai = false;
-					else
+					} else {
 						ai = true;
+					}
 				}
 				if (z > NUMBUTTONS - 1) {
-					// Make sure it's a valid move for black,
+					// Make sure it's a valid move for
+					//black,
 					// if so, play the piece
 					if (gameBoard.getCurrPlyr() == 1) {
-						if (gameBoard.isValidMove(x, y)) {
-							gameBoard.playPiece(x, y);
+						if (gameBoard.isValidMove(x,
+								y)) {
+							gameBoard.playPiece(x,
+									y);
 							button.setIcon(blackPc);
 							Board.nextPlyr();
 						}
-					}
-
-					// make sure it's a valid move for white
-					// & if so play the piece
-					else if (gameBoard.isValidMove(x, y)) {
+					} else if (gameBoard
+							.isValidMove(x, y)) {
 						gameBoard.playPiece(x, y);
 						drawBoard();
 						button.setIcon(whitePc);
 						Board.nextPlyr();
 						if (ai) {
 							drawBoard();
-							move = myAi.computeMove(gameBoard);
-							gameBoard.playPiece(move[1], move[0]);
+							move = myAi
+							.computeMove(gameBoard);
+							gameBoard
+							.playPiece(move[1],
+								move[0]);
 							Board.nextPlyr();
 						}
 					}
@@ -230,18 +274,30 @@ public class Gui extends Board implements ActionListener {
 			// check if both players can't move
 			if (!canMove()) {
 				if (gameBoard.getWinner() == 1) {
-					JOptionPane.showMessageDialog(f, "\nThis win goes to Black!");
-				} else if (gameBoard.getWinner() == -1)
-					JOptionPane.showMessageDialog(f, "Oh my, oh my\nLooks like we have a tie!");
-				else
-					JOptionPane.showMessageDialog(f, "\nThe win goes to White!");
+					JOptionPane.showMessageDialog(f,
+							"\nThis win goes"
+							+ " to Black!");
+				} else if (gameBoard
+						.getWinner() == -1) {
+					JOptionPane.showMessageDialog(f,
+							"Oh my, oh my\nLooks"
+							+ " like we have"
+							+ " a tie!");
+				} else {
+					JOptionPane.showMessageDialog(f,
+							"\nThe win goes"
+							+ " to White!");
 
 				gameBoard.newGame();
-			} else if (getCurrPlyr() == 1)
-				JOptionPane.showMessageDialog(f, "No available moves for white");
-			else
-				JOptionPane.showMessageDialog(f, "No available moves for black");
+			}
+				} else if (getCurrPlyr() == 1) {
+				JOptionPane.showMessageDialog(f, "No available"
+						+ " moves for white");
+			} else {
+				JOptionPane.showMessageDialog(f, "No available"
+						+ " moves for black");
 		}
+			}
 
 		// draw the board to reflect any current player changes
 		drawBoard();
@@ -249,13 +305,16 @@ public class Gui extends Board implements ActionListener {
 	}
 
 	/**
-	 * Draw the board by updating the icons based on which player is where in the
+	 * Draw the board by updating the icons based
+	 *  on which player is where in the
 	 * board array.
 	 */
 	private void drawBoard() {
 		/*
-		 * x and y are used to hold the x and y position on the board z is used so that
-		 * x and y don't increment when the button loop is for one of the top buttons
+		 * x and y are used to hold the x and y
+		 *  position on the board z is used so that
+		 * x and y don't increment when the button
+		 *  loop is for one of the top buttons
 		 * such as New Game
 		 */
 		System.out.println("check");

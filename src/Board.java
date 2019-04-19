@@ -7,14 +7,14 @@ public  class Board {
 	/**
 	 * @param finalY the finalY to set
 	 */
-	private static void setFinalY(int finalY) {
+	private static void setFinalY(final int finalY) {
 		Board.finalY = finalY;
 	}
 
 	/**
 	 * @param finalX the finalX to set
 	 */
-	private static void setFinalX(int finalX) {
+	private static void setFinalX(final int finalX) {
 		Board.finalX = finalX;
 	}
 
@@ -147,7 +147,8 @@ public  class Board {
 	 * @return true if the selection direction
 	 *  can capture pieces, else false
 	 */
-	public boolean checkDirections(int x, int y, final int xChange, final int yChange) {
+	public boolean checkDirections(int x, int y,
+			final int xChange, final int yChange) {
 
 		//makes sure the move is on the Board
 		if (!onBoard(x, y)) {
@@ -350,7 +351,7 @@ public  class Board {
 	 * @return the boardPieces
 	 */
 	public static int[][] getBoardPieces() {
-		return (int[][])boardPieces.clone();
+		return (int[][]) boardPieces.clone();
 	}
 
 	/**

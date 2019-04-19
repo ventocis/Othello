@@ -1,7 +1,10 @@
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Random;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -126,7 +129,7 @@ public class BoardTest {
 
     /**
      * Make the current player move and check that appropriate cells has been
-     * flipped
+     * flipped.
      */
     @Test
     public void testPlayPiece() {
@@ -381,13 +384,18 @@ public class BoardTest {
         Board.setCurrPlyr(1);
         assertFalse(board.canMove());
     }
-
+    /**
+     * Tests the get winner method.
+     */
     @Test
     public void testGetWinner() {
-        //TestBoardPiecesSize should have arguments so the method can be able to enter in other loops
+        //TestBoardPiecesSize should have arguments
+    	//so the method can be able to enter in other loops
         Board board = new Board();
-        //This is the only scenario that It can return, suggestion to add 2 parameters in getWinner()
-        //getWinner(int plyrOnePts, int plyrTwoPts) then It can have 3 results 1, 2 and -1
+        //This is the only scenario that It can return,
+        //suggestion to add 2 parameters in getWinner()
+        //getWinner(int plyrOnePts, int plyrTwoPts)
+        //then It can have 3 results 1, 2 and -1
         int expectedResult = -1;
         int actualResult = board.getWinner();
         assertEquals(actualResult, expectedResult);
