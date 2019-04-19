@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
 
-  /** Created by Alen, Sam, Chandler */
+
 
 public class CheckersGui implements MouseListener, ActionListener {
 	private JPanel boardPanel;
@@ -27,54 +27,44 @@ public class CheckersGui implements MouseListener, ActionListener {
 	private JMenuItem quit;
 	private JMenu menu;
 
+	
 	private Color turn;
-	
-	private final int borderWidth = 1;
-	
+	private static final int borderWidth = 1;
 	private CheckersBoard CheckersBoard;
-	
 	private int blackCheckersRemaining;
 	private int redCheckersRemaining;
 	private CheckersSquare selSquare;
 	private JLabel piecesText;
 	
+	  /** Created by Alen, Sam, Chandler */
 	void InitializeGUI() {
 		frame = new JFrame("CheckersGui Frame");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new FlowLayout());
-		
 		frame.getContentPane().setLayout(
 				new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
 		boardPanel = new JPanel(new GridLayout(8, 8));
-		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
+		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
 		CheckersBoard = new CheckersBoard();
-		CheckersBoard.initializePieces();
-		
+		CheckersBoard.initializePieces();	
 		piecesText = new JLabel(" ");
 		piecesText.setHorizontalTextPosition(JLabel.LEFT);
 		piecesText.setVerticalTextPosition(JLabel.BOTTOM);
-		
 		menuBar = new JMenuBar();
 		menu = new JMenu("File");
-		
 		startGame = new JMenuItem("New Game");
 		startGame.addActionListener(this);
-		
 		quit = new JMenuItem("Quit");
 		quit.addActionListener(this);
-		
 		menu.add(startGame);
 		menu.add(quit);
 		menuBar.add(menu);
-
 		setBoard(CheckersBoard, boardPanel);
 		frame.add(boardPanel);
 		frame.add(piecesText);
 		frame.setJMenuBar(menuBar);
-		frame.pack();
-		
+		frame.pack();	
 		Rectangle boundingRect = frame.getBounds();
 		frame.setBounds(boundingRect.x, boundingRect.y, boundingRect.width + 5, boundingRect.height);
 		frame.setVisible(true);
@@ -83,12 +73,9 @@ public class CheckersGui implements MouseListener, ActionListener {
 	  /** Created by Alen, Sam, Chandler */
 	public CheckersGui() {
 		InitializeGUI();
-		
 		turn = Color.GREEN;
-		
 		redCheckersRemaining = 12;
 		blackCheckersRemaining = 12;
-		
 		updateGameStatus();
 	}
 
@@ -96,14 +83,11 @@ public class CheckersGui implements MouseListener, ActionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		CheckersSquare sel = (CheckersSquare)e.getComponent();
-
 		if(sel.hasPiece()) 
-			if(sel.getPiece().getColor() != turn &&
-				turn != Color.GREEN) {
-			piecesText.setText("Ash! This isn't the time to use that!");
+			if(sel.getPiece().getColor() != turn && turn != Color.GREEN) {
+				piecesText.setText("Ash! This isn't the time to use that!");
 			return;
 		}
-		
 		if (sel.hasPiece() && selSquare == null) {
 			selSquare = sel;
 			selSquare.setHighlight(true);
@@ -112,7 +96,6 @@ public class CheckersGui implements MouseListener, ActionListener {
 		} else if (sel.hasPiece() && !sel.equals(selSquare)) {
 			selSquare.setHighlight(false);
 			CheckersBoard.highlightMoves(selSquare.getPiece(), false);
-			
 			selSquare = sel;
 			selSquare.setHighlight(true);
 			CheckersBoard.highlightMoves(selSquare.getPiece(), true);
@@ -124,10 +107,8 @@ public class CheckersGui implements MouseListener, ActionListener {
 			selSquare = null;
 		} else if (!sel.hasPiece() && selSquare != null) {
 			boolean found = false;
-			boolean jumped = false;
-			
-			Vector<CheckersSquare> oldPossibleMoves = CheckersBoard.possibleMoves(selSquare.getPiece());
-			
+			boolean jumped = false;		
+			Vector<CheckersSquare> oldPossibleMoves = CheckersBoard.possibleMoves(selSquare.getPiece());		
 			for (CheckersSquare choice : oldPossibleMoves) {
 				if (choice.equals(sel)) {
 					if (turn == Color.GREEN)
@@ -136,7 +117,6 @@ public class CheckersGui implements MouseListener, ActionListener {
 					found = true;
 				}
 			}
-			
 			if (found) {
 				if (jumped) {
 					if (turn == Color.BLACK) {
@@ -146,16 +126,13 @@ public class CheckersGui implements MouseListener, ActionListener {
 						blackCheckersRemaining--;
 					}
 				}
-				
 				selSquare.setHighlight(false);
 				for (CheckersSquare unhighlight : oldPossibleMoves) {
 					unhighlight.setHighlight(false);
 				}
 				selSquare = null;
-				
 				nextTurn();
-				updateGameStatus();
-				
+				updateGameStatus();	
 				String winningStr = getWinner();
 				if (winningStr != null) {
 					int restart = JOptionPane.showConfirmDialog(null, winningStr + " Do you want to begin a new game?", "New Game?", JOptionPane.YES_NO_OPTION);
