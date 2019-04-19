@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import javax.swing.Timer;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -17,43 +18,58 @@ public class Gui extends Board implements ActionListener {
 
 	// make an arrayList of buttons
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
-	static final int NUMLABELS = 1;
+	static final int NUMBUTTONS = 2;
 
+	boolean ai = true;
+
+	private Timer timer;
 	// instantiate our icons
 	Icon blankPc = new ImageIcon("imgs/square.png");
 	Icon whitePc = new ImageIcon("imgs/white pc.png");
 	Icon blackPc = new ImageIcon("imgs/black pc.png");
 
 	// variables to hold the elements in the GUI
+	AI myAi;
 	Board gameBoard;
 	GridBagLayout gridBag = new GridBagLayout();
 	JPanel p = new JPanel(gridBag);
-	/*These are three labels one for:
-	 * player turn, black piece score, white piece score
+
+	/*
+	 * These are three labels one for: player turn, black piece score, white piece
+	 * score
 	 */
 	JLabel plyrTurn, blackScore, whiteScore;
 	JFrame f;
 
 	public Gui(Board initialBoard) {
 		GridBagConstraints cnstrnts = new GridBagConstraints();
-		//Gives a name to the frame
+		// Gives a name to the frame
 		f = new JFrame("Othello");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 		// store the game board so we can access it later
 		gameBoard = initialBoard;
+		myAi = new AI();
 
 		cnstrnts.fill = GridBagConstraints.BOTH;
 
-
 		// Add in the icons for the game
 		JButton newGameButton = new JButton("New Game");
-		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setPreferredSize(new Dimension(40, 20));
 		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 0;
 		cnstrnts.gridy = 0;
 		buttons.add(newGameButton);
 		gridBag.setConstraints(newGameButton, cnstrnts);
+
+		// Button to toggle AI
+		JButton jAi = new JButton("Toggle AI");
+		newGameButton.setPreferredSize(new Dimension(40, 20));
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 4;
+		cnstrnts.gridy = 0;
+		buttons.add(jAi);
+		gridBag.setConstraints(jAi, cnstrnts);
 
 		// icon to indicate whose turn it is
 		plyrTurn = new JLabel("Black's Turn");
@@ -64,7 +80,7 @@ public class Gui extends Board implements ActionListener {
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(plyrTurn, cnstrnts);
 
-		//Icon to indicate the number of pieces black has
+		// Icon to indicate the number of pieces black has
 		blackScore = new JLabel("Black: 2");
 		blackScore.setHorizontalTextPosition(JLabel.CENTER);
 		blackScore.setVerticalTextPosition(JLabel.BOTTOM);
@@ -74,7 +90,7 @@ public class Gui extends Board implements ActionListener {
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(blackScore, cnstrnts);
 
-		//icon to indicate the number of pieces white has
+		// icon to indicate the number of pieces white has
 		whiteScore = new JLabel("White: 2");
 		whiteScore.setHorizontalTextPosition(JLabel.CENTER);
 		whiteScore.setVerticalTextPosition(JLabel.BOTTOM);
@@ -84,13 +100,13 @@ public class Gui extends Board implements ActionListener {
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(whiteScore, cnstrnts);
 
-		//add the icons to the JPanel
+		// add the icons to the JPanel
 		p.add(plyrTurn);
 		p.add(blackScore);
 		p.add(whiteScore);
 
-		//Set icons for each JButton & add them to the arrayList
-		//of JButtons
+		// Set icons for each JButton & add them to the arrayList
+		// of JButtons
 		for (int x = 0; x < 8; x++) {
 			for (int y = 1; y < 9; y++) {
 				JButton button = new JButton();
@@ -118,7 +134,7 @@ public class Gui extends Board implements ActionListener {
 			p.add(button);
 		}
 
-		//Make sure the GUI displays correctly when it pops up
+		// Make sure the GUI displays correctly when it pops up
 		p.setSize(2500, 2500);
 		f.setPreferredSize(new Dimension(700, 700));
 		p.setVisible(true);
@@ -133,26 +149,33 @@ public class Gui extends Board implements ActionListener {
 	 * Used to catch any actions that are performed on the GUI
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		/*x and y are used to hold the column and row position 
-		 * on the board
-		 *z is used so that x and y don't increment when the
-		 * button loop is,
-		 *for one of the top buttons such as new game.
+		/*
+		 * x and y are used to hold the column and row position on the board z is used
+		 * so that x and y don't increment when the button loop is, for one of the top
+		 * buttons such as new game.
 		 */
 		int x = 0, y = 0, z = 0;
 
-		//for loops to check & see which button was pushed
+		int move[];
+
+		// for loops to check & see which button was pushed
 		for (JButton button : buttons) {
 			// check the source of the button
 			if (e.getSource() == button) {
 				if (z == 0) {
 					gameBoard.newGame();
 				}
-				//Make sure that the JButton isn't one of the
-				//top buttons 
-				if (z > NUMLABELS - 1) {
-					//Make sure it's a valid move for black,
-					//if so, play the piece
+				// Make sure that the JButton isn't one of the
+				// top buttons
+				else if (z == 1) {
+					if (ai)
+						ai = false;
+					else
+						ai = true;
+				}
+				if (z > NUMBUTTONS - 1) {
+					// Make sure it's a valid move for black,
+					// if so, play the piece
 					if (gameBoard.getCurrPlyr() == 1) {
 						if (gameBoard.isValidMove(x, y)) {
 							gameBoard.playPiece(x, y);
@@ -161,19 +184,26 @@ public class Gui extends Board implements ActionListener {
 						}
 					}
 
-					//make sure it's a valid move for white
-					//& if so play the piece
+					// make sure it's a valid move for white
+					// & if so play the piece
 					else if (gameBoard.isValidMove(x, y)) {
 						gameBoard.playPiece(x, y);
+						drawBoard();
 						button.setIcon(whitePc);
 						gameBoard.nextPlyr();
+						if (ai) {
+							drawBoard();
+							move = myAi.computeMove(gameBoard);
+							gameBoard.playPiece(move[1], move[0]);
+							gameBoard.nextPlyr();
+						}
 					}
 				}
 			}
 
-			//increment x and y if the loop is
-			//passed the top buttons
-			if (z > NUMLABELS - 1) {
+			// increment x and y if the loop is
+			// passed the top buttons
+			if (z > NUMBUTTONS - 1) {
 				if (y == 7) {
 					y = 0;
 					x++;
@@ -181,61 +211,55 @@ public class Gui extends Board implements ActionListener {
 					y++;
 				}
 			}
-			//increment z, z tracks which button we are on
-			//(out of the total buttons, not just the board)
+			// increment z, z tracks which button we are on
+			// (out of the total buttons, not just the board)
 			z++;
 		}
 
 		drawBoard();
 
-		//Make sure the next player can move
+		// Make sure the next player can move
 		if (!canMove()) {
-			//If player can't move then toggle player again
+			// If player can't move then toggle player again
 			gameBoard.nextPlyr();
-			//check if both players can't move
+			// check if both players can't move
 			if (!canMove()) {
 				if (gameBoard.getWinner() == 1) {
-					JOptionPane.showMessageDialog(f, 
-							"\nThis win goes to Black!");
-				}
-				else if(gameBoard.getWinner() == -1)
-					JOptionPane.showMessageDialog(f, 
-							"Oh my, oh my\nLooks like we have a tie!");
+					JOptionPane.showMessageDialog(f, "\nThis win goes to Black!");
+				} else if (gameBoard.getWinner() == -1)
+					JOptionPane.showMessageDialog(f, "Oh my, oh my\nLooks like we have a tie!");
 				else
-					JOptionPane.showMessageDialog(f, 
-							"\nThe win goes to White!");
+					JOptionPane.showMessageDialog(f, "\nThe win goes to White!");
 
 				gameBoard.newGame();
-			}
-			else if(getCurrPlyr() == 1)
-				JOptionPane.showMessageDialog(f, 
-						"No available moves for white");
+			} else if (getCurrPlyr() == 1)
+				JOptionPane.showMessageDialog(f, "No available moves for white");
 			else
-				JOptionPane.showMessageDialog(f, 
-						"No available moves for black");
+				JOptionPane.showMessageDialog(f, "No available moves for black");
 		}
 
-		//draw the board to reflect any current player changes
+		// draw the board to reflect any current player changes
 		drawBoard();
 
 	}
 
 	/**
-	 * Draw the board by updating the icons based on which player is where
-	 * in the board array.
+	 * Draw the board by updating the icons based on which player is where in the
+	 * board array.
 	 */
 	private void drawBoard() {
-		/*x and y are used to hold the x and y position on the board
-		 *z is used so that x and y don't increment when the button
-		 *loop is for one of the top buttons
-		 *such as New Game
+		/*
+		 * x and y are used to hold the x and y position on the board z is used so that
+		 * x and y don't increment when the button loop is for one of the top buttons
+		 * such as New Game
 		 */
+		System.out.println("check");
 		int x = 0, y = 0, z = 0;
-		//Go through each button
+		// Go through each button
 		for (JButton button : buttons) {
-			//Make sure it's not on the top buttons
-			if (z > NUMLABELS - 1) {
-				//set the appropriate icon
+			// Make sure it's not on the top buttons
+			if (z > NUMBUTTONS - 1) {
+				// set the appropriate icon
 				if (gameBoard.getPlyr(x, y) == 1) {
 					button.setIcon(blackPc);
 				} else if (gameBoard.getPlyr(x, y) == 2) {
@@ -253,7 +277,7 @@ public class Gui extends Board implements ActionListener {
 			z++;
 		}
 
-		//Set the current player on the board
+		// Set the current player on the board
 		String player;
 		if (gameBoard.getCurrPlyr() == 1) {
 			player = "Black";

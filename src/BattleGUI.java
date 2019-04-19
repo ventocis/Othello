@@ -17,8 +17,10 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 
 	// make an arrayList of buttons
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
-	static final int NUMLABELS = 1;
+	private static final int NUMLABELS = 1;
 
+	private static final int SHIFTER = 4;
+	private static final int VSHIFTER = 0;
 	// instantiate our icons
 	Icon blankSpace = new ImageIcon("imgs/water.png");
 	Icon hitPc = new ImageIcon("imgs/hit.png");
@@ -37,7 +39,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 	/*These are three labels one for:
 	 * player turn, black piece score, white piece score
 	 */
-	JLabel plyrTurn, player1Hits, player2Hits;
+	JLabel player1Hits, player2Hits, hShips, vShips;
 	JFrame f;
 
 	public BattleGUI(BattleBoard initialBoard) {
@@ -57,48 +59,150 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 		newGameButton.setPreferredSize(new Dimension(40,20)); 
 		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 0;
-		cnstrnts.gridy = 0;
+		cnstrnts.gridy = VSHIFTER;
+		cnstrnts.gridwidth = 2;
 		buttons.add(newGameButton);
 		gridBag.setConstraints(newGameButton, cnstrnts);
+		
+		
+		cnstrnts.gridwidth = 1;
+		// Add in the icons for the game
+		JButton h5 = new JButton("5");
+		newGameButton.setPreferredSize(new Dimension(30,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h5);
+		gridBag.setConstraints(h5, cnstrnts);
 
-		// icon to indicate whose turn it is
-		plyrTurn = new JLabel("Fleet Commander 1's Turn");
-		plyrTurn.setHorizontalTextPosition(JLabel.CENTER);
-		plyrTurn.setVerticalTextPosition(JLabel.BOTTOM);
-		plyrTurn.setVerticalAlignment(JLabel.BOTTOM);
-		cnstrnts.gridx = 1;
-		cnstrnts.gridy = 0;
-		gridBag.setConstraints(plyrTurn, cnstrnts);
+		// Add in the icons for the game
+		JButton h4 = new JButton("4");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 1 + SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h4);
+		gridBag.setConstraints(h4, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton h3 = new JButton("3");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 2 + SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h3);
+		gridBag.setConstraints(h3, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton h2 = new JButton("2");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 3 + SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h2);
+		gridBag.setConstraints(h2, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton v5 = new JButton("5");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v5);
+		gridBag.setConstraints(v5, cnstrnts);
+
+		// Add in the icons for the game
+		JButton v4 = new JButton("4");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER + 1;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v4);
+		gridBag.setConstraints(v4, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton v3 = new JButton("3");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER + 2;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v3);
+		gridBag.setConstraints(v3, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton v2 = new JButton("2");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER + 3;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v2);
+		gridBag.setConstraints(v2, cnstrnts);
+
+		//FIXME delete below
+//
+//		// icon to indicate whose turn it is
+//		plyrTurn = new JLabel("Your Turn");
+//		plyrTurn.setHorizontalTextPosition(JLabel.CENTER);
+//		plyrTurn.setVerticalTextPosition(JLabel.BOTTOM);
+//		plyrTurn.setVerticalAlignment(JLabel.BOTTOM);
+//		cnstrnts.gridx = 1;
+//		cnstrnts.gridy = 0;
+//		gridBag.setConstraints(plyrTurn, cnstrnts);
+		
+		//Icon to indicate the number of pieces black has
+		hShips = new JLabel("Horizontal Ships:");
+		hShips.setHorizontalTextPosition(JLabel.CENTER);
+		hShips.setVerticalTextPosition(JLabel.BOTTOM);
+		hShips.setHorizontalAlignment(JLabel.CENTER);
+		hShips.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER - 2;
+		cnstrnts.gridy = VSHIFTER;
+		cnstrnts.gridwidth = 2;
+		gridBag.setConstraints(hShips, cnstrnts);
+		p.add(hShips);
+		
+		
+		//Icon to indicate the number of pieces black has
+		vShips = new JLabel("Vertical Ships:");
+		vShips.setHorizontalTextPosition(JLabel.CENTER);
+		vShips.setVerticalTextPosition(JLabel.BOTTOM);
+		vShips.setHorizontalAlignment(JLabel.CENTER);
+		vShips.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER - 2;
+		cnstrnts.gridy = 1 + VSHIFTER;
+		gridBag.setConstraints(vShips, cnstrnts);
+		p.add(vShips);
+		
+		cnstrnts.gridwidth = 1;
 
 		//Icon to indicate the number of pieces black has
-		player1Hits = new JLabel("Player 1 Hits: 0");
+		player1Hits = new JLabel("You: 0");
 		player1Hits.setHorizontalTextPosition(JLabel.CENTER);
 		player1Hits.setVerticalTextPosition(JLabel.BOTTOM);
 		player1Hits.setHorizontalAlignment(JLabel.CENTER);
 		player1Hits.setVerticalAlignment(JLabel.BOTTOM);
-		cnstrnts.gridx = 6;
-		cnstrnts.gridy = 0;
+		cnstrnts.gridx = 0;
+		cnstrnts.gridy = VSHIFTER + 1;
 		gridBag.setConstraints(player1Hits, cnstrnts);
+		p.add(player1Hits);
+		
 
 		//icon to indicate the number of pieces white has
-		player2Hits = new JLabel("Player 2 Hits: 0");
+		player2Hits = new JLabel("PC: 0");
 		player2Hits.setHorizontalTextPosition(JLabel.CENTER);
 		player2Hits.setVerticalTextPosition(JLabel.BOTTOM);
 		player2Hits.setHorizontalAlignment(JLabel.CENTER);
 		player2Hits.setVerticalAlignment(JLabel.BOTTOM);
-		cnstrnts.gridx = 7;
-		cnstrnts.gridy = 0;
+		cnstrnts.gridx = 1;
+		cnstrnts.gridy = VSHIFTER + 1;
 		gridBag.setConstraints(player2Hits, cnstrnts);
-
-		//add the icons to the JPanel
-		p.add(plyrTurn);
-		p.add(player1Hits);
 		p.add(player2Hits);
+		
 
 		//Set icons for each JButton & add them to the arrayList
 		//of JButtons will write this after writing code for Board
-		for (int x = 0; x < 8; x++) {
-			for (int y = 1; y < 9; y++) {
+		for (int x = 0; x < 10; x++) {
+			for (int y = 3; y < 13; y++) {
 				JButton button = new JButton();
 //				if (gameBoard.getPlyr(x, y - 1) == 1) {
 //					button.setIcon();
@@ -149,8 +253,15 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 
 		//for loops to check & see which button was pushed
 		for (JButton button : buttons) {
-			// check the source of the button
-//			if (e.getSource() == button) {
+			 //check the source of the button
+			if (e.getSource() == button) {
+				
+				if (z == 0)
+					//FIXME Add New Game
+					System.out.println("Fixme");
+				else if(z == 1)
+					System.out.println("hi");
+			}
 //				if (z == 0) {
 //					gameBoard.newGame();
 //				}
@@ -175,12 +286,13 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 //						gameBoard.nextPlyr();
 //					}
 //				}
-			}
+			
 
 			//increment x and y if the loop is
 			//passed the top buttons
 			if (z > NUMLABELS - 1) {
 				if (y == 7) {
+					//hi
 					y = 0;
 					x++;
 				} else {
@@ -191,6 +303,7 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 			//(out of the total buttons, not just the board)
 			z++;
 		}
+	}
 
 //		drawBoard();
 
