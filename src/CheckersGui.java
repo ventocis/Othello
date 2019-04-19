@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
 
-
+  /** Created by Alen, Sam, Chandler */
 
 public class CheckersGui implements MouseListener, ActionListener {
 	private JPanel boardPanel;
@@ -80,6 +80,7 @@ public class CheckersGui implements MouseListener, ActionListener {
 		frame.setVisible(true);
 	}	
 	
+	  /** Created by Alen, Sam, Chandler */
 	public CheckersGui() {
 		InitializeGUI();
 		
@@ -179,6 +180,7 @@ public class CheckersGui implements MouseListener, ActionListener {
 	public void mousePressed(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}
 	
+	  /** Created by Alen, Sam, Chandler */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == startGame) {
 			resetGame();
@@ -189,7 +191,8 @@ public class CheckersGui implements MouseListener, ActionListener {
 		}
 		
 	}
-		
+	
+	  /** Created by Alen, Sam, Chandler */
 	public void resetGame() {
 		frame.setVisible(false);
 		selSquare = null;
@@ -210,6 +213,7 @@ public class CheckersGui implements MouseListener, ActionListener {
 		frame.setVisible(true);
 	}
 
+	  /** Created by Alen, Sam, Chandler */
 	public void setBoard(CheckersBoard b, JPanel p) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -231,10 +235,12 @@ public class CheckersGui implements MouseListener, ActionListener {
 		}
 	}
 	
+	  /** Created by Alen, Sam, Chandler */
 	public void updateGameStatus() {
 		piecesText.setText("Red Pieces Left: " + redCheckersRemaining + "             Black Pieces Left: " + blackCheckersRemaining);
 	}
 	
+	  /** Created by Alen, Sam, Chandler */
 	public String getWinner() {
 		
 		if (blackCheckersRemaining == 0) {
@@ -277,6 +283,7 @@ public class CheckersGui implements MouseListener, ActionListener {
 		return null;
 	}
 	
+	  /** Created by Alen, Sam, Chandler */
 	public void nextTurn() {
 		if(turn == Color.BLACK) {
 			turn = Color.RED;
