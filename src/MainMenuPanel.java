@@ -47,11 +47,11 @@ public class MainMenuPanel extends JPanel{
 			} else if(event.getSource() == battleShip) {
 				BattleBoard battleBoard = new BattleBoard();
 				BattleGUI secondGui = new BattleGUI(battleBoard);
-//			} else if(event.getSource() == checkers) {
-//				CheckerBoard checkerBoard = new CheckerBoard();
+			} else if(event.getSource() == checkers) {
+				new CheckersGui();
 			} else if(event.getSource() == exit) {
 				JOptionPane.showMessageDialog(null, "Thanks for playing the suite!");
-				System.exit(1);
+				//System.exit(1);
 			}
 			
 		}

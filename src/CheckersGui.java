@@ -19,8 +19,7 @@ import java.util.Vector;
 
 
 
-public class CheckersGui implements MouseListener,
-									ActionListener {
+public class CheckersGui implements MouseListener, ActionListener {
 	private JPanel boardPanel;
 	private JFrame frame;
 	private JMenuItem startGame;
@@ -39,9 +38,9 @@ public class CheckersGui implements MouseListener,
 	private CheckersSquare selSquare;
 	private JLabel piecesText;
 	
-	public void InitializeGUI() {
+	void InitializeGUI() {
 		frame = new JFrame("CheckersGui Frame");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new FlowLayout());
 		
 		frame.getContentPane().setLayout(
@@ -285,9 +284,5 @@ public class CheckersGui implements MouseListener,
 		else {
 			turn = Color.BLACK;
 		}
-	}
-
-	public static void main(String[] args) {
-		new CheckersGui();
 	}
 }

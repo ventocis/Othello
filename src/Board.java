@@ -281,8 +281,8 @@ public  class Board {
 				}
 			}
 		}
-		currPlyr = 1;
-		otherPlyr = 2;
+		currPlyr = 2;
+		otherPlyr = 1;
 	}
 
 	/**

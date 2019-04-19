@@ -59,28 +59,35 @@ public class Gui extends Board implements ActionListener {
 		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
 		cnstrnts.gridx = 0;
 		cnstrnts.gridy = 0;
+		cnstrnts.gridwidth = 2;
 		buttons.add(newGameButton);
 		gridBag.setConstraints(newGameButton, cnstrnts);
+		
+		cnstrnts.gridwidth = 1;
 
 		// Button to toggle AI
 		JButton jAi = new JButton("Toggle AI");
 		newGameButton.setPreferredSize(new Dimension(40, 20));
 		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
-		cnstrnts.gridx = 4;
+		cnstrnts.gridx = 2;
 		cnstrnts.gridy = 0;
+		cnstrnts.gridwidth = 2;
 		buttons.add(jAi);
 		gridBag.setConstraints(jAi, cnstrnts);
 
+
 		// icon to indicate whose turn it is
-		plyrTurn = new JLabel("Black's Turn");
+		plyrTurn = new JLabel("White's Turn");
 		plyrTurn.setHorizontalTextPosition(JLabel.CENTER);
 		plyrTurn.setVerticalTextPosition(JLabel.BOTTOM);
 		plyrTurn.setVerticalAlignment(JLabel.BOTTOM);
-		cnstrnts.gridx = 1;
+		cnstrnts.gridwidth = 2;
+		cnstrnts.gridx = 4;
 		cnstrnts.gridy = 0;
 		gridBag.setConstraints(plyrTurn, cnstrnts);
 
 		// Icon to indicate the number of pieces black has
+		cnstrnts.gridwidth = 1;
 		blackScore = new JLabel("Black: 2");
 		blackScore.setHorizontalTextPosition(JLabel.CENTER);
 		blackScore.setVerticalTextPosition(JLabel.BOTTOM);

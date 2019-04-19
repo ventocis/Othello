@@ -13,11 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class  BattleGUI extends BattleBoard implements ActionListener {
+public class  AIBattleGUI extends BattleBoard implements ActionListener {
 
 	// make an arrayList of buttons
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
-	private static final int NUMLABELS = 1;
+	private static final int NUMLABELS = 9;
 
 	private static final int SHIFTER = 4;
 	private static final int VSHIFTER = 0;
@@ -29,14 +29,11 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 	Icon medShip = new ImageIcon("imgs/medium_ship.png");
 	Icon bigShip = new ImageIcon("imgs/big_ship.png");
 	Icon biggestShip = new ImageIcon("imgs/biggest_ship.png");
-	
-	
 
 
 
 	// variables to hold the elements in the GUI
 	BattleBoard gameBoard;
-	BattleBoard aiBoard;
 	GridBagLayout gridBag = new GridBagLayout();
 	JPanel p = new JPanel(gridBag);
 	/*These are three labels one for:
@@ -45,13 +42,10 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 	JLabel player1Hits, player2Hits, hShips, vShips;
 	JFrame f;
 
-	public BattleGUI(BattleBoard initialBoard) {
-		BattleBoard aiBoard = new BattleBoard();
-		AIBattleGUI aiGui = new AIBattleGUI(aiBoard);
-		
+	public AIBattleGUI(BattleBoard initialBoard) {
 		GridBagConstraints cnstrnts = new GridBagConstraints();
 		//Gives a name to the frame
-		f = new JFrame("Battle Ship");
+		f = new JFrame("AI Battle Ship");
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		// store the game board so we can access it later
@@ -70,6 +64,104 @@ public class  BattleGUI extends BattleBoard implements ActionListener {
 		buttons.add(newGameButton);
 		gridBag.setConstraints(newGameButton, cnstrnts);
 		
+		
+		cnstrnts.gridwidth = 1;
+		// Add in the icons for the game
+		JButton h5 = new JButton("5");
+		newGameButton.setPreferredSize(new Dimension(30,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h5);
+		gridBag.setConstraints(h5, cnstrnts);
+
+		// Add in the icons for the game
+		JButton h4 = new JButton("4");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 1 + SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h4);
+		gridBag.setConstraints(h4, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton h3 = new JButton("3");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 2 + SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h3);
+		gridBag.setConstraints(h3, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton h2 = new JButton("2");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = 3 + SHIFTER;
+		cnstrnts.gridy = VSHIFTER;
+		buttons.add(h2);
+		gridBag.setConstraints(h2, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton v5 = new JButton("5");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v5);
+		gridBag.setConstraints(v5, cnstrnts);
+
+		// Add in the icons for the game
+		JButton v4 = new JButton("4");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER + 1;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v4);
+		gridBag.setConstraints(v4, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton v3 = new JButton("3");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER + 2;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v3);
+		gridBag.setConstraints(v3, cnstrnts);
+		
+		// Add in the icons for the game
+		JButton v2 = new JButton("2");
+		newGameButton.setPreferredSize(new Dimension(40,20)); 
+		newGameButton.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER + 3;
+		cnstrnts.gridy = VSHIFTER + 1;
+		buttons.add(v2);
+		gridBag.setConstraints(v2, cnstrnts);
+
+		
+		//Icon to indicate the number of pieces black has
+		hShips = new JLabel("Horizontal Ships:");
+		hShips.setHorizontalTextPosition(JLabel.CENTER);
+		hShips.setVerticalTextPosition(JLabel.BOTTOM);
+		hShips.setHorizontalAlignment(JLabel.CENTER);
+		hShips.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER - 2;
+		cnstrnts.gridy = VSHIFTER;
+		cnstrnts.gridwidth = 2;
+		gridBag.setConstraints(hShips, cnstrnts);
+		p.add(hShips);
+		
+		
+		//Icon to indicate the number of pieces black has
+		vShips = new JLabel("Vertical Ships:");
+		vShips.setHorizontalTextPosition(JLabel.CENTER);
+		vShips.setVerticalTextPosition(JLabel.BOTTOM);
+		vShips.setHorizontalAlignment(JLabel.CENTER);
+		vShips.setVerticalAlignment(JLabel.BOTTOM);
+		cnstrnts.gridx = SHIFTER - 2;
+		cnstrnts.gridy = 1 + VSHIFTER;
+		gridBag.setConstraints(vShips, cnstrnts);
+		p.add(vShips);
 		
 		cnstrnts.gridwidth = 1;
 
