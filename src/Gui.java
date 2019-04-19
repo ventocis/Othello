@@ -55,110 +55,192 @@ public class Gui extends Board implements ActionListener {
 	 * 
 	 */
 	private Board gameBoard;
+	/**
+	 * Method for getting buttons.
+	 * @return buttons
+	 */
 	public ArrayList<JButton> getButtons() {
 		return buttons;
 	}
-
-	public void setButtons(ArrayList<JButton> buttons) {
+	/**
+	 * Method for setting the buttons.
+	 * @param buttons sets the buttons.
+	 */
+	public void setButtons(final ArrayList<JButton> buttons) {
 		this.buttons = buttons;
 	}
-
+	/**
+	 * Method to check if AI is on.
+	 * @return returns true if on.
+	 */
 	public boolean isAi() {
 		return ai;
 	}
-
-	public void setAi(boolean ai) {
+	/**
+	 * Method to set status of AI.
+	 * @param ai sets the ai.
+	 */
+	public void setAi(final boolean ai) {
 		this.ai = ai;
 	}
-
+	/**
+	 * Getter method for blank spaces.
+	 * @return returns the blank.
+	 */
 	public Icon getBlankPc() {
 		return blankPc;
 	}
-
-	public void setBlankPc(Icon blankPc) {
+	/**
+	 * Method for setting to blank.
+	 * @param blankPc sets the piece to blank.
+	 */
+	public void setBlankPc(final Icon blankPc) {
 		this.blankPc = blankPc;
 	}
-
+	/**
+	 * Method for setting to white.
+	 * @return whitePc sets the piece to white.
+	 */
 	public Icon getWhitePc() {
 		return whitePc;
 	}
-
-	public void setWhitePc(Icon whitePc) {
+	/**
+	 * Method that sets piece to white.
+	 * @param whitePc sets the white piece.
+	 */
+	public void setWhitePc(final Icon whitePc) {
 		this.whitePc = whitePc;
 	}
-
+	/**
+	 * Method to get the black piece.
+	 * @return return the piece.
+	 */
 	public Icon getBlackPc() {
 		return blackPc;
 	}
-
-	public void setBlackPc(Icon blackPc) {
+	/**
+	 * Method to set piece.
+	 * @param blackPc sets the black piece.
+	 */
+	public void setBlackPc(final Icon blackPc) {
 		this.blackPc = blackPc;
 	}
-
+	/**
+	 * Method to get AI.
+	 * @return returns the AI.
+	 */
 	public AI getMyAi() {
 		return myAi;
 	}
-
-	public void setMyAi(AI myAi) {
+	/**
+	 * Method to set the AI.
+	 * @param myAi sets the AI.
+	 */
+	public void setMyAi(final AI myAi) {
 		this.myAi = myAi;
 	}
-
+	/**
+	 * Method to get the gameboard.
+	 * @return returns the board.
+	 */
 	public Board getGameBoard() {
 		return gameBoard;
 	}
-
-	public void setGameBoard(Board gameBoard) {
+	/**
+	 * Sets the game board to board.
+	 * @param gameBoard sets the board.
+	 */
+	public void setGameBoard(final Board gameBoard) {
 		this.gameBoard = gameBoard;
 	}
-
+	/**
+	 * Method to get gridbag.
+	 * @return returns the grid bag.
+	 */
 	public GridBagLayout getGridBag() {
 		return gridBag;
 	}
-
-	public void setGridBag(GridBagLayout gridBag) {
+	/**
+	 * Method to set grid bag.
+	 * @param gridBag .
+	 */
+	public void setGridBag(final GridBagLayout gridBag) {
 		this.gridBag = gridBag;
 	}
-
+	/**
+	 * gets the P.
+	 * @return returns the p.
+	 */
 	public JPanel getP() {
 		return p;
 	}
-
-	public void setP(JPanel p) {
+	/**
+	 * sets the panel.
+	 * @param p sets the panel.
+	 */
+	public void setP(final JPanel p) {
 		this.p = p;
 	}
-
+	/**
+	 * Returns the players turn.
+	 * @return the turn.
+	 */
 	public JLabel getPlyrTurn() {
 		return plyrTurn;
 	}
-
-	public void setPlyrTurn(JLabel plyrTurn) {
+	/**
+	 * Sets the curr players turn.
+	 * @param plyrTurn .
+	 */
+	public void setPlyrTurn(final JLabel plyrTurn) {
 		this.plyrTurn = plyrTurn;
 	}
-
+	/**
+	 * gets the label for black score.
+	 * @return blackscore.
+	 */
 	public JLabel getBlackScore() {
 		return blackScore;
 	}
-
-	public void setBlackScore(JLabel blackScore) {
+	/**
+	 * sets the black score label.
+	 * @param blackScore sets the black score
+	 */
+	public void setBlackScore(final JLabel blackScore) {
 		this.blackScore = blackScore;
 	}
-
+	/**
+	 * gets the whites score label.
+	 * @return returns the label.
+	 */
 	public JLabel getWhiteScore() {
 		return whiteScore;
 	}
-
-	public void setWhiteScore(JLabel whiteScore) {
+	/**
+	 * sets the white score label.
+	 * @param whiteScore .
+	 */
+	public void setWhiteScore(final JLabel whiteScore) {
 		this.whiteScore = whiteScore;
 	}
-
+	/**
+	 * Method to get the frame.
+	 * @return returns the frame.
+	 */
 	public JFrame getF() {
 		return f;
 	}
-
-	public void setF(JFrame f) {
+	/**
+	 * Sets the frame to frame.
+	 * @param f sets frame.
+	 */
+	public void setF(final JFrame f) {
 		this.f = f;
 	}
-
+	/**
+	 * Getter to get the number of buttons.
+	 * @return the number of buttons.
+	 */
 	public static int getNumbuttons() {
 		return NUMBUTTONS;
 	}

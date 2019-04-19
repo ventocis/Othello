@@ -1,20 +1,42 @@
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-//Extends is inheritance, inherits all the qualities from JFrame
-public class MainMenuPanel extends JPanel{
 
+/**
+ * Extends is inheritance, inherits all the qualities from JFrame.
+ * @author Owner
+ *
+ */
+public class MainMenuPanel extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Button for othello.
+	 */
 	private JButton othello;
+	/**
+	 * Button for battleShip.
+	 */
 	private JButton battleShip;	
+	/**
+	 * Button for checkers.
+	 */
 	private JButton checkers;
+	/**
+	 * Button for exit.
+	 */
 	private JButton exit;
 	
-		
+	/**
+	 * Constructor for main menu panel.
+	 */
 	public MainMenuPanel() {
 		
 		setLayout(new FlowLayout());
@@ -32,7 +54,7 @@ public class MainMenuPanel extends JPanel{
 		exit = new JButton("Exit");
 		add(exit);
 		
-		thehandler handler  = new thehandler();
+		TheHandler handler  = new TheHandler();
 		othello.addActionListener(handler);
 		battleShip.addActionListener(handler);
 		checkers.addActionListener(handler);
@@ -40,19 +62,26 @@ public class MainMenuPanel extends JPanel{
 		
 		
 	}
-	
-	private class thehandler implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			if(event.getSource() == othello) {
+	/**
+	 * Class for the event handler in the program.
+	 * @author Owner
+	 *
+	 */
+	private class TheHandler implements ActionListener {
+		/**
+		 * Method for the actions performed.
+		 * @param event is the event performed.
+		 */
+		public void actionPerformed(final ActionEvent event) {
+			if (event.getSource() == othello) {
 				Board gameBoard = new Board();
 				new Gui(gameBoard);
-			} //else if(event.getSource() == battleShip) {
-				//BattleBoard battleBoard = new BattleBoard();
-				//BattleGUI secondGui = new BattleGUI(battleBoard);
-			else if(event.getSource() == checkers) {
+			} else if (event.getSource() == checkers) {
 				new CheckersGui();
-			} else if(event.getSource() == exit) {
-				JOptionPane.showMessageDialog(null, "Thanks for playing the suite!");
+			} else if (event.getSource() == exit) {
+				JOptionPane.showMessageDialog(null,
+						"Thanks for playing the"
+						+ " suite!");
 				//System.exit(1);
 			}
 			
