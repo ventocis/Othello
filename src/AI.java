@@ -20,20 +20,7 @@ public class AI {
 	//	Board check = new Board(state);
 
 		int r, c;
-//		while (true) {
-//			r = rand.nextInt(8);
-//			c = rand.nextInt(8);
-////		for (int r = 1; r < 8; r++) {
-////			for (int c = 1; c < 8; c++) {
-//
-//			if (check.isLegal(state.getBoard(), r, c)) {
-//				move[0] = r;
-//				move[1] = c;
-//				return move;
-//			}
-//			System.out.println(r + " " + c);
-//
-//		}
+
 		ArrayList<Score> availableMoves = new ArrayList<Score>();
 		
 		for (r=0; r<8;r++)
@@ -51,8 +38,6 @@ public class AI {
 				if (s.getPoints() > best) {
 					
 					best = s.getPoints();
-					//TODO delete
-					System.out.println(" " + best);
 					bestMove = s;
 				}
 			}
@@ -117,59 +102,4 @@ public class AI {
 			
 		return value;	
 	}
-	
-//	int minimax(Node node, int depth, int isMaximizingPlayer, int alpha, int beta, GameState game) {
-//		
-//		if(node == null)
-//			return 0; 
-//		
-//		//gameValue(game.getBoard());
-//		
-//		// If leaf, return value
-//		if (node.noChildren(node)) {
-//			return gameValue(game.getBoard()); 
-//		}
-//		
-//		GameState game2 = game;
-//		
-//		Stack<Node> children = node.getChildren(node);
-//	
-//	    if (isMaximizingPlayer == player) {
-//	        int bestVal = -1000000; 
-//	    
-//	        for (Node child : children) {
-//	        	int value = minimax(child, depth+1, opponent, alpha, beta, game2);
-//	            bestVal = max( bestVal, value); 
-//	            alpha = max( alpha, bestVal);
-//	            if (beta <= alpha) 
-//	                break;
-//	        }
-//	        return bestVal;
-//	    }
-//	    else {
-//
-//	    	int bestVal = 1000000;
-//	
-//	    	for (Node child :children) {
-//	            int value = minimax(child, depth+1, player, alpha, beta, game2);
-//	            bestVal = min(bestVal, value);
-//	            beta = min( beta, bestVal);
-//	            if (beta <= alpha)
-//	                break;
-//	    	}
-//	    	return bestVal;
-//	    }
-	
-//	private int min(int bestVal, int value) {
-//		if (bestVal < value) 
-//			return bestVal;
-//		return value;
-//	}
-//
-//	private int max(int bestVal, int value) {
-//		if (bestVal > value) 
-//			return bestVal;
-//		return value;
-	
-//	}
 }

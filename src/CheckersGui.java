@@ -234,7 +234,6 @@ public class CheckersGui implements MouseListener, ActionListener {
 	 * @param e mouse exited.
 	 */
 	public void mouseExited(final MouseEvent e) {
-	}
 
 	/**
 	 * The mouse is pressed.
@@ -299,7 +298,6 @@ public class CheckersGui implements MouseListener, ActionListener {
 			for (int j = 0; j < 8; j++) {
 				CheckersSquare sq = b.getSquare(i, j);
 				sq.addMouseListener(this);
-
 				JPanel containerPanel 
 				= new JPanel(new
 						FlowLayout());
@@ -375,7 +373,6 @@ public class CheckersGui implements MouseListener, ActionListener {
 			}
 		}
 
-		if (redCanMove && !blackCanMove) {
 			return "Red team wins since"
 					+ " Black team can make no more moves!";
 		} else if (blackCanMove && !redCanMove) {

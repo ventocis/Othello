@@ -1,3 +1,4 @@
+B
 import java.awt.Color;
 import java.util.Vector;
 
@@ -44,6 +45,22 @@ public class CheckersBoard {
 				lastColor = !lastColor;
 			}
 			lastColor = !lastColor;
+		}
+	}
+
+	/**
+	 * Method to make sure that the move is within the bounds of the board.
+	 * 
+	 * @param row variable for the rows of the board.
+	 * @param col variable for the columns of the board.
+	 * @return true or false based on bounds.
+	 */
+	/** Created by Alen, Sam, Chandler */
+	public static boolean inBounds(int row, int col) {
+		if (row >= 0 && row < rows && col >= 0 && col < cols) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -265,6 +282,7 @@ public class CheckersBoard {
 				highlight.setHighlight(true);
 			}
 		} else {
+
 			for (CheckersSquare highlight : possibleMoves) {
 				highlight.setHighlight(false);
 			}

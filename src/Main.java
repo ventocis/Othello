@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.FlowLayout;
 
 import javax.swing.JFrame;//need this
 /*******************************************************************
@@ -11,7 +10,10 @@ import javax.swing.JFrame;//need this
  ******************************************************************/
 
 public class Main extends JFrame{
-    public static void main(String[] args){
+ 
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args){
 
     	JFrame frame = new JFrame("Game Suite");
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
