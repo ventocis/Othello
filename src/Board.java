@@ -147,7 +147,7 @@ public  class Board {
 	 * @return true if the selection direction
 	 *  can capture pieces, else false
 	 */
-	public boolean checkDirections(int x, int y,
+	private boolean checkDirections(int x, int y,
 			final int xChange, final int yChange) {
 
 		//makes sure the move is on the Board
