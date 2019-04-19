@@ -85,7 +85,7 @@ public class BattleBoard {
 	 * @return true if on the board false if not on the board
 	 */
 	public boolean onBoard(final int x, final int y) {
-		if (x > getSIZE() || x < 0 || y > getSIZE() || y < 0) {
+		if (x >= getSIZE() || x < 0 || y >= getSIZE() || y < 0) {
 			return false;
 		}
 		return true;
@@ -141,8 +141,8 @@ public class BattleBoard {
 	 * @return true or false
 	 */
 	public boolean isValidHorizontalShipMove(String sname, final int x, final int y) {
-		int row = x;
-		int col = y;
+		int col = x;
+		int row = y;
 		
 		if(count >= SHIPMAX) {
 			return false;
@@ -155,7 +155,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(smallShip)) {
 			//checks to see if the ship is in bounds on the east border
 			if(onBoard(row, col+1)) {
-				for(int i = col; i <= col+2; i++) {
+				for(int i = col+1; i >= col; i--) {
 					if(board[row][i] == getEmpty()) {
 						return true;
 					}
@@ -165,7 +165,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(medShip)) {
 			//checks to see if the ship is in bounds on the east border
 			if(onBoard(row, col+2)) {
-				for(int i = col+2; i == col; i--) {
+				for(int i = col+2; i >= col; i--) {
 					if(board[row][i] == getEmpty()) {
 						return true;
 					}
@@ -175,7 +175,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(bigShip)) {
 			//checks to see if the ship is in bounds on the east border
 			if(onBoard(row, col+3)) {
-				for(int i = col+3; i == col; i--) {
+				for(int i = col+3; i >= col; i--) {
 					if(board[row][i] == getEmpty()) {
 						return true;
 					}
@@ -185,7 +185,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(biggestShip)) {
 			//checks to see if the ship is in bounds on the east border
 			if(onBoard(row, col+4)) {
-				for(int i = col+4; i == col; i--) {
+				for(int i = col+4; i >= col; i--) {
 					if(board[row][i] == getEmpty()) {
 						return true;
 					}
@@ -204,8 +204,8 @@ public class BattleBoard {
 	 * @return true or false 
 	 */
 	public boolean isValidVerticalShipMove(String sname, final int x, final int y) {
-		int row = x;
-		int col = y;
+		int col = x;
+		int row = y;
 		
 		if(count >= SHIPMAX) {
 			return false;
@@ -217,8 +217,8 @@ public class BattleBoard {
 
 		if(onBoard(x,y) && sname.equals(smallShip)) {
 			//checks to see if the ship is in bounds on the north border
-			if(onBoard(row-1, col)) {
-				for(int i = row-1; i == row; i++) {
+			if(onBoard(row - 1, col)) {
+				for(int i = row-1; i <= row; i++) {
 					if(board[i][col] == getEmpty()) {
 						return true;
 					}
@@ -228,7 +228,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(medShip)) {
 			//checks to see if the ship is in bounds on the north border
 			if(onBoard(row-2, col)) {
-				for(int i = row-2; i == row; i++) {
+				for(int i = row - 2; i <= row; i++) {
 					if(board[i][col] == getEmpty()) {
 						return true;
 					}
@@ -238,7 +238,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(bigShip)) {
 			//checks to see if the ship is in bounds on the north border
 			if(onBoard(row-3, col)) {
-				for(int i = row-3; i == row; i++) {
+				for(int i = row-3; i <= row; i++) {
 					if(board[i][col] == getEmpty()) {
 						return true;
 					}
@@ -248,7 +248,7 @@ public class BattleBoard {
 		if(onBoard(x,y) && sname.equals(biggestShip)) {
 			//checks to see if the ship is in bounds on the north border
 			if(onBoard(row-4, col)) {
-				for(int i = row-4; i == row; i++) {
+				for(int i = row-4; i <= row; i++) {
 					if(board[i][col] == getEmpty()) {
 						return true;
 					}
