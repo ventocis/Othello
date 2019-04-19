@@ -7,6 +7,7 @@ public class CheckersPiece {
 	public Color color;
 	
 	
+	 /** Created by Alen, Sam, Chandler */
 	public CheckersPiece(Color color, int row, int col) {
 		this.color = color;
 		this.row = row;
@@ -30,6 +31,7 @@ public class CheckersPiece {
 		this.col = col;
 	}
 
+	 /** Created by Alen, Sam, Chandler */
 	public String toString() {
 		
 		StringBuilder s = new StringBuilder();
